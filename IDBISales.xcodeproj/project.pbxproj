@@ -14,6 +14,7 @@
 		9C243ED21F2B17B400AE8499 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9C243ED01F2B17B400AE8499 /* LaunchScreen.storyboard */; };
 		9C243EDD1F2B17B400AE8499 /* IDBISalesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C243EDC1F2B17B400AE8499 /* IDBISalesTests.swift */; };
 		9C243EE81F2B17B400AE8499 /* IDBISalesUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C243EE71F2B17B400AE8499 /* IDBISalesUITests.swift */; };
+		9C243EF61F2B18DD00AE8499 /* idbi_bank_logo2.png in Resources */ = {isa = PBXBuildFile; fileRef = 9C243EF51F2B18DD00AE8499 /* idbi_bank_logo2.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +48,7 @@
 		9C243EE31F2B17B400AE8499 /* IDBISalesUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = IDBISalesUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9C243EE71F2B17B400AE8499 /* IDBISalesUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IDBISalesUITests.swift; sourceTree = "<group>"; };
 		9C243EE91F2B17B400AE8499 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9C243EF51F2B18DD00AE8499 /* idbi_bank_logo2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = idbi_bank_logo2.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,6 +105,7 @@
 				9C243ECE1F2B17B400AE8499 /* Assets.xcassets */,
 				9C243ED01F2B17B400AE8499 /* LaunchScreen.storyboard */,
 				9C243ED31F2B17B400AE8499 /* Info.plist */,
+				9C243EF51F2B18DD00AE8499 /* idbi_bank_logo2.png */,
 			);
 			path = IDBISales;
 			sourceTree = "<group>";
@@ -238,6 +241,7 @@
 				9C243ED21F2B17B400AE8499 /* LaunchScreen.storyboard in Resources */,
 				9C243ECF1F2B17B400AE8499 /* Assets.xcassets in Resources */,
 				9C243ECD1F2B17B400AE8499 /* Main.storyboard in Resources */,
+				9C243EF61F2B18DD00AE8499 /* idbi_bank_logo2.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
