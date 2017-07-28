@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -42,9 +43,12 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tft-aQ-gO6">
-                                <rect key="frame" x="95" y="334" width="131" height="40"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tft-aQ-gO6">
+                                <rect key="frame" x="95" y="359" width="131" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="tft-aQ-gO6" secondAttribute="height" multiplier="131:40" id="3rh-cO-Mbo"/>
+                                    <constraint firstAttribute="height" constant="40" id="Jsm-Jm-nS7"/>
+                                </constraints>
                                 <state key="normal" title="Button"/>
                             </button>
                         </subviews>
@@ -52,6 +56,8 @@
                         <constraints>
                             <constraint firstItem="QHZ-3O-aZV" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="32" id="iHZ-e4-9mW"/>
                             <constraint firstItem="QHZ-3O-aZV" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="kz7-dN-nAG"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="tft-aQ-gO6" secondAttribute="bottom" constant="81" id="r7J-wg-qKD"/>
+                            <constraint firstItem="tft-aQ-gO6" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="xAx-DU-0HC"/>
                         </constraints>
                     </view>
                 </viewController>
