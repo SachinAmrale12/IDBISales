@@ -20,6 +20,7 @@ class AddLeadViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
     @IBOutlet weak var ageTextfield             : RaisePlaceholder!
     @IBOutlet weak var checkboxCustomer         : CCheckbox!
     @IBOutlet weak var checkboxNonCustomer      : CCheckbox!
+    @IBOutlet weak var customerIDTextfield      : RaisePlaceholder!
     var preferredTimeArray                      = ["10AM-12PM","12PM-2PM","2PM-4PM","4PM-6PM"]
     var ageArray                                = ["0-17","18-24","25-34","35-44","45-60","60+"]
     var Products                                  = [String]()
@@ -39,7 +40,7 @@ class AddLeadViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
     
     func commonInitialization()
     {
-        checkboxNonCustomer.isCheckboxSelected = true
+       
         
         
         
@@ -108,8 +109,15 @@ class AddLeadViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
         
         
         // checkmark
+        checkboxNonCustomer.isCheckboxSelected = true
         checkboxNonCustomer.delegate=self
         checkboxCustomer.delegate=self
+        
+        // customer ID textfiled
+        
+        customerIDTextfield.animationDuration = 0.5
+        customerIDTextfield.subjectColor = UIColor.orange
+        customerIDTextfield.underLineColor = UIColor.orange
               
         
     }
