@@ -1,0 +1,6 @@
+framework module Pods_IDBISales {
+  umbrella header "Pods-IDBISales-umbrella.h"
+
+  export *
+  module * { export * }
+}

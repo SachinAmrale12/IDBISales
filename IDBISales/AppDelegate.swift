@@ -13,8 +13,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
+    class func SharedInstance() -> AppDelegate{
+        
+        struct Static {
+            //Singleton instance. Initializing Data manager.
+            static let sharedInstance = AppDelegate()
+        }
+        /** @return Returns the default singleton instance. */
+        return Static.sharedInstance
+    }
+    
+    
 
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool
+    {
+        
+        
+        
+      //  JNKeychain.saveValue("2981012620", forKey: "DummyNumber")
+      //  JNKeychain.saveValue("0262101892", forKey: "DummyNumberReverse")
+        
+        
         // Override point for customization after application launch.
         return true
     }
