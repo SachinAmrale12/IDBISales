@@ -1,15 +1,23 @@
 PODS:
   - Alamofire (4.5.0)
+  - Charts (3.0.2):
+    - Charts/Core (= 3.0.2)
+  - Charts/Core (3.0.2)
   - ReachabilitySwift (3)
+  - TNCheckBoxGroup (0.1)
 
 DEPENDENCIES:
   - Alamofire (~> 4.4)
+  - Charts
   - ReachabilitySwift (~> 3)
+  - TNCheckBoxGroup
 
 SPEC CHECKSUMS:
   Alamofire: f28cdffd29de33a7bfa022cbd63ae95a27fae140
+  Charts: 236d6ccdd0ce6feae151d89e829a7397381a21fd
   ReachabilitySwift: f5b9bb30a0777fac8f09ce8b067e32faeb29bb64
+  TNCheckBoxGroup: a68af5c69d292dcdf963bfab9496ed8e3f73689f
 
-PODFILE CHECKSUM: 16af6d55cdcbfc25f1c1116bbcbbd461046c20f0
+PODFILE CHECKSUM: 679678ed22097929d6f1e17dabacf0f00370e24b
 
 COCOAPODS: 1.2.1

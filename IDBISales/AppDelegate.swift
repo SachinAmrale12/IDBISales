@@ -30,8 +30,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         
         
-      //  JNKeychain.saveValue("2981012620", forKey: "DummyNumber")
-      //  JNKeychain.saveValue("0262101892", forKey: "DummyNumberReverse")
+        JNKeychain.saveValue("2981012620", forKey: "DummyNumber")
+        JNKeychain.saveValue("0262101892", forKey: "DummyNumberReverse")
         
         
         // Override point for customization after application launch.

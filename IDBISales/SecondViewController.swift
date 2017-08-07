@@ -26,6 +26,11 @@ class SecondViewController: UIViewController {
         }
     }
     
+    //
+    @IBAction func addLeadButtonClicked(_ sender: Any)
+    {
+        self.navigationController?.pushViewController(UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "addLeadVCIndentifier"), animated: true)
+    }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

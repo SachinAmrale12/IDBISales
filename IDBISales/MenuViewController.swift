@@ -10,7 +10,7 @@ import UIKit
 
 class MenuViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {
 
-    let contentArray                    = ["Home","Add Lead","Search Lead","View Lead"]
+    let contentArray                    = ["Home","Search Lead","Add Meeting","Reports"]
     @IBOutlet weak var menuTableView    : UITableView!
     var parrentViewInstance             : SecondViewController!
     
@@ -87,9 +87,9 @@ class MenuViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
     {
-        if indexPath.row == 2
+        if indexPath.row == 4
         {
-            self.performSegue(withIdentifier: "addLeadIdentifier", sender: nil)
+            self.performSegue(withIdentifier: "reportVCIdentifier", sender: nil)
         }
     }
 

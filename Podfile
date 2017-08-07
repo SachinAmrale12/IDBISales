@@ -7,5 +7,7 @@ target 'IDBISales' do
 
   pod 'Alamofire', '~> 4.4'
   pod 'ReachabilitySwift', '~> 3'
+  pod 'Charts'
+  pod 'TNCheckBoxGroup'
 
 end

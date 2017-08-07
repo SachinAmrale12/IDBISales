@@ -21,25 +21,121 @@ class DataManager: NSObject {
         return Static.sharedInstance
     }
 
+    func getKeyForEncryption() -> String
+    {
+        return KeyCode.sharedInstance().getKey(JNKeychain.loadValue(forKey: "userID") as! String, withMobile: JNKeychain.loadValue(forKey: "mobileNumber") as! String)
+    }
     
-    // //http://localhost:8080/AbhayCard/register/ldapLogin/{"username":"YuqLeXfu6ESSYNQRjh9g==","pin":":*:T5bctRG3wVxsbqYeIeA ==","clientId":"tzLonXeVMWmyi1reRhqw==","message":"wG:*:4epyCFCMmjFXcswcg=="}
+    func getGlobalKey() -> String
+    {
+        return KeyCode.sharedInstance().getKey("2981012620", withMobile: "0262101892")
+    }
     
-    //class func Registration(custID: String ,withMobile: String ,withClientSecret: String ,withClientID: String, completionClouser: @escaping (_ isSuccessful:Bool,_ error:String?,_ result: Any?) -> Void){
     
-//    class func Login(userName : String,withPin : String,withClientID : String, withMessage : StringcompletionClouser: @escaping (_ isSuccessful:Bool,_ error:String?,_ result: Any?) -> Void)
-//    {
-//        ServerManager.SharedInstance().loginFromBankEmployee(userName: userName, withPin : withPin, withClientID : withClientID, withMessage : withMessage, completionClouser: {(isSucessful,error,result) in
-//        if isSucessful
-//        {
-//            completionClouser(isSucessful,nil,result)
-//        }
-//        else
-//        {
-//            completionClouser(isSucessful,error,nil)
-//
-//        }
-//        
-//        })
-//    }
+    class func getCustomerDetails(custID: String,clientID: String,completionClouser:@escaping (_ isSuccessful: Bool,_ error: String?,_ result: Any?) -> Void)
+    {
+        ServerManager.SharedInstance().getCustomerDetails(custID: custID, clientID: clientID) { (isSuccessful, error, result) in
+            
+            if isSuccessful
+            {
+                completionClouser(isSuccessful,nil,result)
+            }
+            else
+            {
+                completionClouser(isSuccessful,error,nil)
+            }
+        }
+    }
+    
+    
+    class func getProgrammList(custID: String,clientID: String,completionClouser:@escaping (_ isSuccessful: Bool,_ error: String?,_ result: Any?) -> Void)
+    {
+        ServerManager.SharedInstance().getProgrammList(custID: custID, clientID: clientID) { (isSuccessful, error, result) in
+            
+            if isSuccessful
+            {
+                completionClouser(isSuccessful,nil,result)
+            }
+            else
+            {
+                completionClouser(isSuccessful,error,nil)
+            }
+        }
+    }
+    
+    class func getBranches(custID: String,clientID: String,message: String,completionClouser:@escaping (_ isSuccessful: Bool,_ error: String?,_ result: Any?) -> Void)
+    {
+        ServerManager.SharedInstance().getBranches(custID: custID, clientID: clientID, message: message) { (isSuccessful, error, result) in
+            
+            if isSuccessful
+            {
+                completionClouser(isSuccessful,nil,result)
+            }
+            else
+            {
+                completionClouser(isSuccessful,error,nil)
+            }
+        }
+    }
+    
+    class func getCities(custID: String,clientID: String,message: String,completionClouser:@escaping (_ isSuccessful: Bool,_ error: String?,_ result: Any?) -> Void)
+    {
+        ServerManager.SharedInstance().getCities(custID: custID, clientID: clientID, message: message) { (isSuccessful, error, result) in
+            
+            if isSuccessful
+            {
+                completionClouser(isSuccessful,nil,result)
+            }
+            else
+            {
+                completionClouser(isSuccessful,error,nil)
+            }
+        }
+    }
+    
+    class func getStates(custID: String,clientID: String,completionClouser:@escaping (_ isSuccessful: Bool,_ error: String?,_ result: Any?) -> Void)
+    {
+        ServerManager.SharedInstance().getStates(custID: custID, clientID: clientID) { (isSuccessful, error, result) in
+        
+            if isSuccessful
+            {
+                completionClouser(isSuccessful,nil,result)
+            }
+            else
+            {
+                completionClouser(isSuccessful,error,nil)
+            }
+        }
+    }
+    
+    class func getAccessToken(custID: String,clientID: String,pin :String,username: String,clientSecret: String,completionClouser:@escaping (_ isSuccessful: Bool,_ error: String?,_ result: Any?) -> Void)
+    {
+        ServerManager.SharedInstance().getAccessToken(custID: custID, clientID: clientID, pin: pin, username: username, clientSecret: clientSecret) { (isSucessful, error, result) in
+            
+            if isSucessful
+            {
+                completionClouser(isSucessful,nil,result)
+            }
+            else
+            {
+                completionClouser(isSucessful,error,nil)
+            }
+        }
+    }
+    
+    class func LoginUser(userName: String,clientID: String,pin: String,message: String,completionClouser:@escaping (_ isSuccessful: Bool,_ error: String?,_ result: Any?) -> Void)
+    {
+        ServerManager.SharedInstance().LoginUser(userName: userName, clientID: clientID, pin: pin, message: message) { (isSucessful, error, result) in
+            
+            if isSucessful
+            {
+                completionClouser(isSucessful,nil,result)
+            }
+            else
+            {
+                completionClouser(isSucessful,error,nil)
+            }
+        }
+    }
 
 }

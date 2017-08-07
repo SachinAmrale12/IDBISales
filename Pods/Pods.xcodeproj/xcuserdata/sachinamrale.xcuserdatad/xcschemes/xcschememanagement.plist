@@ -9,6 +9,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>Charts.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods-IDBISales.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -19,20 +24,35 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>TNCheckBoxGroup.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>54C3000EB54209CAB05E39C8D598C7A1</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>779F3B86A11B27164C961EA1E1417908</key>
+		<key>1292837EC62D8B6FEA2273D47ADFC40F</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
 		<key>88E9EC28B8B46C3631E6B242B50F4442</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>C0624B7FF9C11A1F9B1D71D9B66C7A34</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>C7102172669A4F7FF07BCBE1423CB5AA</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>F307B842FF76B2DE6C55DB67C0885325</key>
 		<dict>
 			<key>primary</key>
 			<true/>

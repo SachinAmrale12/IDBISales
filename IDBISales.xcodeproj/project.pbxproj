@@ -12,6 +12,12 @@
 		5C63B8091F2B467700B56C92 /* TPKeyboardAvoidingScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C63B8041F2B467700B56C92 /* TPKeyboardAvoidingScrollView.m */; };
 		5C63B80A1F2B467700B56C92 /* TPKeyboardAvoidingTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C63B8061F2B467700B56C92 /* TPKeyboardAvoidingTableView.m */; };
 		5C63B80B1F2B467700B56C92 /* UIScrollView+TPKeyboardAvoidingAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C63B8081F2B467700B56C92 /* UIScrollView+TPKeyboardAvoidingAdditions.m */; };
+		5C7835AD1F358A7200C45685 /* ReportsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C7835AC1F358A7200C45685 /* ReportsViewController.swift */; };
+		5C7835B01F35E99700C45685 /* MaterialLoadingIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C7835AF1F35E99700C45685 /* MaterialLoadingIndicator.swift */; };
+		5C9F218B1F3478DF00DB5274 /* DateCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C9F21881F3478DF00DB5274 /* DateCollectionViewCell.swift */; };
+		5C9F218C1F3478DF00DB5274 /* DateTimePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C9F21891F3478DF00DB5274 /* DateTimePicker.swift */; };
+		5C9F218D1F3478DF00DB5274 /* StepCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C9F218A1F3478DF00DB5274 /* StepCollectionViewFlowLayout.swift */; };
+		5C9F218F1F347DA500DB5274 /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C9F218E1F347DA500DB5274 /* Alert.swift */; };
 		5CB5008F1F3327DC00431EE8 /* JNKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CB5008E1F3327DC00431EE8 /* JNKeychain.m */; };
 		5CB500941F3331F500431EE8 /* CCheckbox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CB500931F3331F500431EE8 /* CCheckbox.swift */; };
 		5CBBEF431F31D3840032B57B /* LUAutocompleteTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CBBEF3F1F31D3840032B57B /* LUAutocompleteTableViewCell.swift */; };
@@ -69,6 +75,12 @@
 		5C63B8061F2B467700B56C92 /* TPKeyboardAvoidingTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPKeyboardAvoidingTableView.m; sourceTree = "<group>"; };
 		5C63B8071F2B467700B56C92 /* UIScrollView+TPKeyboardAvoidingAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+TPKeyboardAvoidingAdditions.h"; sourceTree = "<group>"; };
 		5C63B8081F2B467700B56C92 /* UIScrollView+TPKeyboardAvoidingAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+TPKeyboardAvoidingAdditions.m"; sourceTree = "<group>"; };
+		5C7835AC1F358A7200C45685 /* ReportsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReportsViewController.swift; sourceTree = "<group>"; };
+		5C7835AF1F35E99700C45685 /* MaterialLoadingIndicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MaterialLoadingIndicator.swift; sourceTree = "<group>"; };
+		5C9F21881F3478DF00DB5274 /* DateCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateCollectionViewCell.swift; sourceTree = "<group>"; };
+		5C9F21891F3478DF00DB5274 /* DateTimePicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateTimePicker.swift; sourceTree = "<group>"; };
+		5C9F218A1F3478DF00DB5274 /* StepCollectionViewFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StepCollectionViewFlowLayout.swift; sourceTree = "<group>"; };
+		5C9F218E1F347DA500DB5274 /* Alert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Alert.swift; sourceTree = "<group>"; };
 		5CB5008D1F3327DC00431EE8 /* JNKeychain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JNKeychain.h; sourceTree = "<group>"; };
 		5CB5008E1F3327DC00431EE8 /* JNKeychain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JNKeychain.m; sourceTree = "<group>"; };
 		5CB500931F3331F500431EE8 /* CCheckbox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CCheckbox.swift; sourceTree = "<group>"; };
@@ -144,6 +156,8 @@
 		5C63B7FD1F2B38D500B56C92 /* ThirdPartyLibraries */ = {
 			isa = PBXGroup;
 			children = (
+				5C7835AE1F35E98A00C45685 /* Loader */,
+				5C9F21871F3478C200DB5274 /* Date&TimePicker */,
 				5CB500921F3331E900431EE8 /* checkmark */,
 				5CBBEF471F31E28E0032B57B /* MultiSelectionView */,
 				5CBBEF3C1F31B1B20032B57B /* AutoCompleteTextField */,
@@ -173,6 +187,24 @@
 				5C63B8081F2B467700B56C92 /* UIScrollView+TPKeyboardAvoidingAdditions.m */,
 			);
 			name = KeyBoardAvoidingScrollView;
+			sourceTree = "<group>";
+		};
+		5C7835AE1F35E98A00C45685 /* Loader */ = {
+			isa = PBXGroup;
+			children = (
+				5C7835AF1F35E99700C45685 /* MaterialLoadingIndicator.swift */,
+			);
+			name = Loader;
+			sourceTree = "<group>";
+		};
+		5C9F21871F3478C200DB5274 /* Date&TimePicker */ = {
+			isa = PBXGroup;
+			children = (
+				5C9F21881F3478DF00DB5274 /* DateCollectionViewCell.swift */,
+				5C9F21891F3478DF00DB5274 /* DateTimePicker.swift */,
+				5C9F218A1F3478DF00DB5274 /* StepCollectionViewFlowLayout.swift */,
+			);
+			name = "Date&TimePicker";
 			sourceTree = "<group>";
 		};
 		5CB500901F3327E800431EE8 /* encryptionclass */ = {
@@ -297,10 +329,12 @@
 				5CC89EDD1F33045700AA0336 /* APIConfigurations */,
 				5C63B7FD1F2B38D500B56C92 /* ThirdPartyLibraries */,
 				9C243EC71F2B17B400AE8499 /* AppDelegate.swift */,
+				5C9F218E1F347DA500DB5274 /* Alert.swift */,
 				9C243EC91F2B17B400AE8499 /* ViewController.swift */,
 				5CCAB6CC1F2C4D6500E24BEB /* SecondViewController.swift */,
 				5CCAB6D31F2C66AD00E24BEB /* MenuViewController.swift */,
 				5CF1CB601F30562D006CEBA7 /* AddLeadViewController.swift */,
+				5C7835AC1F358A7200C45685 /* ReportsViewController.swift */,
 				5C63B8021F2B467700B56C92 /* IDBISales-Bridging-Header.h */,
 				5CD1A9C11F2F089700E314DA /* defaultUser.png */,
 				9C243ECB1F2B17B400AE8499 /* Main.storyboard */,
@@ -532,6 +566,7 @@
 				5CBBEF431F31D3840032B57B /* LUAutocompleteTableViewCell.swift in Sources */,
 				5CB5008F1F3327DC00431EE8 /* JNKeychain.m in Sources */,
 				5CBBEF441F31D3840032B57B /* LUAutocompleteView.swift in Sources */,
+				5C7835B01F35E99700C45685 /* MaterialLoadingIndicator.swift in Sources */,
 				5CBBEF461F31D3840032B57B /* LUAutocompleteViewDelegate.swift in Sources */,
 				5C63B80B1F2B467700B56C92 /* UIScrollView+TPKeyboardAvoidingAdditions.m in Sources */,
 				5CC89EF01F33058500AA0336 /* NSString+Base64.m in Sources */,
@@ -539,6 +574,7 @@
 				5CF1CB671F3095D2006CEBA7 /* MVYSideMenuOptions.m in Sources */,
 				5CF1CB661F3095D2006CEBA7 /* MVYSideMenuController.m in Sources */,
 				5CC89EDF1F33048F00AA0336 /* DataManager.swift in Sources */,
+				5C9F218B1F3478DF00DB5274 /* DateCollectionViewCell.swift in Sources */,
 				5CF1CB611F30562D006CEBA7 /* AddLeadViewController.swift in Sources */,
 				5CB500941F3331F500431EE8 /* CCheckbox.swift in Sources */,
 				5C63B8091F2B467700B56C92 /* TPKeyboardAvoidingScrollView.m in Sources */,
@@ -548,8 +584,12 @@
 				5C63B7FF1F2B38F100B56C92 /* RaisePlaceholder.swift in Sources */,
 				5CC89EED1F33058500AA0336 /* KeyCode.m in Sources */,
 				5CC89EF11F33058500AA0336 /* NSData+CommonCrypto.m in Sources */,
+				5C7835AD1F358A7200C45685 /* ReportsViewController.swift in Sources */,
+				5C9F218D1F3478DF00DB5274 /* StepCollectionViewFlowLayout.swift in Sources */,
+				5C9F218F1F347DA500DB5274 /* Alert.swift in Sources */,
 				5CC89EEF1F33058500AA0336 /* NSData+Base64.m in Sources */,
 				9C243EC81F2B17B400AE8499 /* AppDelegate.swift in Sources */,
+				5C9F218C1F3478DF00DB5274 /* DateTimePicker.swift in Sources */,
 				5CC89EE11F33049F00AA0336 /* ServerManager.swift in Sources */,
 				5CBBEF4B1F31E2AE0032B57B /* CZPickerView.m in Sources */,
 			);
