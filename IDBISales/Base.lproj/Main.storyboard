@@ -387,6 +387,9 @@
                                                     <constraint firstAttribute="height" constant="40" id="dib-kK-hQT"/>
                                                 </constraints>
                                                 <state key="normal" title="Add"/>
+                                                <connections>
+                                                    <action selector="addButtonClicked:" destination="xnp-HP-x7A" eventType="touchUpInside" id="Kwq-JF-UNA"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -446,8 +449,60 @@
                                     </label>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rlq-Ch-PN1">
                                         <rect key="frame" x="15" y="50" width="210" height="70"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5Md-s9-QsM" customClass="DLRadioButton">
+                                                <rect key="frame" x="15" y="0.0" width="187" height="29"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="29" id="BSr-og-roE"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                <state key="normal" title="Customer">
+                                                    <color key="titleColor" red="0.098039215690000001" green="0.43529411759999997" blue="0.23921568630000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                </state>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="iconSize">
+                                                        <real key="value" value="21"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="color" keyPath="iconColor">
+                                                        <color key="value" red="0.098039215690000001" green="0.43529411759999997" blue="0.23921568630000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                </userDefinedRuntimeAttributes>
+                                                <connections>
+                                                    <action selector="SelectTypeOfCustomer:" destination="xnp-HP-x7A" eventType="touchUpInside" id="5cX-iz-LI0"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ctA-jw-k6D" customClass="DLRadioButton">
+                                                <rect key="frame" x="15" y="41" width="179" height="29"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="29" id="akz-r6-xnS"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                <state key="normal" title="Non-Customer">
+                                                    <color key="titleColor" red="0.098039215690000001" green="0.43529411759999997" blue="0.23921568630000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                </state>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="iconSize">
+                                                        <real key="value" value="21"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="color" keyPath="iconColor">
+                                                        <color key="value" red="0.098039215690000001" green="0.43529411759999997" blue="0.23921568630000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                </userDefinedRuntimeAttributes>
+                                                <connections>
+                                                    <action selector="SelectTypeOfCustomer:" destination="xnp-HP-x7A" eventType="touchUpInside" id="pGc-lJ-SZ8"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
+                                            <constraint firstAttribute="trailing" secondItem="ctA-jw-k6D" secondAttribute="trailing" constant="16" id="3zY-Cy-oK1"/>
+                                            <constraint firstItem="5Md-s9-QsM" firstAttribute="top" secondItem="rlq-Ch-PN1" secondAttribute="top" id="Apq-qB-BYC"/>
+                                            <constraint firstItem="5Md-s9-QsM" firstAttribute="leading" secondItem="rlq-Ch-PN1" secondAttribute="leading" constant="15" id="Bpm-ql-WaR"/>
+                                            <constraint firstAttribute="bottom" secondItem="ctA-jw-k6D" secondAttribute="bottom" id="DdF-Ga-YL0"/>
+                                            <constraint firstAttribute="trailing" secondItem="5Md-s9-QsM" secondAttribute="trailing" constant="8" id="hs9-UP-O8B"/>
+                                            <constraint firstItem="ctA-jw-k6D" firstAttribute="leading" secondItem="rlq-Ch-PN1" secondAttribute="leading" constant="15" id="yZD-NB-EgV"/>
                                             <constraint firstAttribute="height" constant="70" id="ymY-PB-kng"/>
                                         </constraints>
                                     </view>
@@ -495,7 +550,7 @@
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LuU-Lb-zro">
                                 <rect key="frame" x="140" y="220" width="40" height="40"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="40" id="qlQ-mI-W59"/>
                                     <constraint firstAttribute="height" constant="40" id="x4z-hE-8Hv"/>
@@ -530,11 +585,13 @@
                         <outlet property="containerViewHeightConstarint" destination="WXg-fZ-ky7" id="HRc-0y-iqF"/>
                         <outlet property="custIDTextfieldHeightConstraint" destination="IPc-0q-l72" id="456-gu-ptQ"/>
                         <outlet property="customerIDTextfield" destination="0j2-EN-rN4" id="Kmk-3h-MLB"/>
+                        <outlet property="customerRadioButton" destination="5Md-s9-QsM" id="sjq-wi-eu4"/>
                         <outlet property="emailIdTextfield" destination="oOb-5M-WKZ" id="DIN-hi-EPB"/>
                         <outlet property="firstNameTextfield" destination="Uh0-Vg-VDW" id="uam-R8-nyX"/>
                         <outlet property="loaderView" destination="LuU-Lb-zro" id="Exy-Og-4lt"/>
                         <outlet property="mainCustomerView" destination="aKD-oy-tXP" id="8H1-Jz-i1l"/>
                         <outlet property="mobileNoTextfield" destination="Ts0-3N-Ke3" id="Oo7-tU-mCq"/>
+                        <outlet property="nonCustomerRadioButton" destination="ctA-jw-k6D" id="aIk-ac-06K"/>
                         <outlet property="programmTextView" destination="72Q-L1-RPx" id="ruc-az-sIk"/>
                         <outlet property="stateTextfield" destination="PcJ-ct-Tnf" id="IQ0-PB-flu"/>
                     </connections>

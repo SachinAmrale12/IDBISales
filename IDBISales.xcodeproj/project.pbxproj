@@ -12,6 +12,7 @@
 		5C63B8091F2B467700B56C92 /* TPKeyboardAvoidingScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C63B8041F2B467700B56C92 /* TPKeyboardAvoidingScrollView.m */; };
 		5C63B80A1F2B467700B56C92 /* TPKeyboardAvoidingTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C63B8061F2B467700B56C92 /* TPKeyboardAvoidingTableView.m */; };
 		5C63B80B1F2B467700B56C92 /* UIScrollView+TPKeyboardAvoidingAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C63B8081F2B467700B56C92 /* UIScrollView+TPKeyboardAvoidingAdditions.m */; };
+		5C7571911F397B370052513E /* DLRadioButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C7571901F397B370052513E /* DLRadioButton.m */; };
 		5C7835AD1F358A7200C45685 /* ReportsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C7835AC1F358A7200C45685 /* ReportsViewController.swift */; };
 		5C7835B01F35E99700C45685 /* MaterialLoadingIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C7835AF1F35E99700C45685 /* MaterialLoadingIndicator.swift */; };
 		5C9F218B1F3478DF00DB5274 /* DateCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C9F21881F3478DF00DB5274 /* DateCollectionViewCell.swift */; };
@@ -75,6 +76,8 @@
 		5C63B8061F2B467700B56C92 /* TPKeyboardAvoidingTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPKeyboardAvoidingTableView.m; sourceTree = "<group>"; };
 		5C63B8071F2B467700B56C92 /* UIScrollView+TPKeyboardAvoidingAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+TPKeyboardAvoidingAdditions.h"; sourceTree = "<group>"; };
 		5C63B8081F2B467700B56C92 /* UIScrollView+TPKeyboardAvoidingAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+TPKeyboardAvoidingAdditions.m"; sourceTree = "<group>"; };
+		5C75718F1F397B370052513E /* DLRadioButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DLRadioButton.h; sourceTree = "<group>"; };
+		5C7571901F397B370052513E /* DLRadioButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DLRadioButton.m; sourceTree = "<group>"; };
 		5C7835AC1F358A7200C45685 /* ReportsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReportsViewController.swift; sourceTree = "<group>"; };
 		5C7835AF1F35E99700C45685 /* MaterialLoadingIndicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MaterialLoadingIndicator.swift; sourceTree = "<group>"; };
 		5C9F21881F3478DF00DB5274 /* DateCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -156,6 +159,7 @@
 		5C63B7FD1F2B38D500B56C92 /* ThirdPartyLibraries */ = {
 			isa = PBXGroup;
 			children = (
+				5C75718E1F397B200052513E /* RadioButtton */,
 				5C7835AE1F35E98A00C45685 /* Loader */,
 				5C9F21871F3478C200DB5274 /* Date&TimePicker */,
 				5CB500921F3331E900431EE8 /* checkmark */,
@@ -187,6 +191,15 @@
 				5C63B8081F2B467700B56C92 /* UIScrollView+TPKeyboardAvoidingAdditions.m */,
 			);
 			name = KeyBoardAvoidingScrollView;
+			sourceTree = "<group>";
+		};
+		5C75718E1F397B200052513E /* RadioButtton */ = {
+			isa = PBXGroup;
+			children = (
+				5C75718F1F397B370052513E /* DLRadioButton.h */,
+				5C7571901F397B370052513E /* DLRadioButton.m */,
+			);
+			name = RadioButtton;
 			sourceTree = "<group>";
 		};
 		5C7835AE1F35E98A00C45685 /* Loader */ = {
@@ -566,6 +579,7 @@
 				5CBBEF431F31D3840032B57B /* LUAutocompleteTableViewCell.swift in Sources */,
 				5CB5008F1F3327DC00431EE8 /* JNKeychain.m in Sources */,
 				5CBBEF441F31D3840032B57B /* LUAutocompleteView.swift in Sources */,
+				5C7571911F397B370052513E /* DLRadioButton.m in Sources */,
 				5C7835B01F35E99700C45685 /* MaterialLoadingIndicator.swift in Sources */,
 				5CBBEF461F31D3840032B57B /* LUAutocompleteViewDelegate.swift in Sources */,
 				5C63B80B1F2B467700B56C92 /* UIScrollView+TPKeyboardAvoidingAdditions.m in Sources */,

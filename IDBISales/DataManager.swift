@@ -32,9 +32,39 @@ class DataManager: NSObject {
     }
     
     
-    class func getCustomerDetails(custID: String,clientID: String,completionClouser:@escaping (_ isSuccessful: Bool,_ error: String?,_ result: Any?) -> Void)
+    class func createLead(programId: String,sourceBycode :String,custName: String,cityCode: String,stateCode: String,emailID: String,empEmailId :String,takerEmailId :String,custId: String,takerSolId :String,mobileNo :String,clientID: String,completionClouser:@escaping (_ isSuccessful: Bool,_ error: String?,_ result: Any?) -> Void)
     {
-        ServerManager.SharedInstance().getCustomerDetails(custID: custID, clientID: clientID) { (isSuccessful, error, result) in
+        ServerManager.SharedInstance().createLead(programId: programId, sourceBycode: sourceBycode, custName: custName, cityCode: cityCode, stateCode: stateCode, emailID: emailID, empEmailId: empEmailId, takerEmailId: takerEmailId, custId: custId, takerSolId: takerSolId, mobileNo: mobileNo, clientID: clientID) { (isSuccessful, error, result) in
+            
+            if isSuccessful
+            {
+                completionClouser(isSuccessful,nil,result)
+            }
+            else
+            {
+                completionClouser(isSuccessful,error,nil)
+            }
+        }
+    }
+    
+    class func getEmailIDFromSol(sol: String,custID: String,clientID: String,completionClouser:@escaping (_ isSuccessful: Bool,_ error: String?,_ result: Any?) -> Void)
+    {
+        ServerManager.SharedInstance().getEmailIDFromSol(sol: sol, custID: custID, clientID: clientID) { (isSuccessful, error, result) in
+            
+            if isSuccessful
+            {
+                completionClouser(isSuccessful,nil,result)
+            }
+            else
+            {
+                completionClouser(isSuccessful,error,nil)
+            }
+        }
+    }
+    
+    class func getCustomerDetails(ein: String,custID: String,clientID: String,completionClouser:@escaping (_ isSuccessful: Bool,_ error: String?,_ result: Any?) -> Void)
+    {
+        ServerManager.SharedInstance().getCustomerDetails(ein: ein,custID: custID, clientID: clientID) { (isSuccessful, error, result) in
             
             if isSuccessful
             {
