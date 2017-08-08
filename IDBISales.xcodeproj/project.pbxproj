@@ -46,6 +46,7 @@
 		9C243ED21F2B17B400AE8499 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9C243ED01F2B17B400AE8499 /* LaunchScreen.storyboard */; };
 		9C243EDD1F2B17B400AE8499 /* IDBISalesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C243EDC1F2B17B400AE8499 /* IDBISalesTests.swift */; };
 		9C243EE81F2B17B400AE8499 /* IDBISalesUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C243EE71F2B17B400AE8499 /* IDBISalesUITests.swift */; };
+		9CFD1B4F1F39AC500061A642 /* LeadDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CFD1B4E1F39AC500061A642 /* LeadDetails.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -128,6 +129,7 @@
 		9C243EE31F2B17B400AE8499 /* IDBISalesUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = IDBISalesUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9C243EE71F2B17B400AE8499 /* IDBISalesUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IDBISalesUITests.swift; sourceTree = "<group>"; };
 		9C243EE91F2B17B400AE8499 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9CFD1B4E1F39AC500061A642 /* LeadDetails.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LeadDetails.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -345,6 +347,7 @@
 				5C9F218E1F347DA500DB5274 /* Alert.swift */,
 				9C243EC91F2B17B400AE8499 /* ViewController.swift */,
 				5CCAB6CC1F2C4D6500E24BEB /* SecondViewController.swift */,
+				9CFD1B4E1F39AC500061A642 /* LeadDetails.swift */,
 				5CCAB6D31F2C66AD00E24BEB /* MenuViewController.swift */,
 				5CF1CB601F30562D006CEBA7 /* AddLeadViewController.swift */,
 				5C7835AC1F358A7200C45685 /* ReportsViewController.swift */,
@@ -582,6 +585,7 @@
 				5C7571911F397B370052513E /* DLRadioButton.m in Sources */,
 				5C7835B01F35E99700C45685 /* MaterialLoadingIndicator.swift in Sources */,
 				5CBBEF461F31D3840032B57B /* LUAutocompleteViewDelegate.swift in Sources */,
+				9CFD1B4F1F39AC500061A642 /* LeadDetails.swift in Sources */,
 				5C63B80B1F2B467700B56C92 /* UIScrollView+TPKeyboardAvoidingAdditions.m in Sources */,
 				5CC89EF01F33058500AA0336 /* NSString+Base64.m in Sources */,
 				5C63B80A1F2B467700B56C92 /* TPKeyboardAvoidingTableView.m in Sources */,
@@ -758,9 +762,11 @@
 			baseConfigurationReference = 42C66A791ED876DABC349DBB /* Pods-IDBISales.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "LaunchImage-2";
 				CLANG_ENABLE_MODULES = YES;
 				DEVELOPMENT_TEAM = BTT36DS6LY;
 				INFOPLIST_FILE = IDBISales/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.idbi.test;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -775,9 +781,11 @@
 			baseConfigurationReference = 69B8EDC0B86D19C0BC084E90 /* Pods-IDBISales.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "LaunchImage-2";
 				CLANG_ENABLE_MODULES = YES;
 				DEVELOPMENT_TEAM = BTT36DS6LY;
 				INFOPLIST_FILE = IDBISales/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.idbi.test;
 				PRODUCT_NAME = "$(TARGET_NAME)";
