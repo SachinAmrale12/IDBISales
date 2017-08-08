@@ -47,7 +47,8 @@ class AddLeadViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
     private let autocompleteView                            = LUAutocompleteView()
     private let autocompleteViewForCity                     = LUAutocompleteView()
     private let autocompleteViewForBranch                   = LUAutocompleteView()
-   
+    var isCustomer                                          : Bool!
+   var productList                                          = [String]()
     
     
     var takerEmailID                                        : String!
@@ -136,10 +137,15 @@ class AddLeadViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
         
     }
     
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
+    
     @IBAction func SelectTypeOfCustomer(_ sender: DLRadioButton)
     {
         if sender == customerRadioButton
         {
+            isCustomer = true
             customerRadioButton.isSelected = true
             nonCustomerRadioButton.isSelected = false
             customerIDTextfield.isHidden = false
@@ -148,6 +154,7 @@ class AddLeadViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
         }
         else
         {
+            isCustomer = false
             customerRadioButton.isSelected = false
             nonCustomerRadioButton.isSelected = true
             customerIDTextfield.isHidden = true
@@ -164,7 +171,28 @@ class AddLeadViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
             self.loaderView.isHidden = false
             self.loader.startAnimating()
             
-            DataManager.createLead(programId: AESCrypt.encrypt(self.allProgrammDictionary[self.programmTextView.text], password: DataManager.SharedInstance().getKeyForEncryption()).replacingOccurrences(of: "/", with: ":~:"), sourceBycode: AESCrypt.encrypt("others", password: DataManager.SharedInstance().getKeyForEncryption()).replacingOccurrences(of: "/", with: ":~:"), custName: AESCrypt.encrypt(self.firstNameTextfield.text, password: DataManager.SharedInstance().getKeyForEncryption()).replacingOccurrences(of: "/", with: ":~:"), cityCode: AESCrypt.encrypt(self.allCityDictionary[self.cityTextfield.text!], password: DataManager.SharedInstance().getKeyForEncryption()).replacingOccurrences(of: "/", with: ":~:"), stateCode: AESCrypt.encrypt(self.allStateDictionary[self.stateTextfield.text!], password: DataManager.SharedInstance().getKeyForEncryption()).replacingOccurrences(of: "/", with: ":~:"), emailID: AESCrypt.encrypt(emailIdTextfield.text, password: DataManager.SharedInstance().getKeyForEncryption()).replacingOccurrences(of: "/", with: ":~:"), empEmailId: AESCrypt.encrypt(JNKeychain.loadValue(forKey: "emailID") as! String, password: DataManager.SharedInstance().getKeyForEncryption()).replacingOccurrences(of: "/", with: ":~:"), takerEmailId: AESCrypt.encrypt(self.takerEmailID, password: DataManager.SharedInstance().getKeyForEncryption()).replacingOccurrences(of: "/", with: ":~:"), custId: AESCrypt.encrypt("84889938", password: DataManager.SharedInstance().getGlobalKey()).replacingOccurrences(of: "/", with: ":~:"), takerSolId: AESCrypt.encrypt(self.allBranchDictionary[self.branchTextfield.text!], password: DataManager.SharedInstance().getKeyForEncryption()).replacingOccurrences(of: "/", with: ":~:"), mobileNo:  AESCrypt.encrypt(mobileNoTextfield.text, password: DataManager.SharedInstance().getKeyForEncryption()).replacingOccurrences(of: "/", with: ":~:"), clientID: JNKeychain.loadValue(forKey: "encryptedClientID") as! String, completionClouser: { (isSuccessful, error, result) in
+            let custID : String!
+            let isNewCustomer : String!
+            if isCustomer == false
+            {
+                isNewCustomer = AESCrypt.encrypt("true", password: DataManager.SharedInstance().getKeyForEncryption()).replacingOccurrences(of: "/", with: ":~:")
+                custID = AESCrypt.encrypt("NA", password: DataManager.SharedInstance().getKeyForEncryption()).replacingOccurrences(of: "/", with: ":~:")
+            }
+            else
+            {
+                isNewCustomer = AESCrypt.encrypt("false", password: DataManager.SharedInstance().getKeyForEncryption()).replacingOccurrences(of: "/", with: ":~:")
+                custID = JNKeychain.loadValue(forKey: "EncryptedCustomerID") as! String
+            }
+            
+            var progIdArray = [String]()
+            for string in productList
+            {
+                progIdArray.append(self.allProgrammDictionary[string]!)
+            }
+            
+            let programid = progIdArray.description.replacingOccurrences(of: "\"", with: "").replacingOccurrences(of: "[", with: "").replacingOccurrences(of: "]", with: "").replacingOccurrences(of: ",", with: "~").replacingOccurrences(of: " ", with: "")
+            
+            DataManager.createLead(isNewCustomer: isNewCustomer,programId: AESCrypt.encrypt(programid, password: DataManager.SharedInstance().getKeyForEncryption()).replacingOccurrences(of: "/", with: ":~:"), leadCustId: custID, sourceBycode: AESCrypt.encrypt("others", password: DataManager.SharedInstance().getKeyForEncryption()).replacingOccurrences(of: "/", with: ":~:"), custName: AESCrypt.encrypt(self.firstNameTextfield.text, password: DataManager.SharedInstance().getKeyForEncryption()).replacingOccurrences(of: "/", with: ":~:"), cityCode: AESCrypt.encrypt(self.allCityDictionary[self.cityTextfield.text!], password: DataManager.SharedInstance().getKeyForEncryption()).replacingOccurrences(of: "/", with: ":~:"), stateCode: AESCrypt.encrypt(self.allStateDictionary[self.stateTextfield.text!], password: DataManager.SharedInstance().getKeyForEncryption()).replacingOccurrences(of: "/", with: ":~:"), emailID: AESCrypt.encrypt(emailIdTextfield.text, password: DataManager.SharedInstance().getKeyForEncryption()).replacingOccurrences(of: "/", with: ":~:"), empEmailId: AESCrypt.encrypt(JNKeychain.loadValue(forKey: "emailID") as! String, password: DataManager.SharedInstance().getKeyForEncryption()).replacingOccurrences(of: "/", with: ":~:"), takerEmailId: AESCrypt.encrypt(self.takerEmailID, password: DataManager.SharedInstance().getKeyForEncryption()).replacingOccurrences(of: "/", with: ":~:"), custId: JNKeychain.loadValue(forKey: "encryptedCustID") as! String, takerSolId: AESCrypt.encrypt(self.allBranchDictionary[self.branchTextfield.text!], password: DataManager.SharedInstance().getKeyForEncryption()).replacingOccurrences(of: "/", with: ":~:"), mobileNo:  AESCrypt.encrypt(mobileNoTextfield.text, password: DataManager.SharedInstance().getKeyForEncryption()).replacingOccurrences(of: "/", with: ":~:"), clientID: JNKeychain.loadValue(forKey: "encryptedClientID") as! String, completionClouser: { (isSuccessful, error, result) in
             
                 self.loaderView.isHidden = true
                 self.loader.stopAnimating()
@@ -209,12 +237,22 @@ class AddLeadViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
     
     @IBAction func doneButtonClicked(_ sender: Any)
     {
-        if customerIDTextfield.text != ""
+        if nonCustomerRadioButton.isSelected == true
+        {
+            mainCustomerView.isHidden = true
+            checkBoxContainerView.isHidden = true
+            return
+        }
+        if customerIDTextfield.text != "" && customerRadioButton.isSelected == true
         {
             if (networkReachability?.isReachable)!
             {
+                mainCustomerView.isHidden = true
+                checkBoxContainerView.isHidden = true
+                
                 self.loaderView.isHidden = false
                 self.loader.startAnimating()
+                
                 DataManager.getCustomerDetails(ein: JNKeychain.loadValue(forKey: "encryptedCustID") as! String,custID: AESCrypt.encrypt(customerIDTextfield.text, password: DataManager.SharedInstance().getKeyForEncryption()).replacingOccurrences(of: "/", with: ":~:"), clientID: JNKeychain.loadValue(forKey: "encryptedClientID") as! String, completionClouser: { (isSuccessful, error, result) in
                     
                     self.loaderView.isHidden = true
@@ -268,6 +306,8 @@ class AddLeadViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
                             if let custID = jsonResult["custId"]
                             {
                                 let custId = AESCrypt.decrypt(custID, password: DataManager.SharedInstance().getKeyForEncryption()) as String
+                                let encryptedCustomerID = AESCrypt.encrypt(custId, password: DataManager.SharedInstance().getKeyForEncryption()).replacingOccurrences(of: "/", with: ":~:")
+                                JNKeychain.saveValue(encryptedCustomerID, forKey: "EncryptedCustomerID")
                                 print(custId)
                             }
                             if let name = jsonResult["custName"]
@@ -313,15 +353,18 @@ class AddLeadViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
             }
             
         }
-        
-        mainCustomerView.isHidden = true
-        checkBoxContainerView.isHidden = true
+        else
+        {
+            self.AlertMessages(title: "Error", message: "Please Enter Valid Customer ID", actionTitle: "OK", alertStyle: .alert, actionStyle: .cancel, handler: nil)
+        }
+    
     }
     override func viewWillAppear(_ animated: Bool)
     {
         self.programmTextView.text = "Select Program"
         mainCustomerView.isHidden = false
         checkBoxContainerView.isHidden = false
+        isCustomer = true
     }
 
     // MARK: Picker Done And Cancel Methods
@@ -341,7 +384,7 @@ class AddLeadViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
     func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
         
         self.productListClicked()
-        return true
+        return false
     }
     
     // MARK: Textfield Methods
@@ -629,52 +672,53 @@ class AddLeadViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
     
     func productListClicked()
     {
-        if (networkReachability?.isReachable)!
-        {
-            self.loaderView.isHidden = false
-            self.loader.startAnimating()
-            
-            DataManager.getProgrammList(custID: JNKeychain.loadValue(forKey: "encryptedCustID") as! String, clientID: JNKeychain.loadValue(forKey: "encryptedClientID") as! String, completionClouser: { (isSuccessful, error, result) in
-                self.loaderView.isHidden = true
-                self.loader.stopAnimating()
-                if isSuccessful
-                {
-                    if let jsonResult = result as? Array<Dictionary<String, String>>
-                    {
-                        for data in jsonResult
-                        {
-                            let prgId = AESCrypt.decrypt(data["prgId"], password: DataManager.SharedInstance().getKeyForEncryption())
-                            let prgName = AESCrypt.decrypt(data["prgName"], password: DataManager.SharedInstance().getKeyForEncryption())
-//                            let clientId = AESCrypt.decrypt(data["clientId"], password: DataManager.SharedInstance().getKeyForEncryption())
-//                            let custId = AESCrypt.decrypt(data["custId"], password: DataManager.SharedInstance().getKeyForEncryption())
-                            self.allProgrammDictionary.updateValue(prgId!, forKey: prgName!)
-                           
-                        }
-                        
-                        let picker = CZPickerView(headerTitle: "Products", cancelButtonTitle: "Cancel", confirmButtonTitle: "Confirm")
-                        picker?.delegate = self
-                        picker?.dataSource = self
-                        picker?.needFooterView = false
-                        picker?.allowMultipleSelection = true
-                        picker?.show()
-                    }
-                }
-                else
-                {
-                    if let errorString = error
-                    {
-                        self.AlertMessages(title: "Error", message: errorString, actionTitle: "OK", alertStyle: .alert, actionStyle: .cancel, handler: nil)
-                    }
-                }
+            if (networkReachability?.isReachable)!
+            {
+                self.loaderView.isHidden = false
+                self.loader.startAnimating()
                 
-            })
+                DataManager.getProgrammList(custID: JNKeychain.loadValue(forKey: "encryptedCustID") as! String, clientID: JNKeychain.loadValue(forKey: "encryptedClientID") as! String, completionClouser: { (isSuccessful, error, result) in
+                    self.loaderView.isHidden = true
+                    self.loader.stopAnimating()
+                    if isSuccessful
+                    {
+                        if let jsonResult = result as? Array<Dictionary<String, String>>
+                        {
+                            print(jsonResult)
+                            for data in jsonResult
+                            {
+                                let prgId = AESCrypt.decrypt(data["prgId"], password: DataManager.SharedInstance().getKeyForEncryption())
+                                let prgName = AESCrypt.decrypt(data["prgName"], password: DataManager.SharedInstance().getKeyForEncryption())
+    //                            let clientId = AESCrypt.decrypt(data["clientId"], password: DataManager.SharedInstance().getKeyForEncryption())
+    //                            let custId = AESCrypt.decrypt(data["custId"], password: DataManager.SharedInstance().getKeyForEncryption())
+                                self.allProgrammDictionary.updateValue(prgId!, forKey: prgName!)
+                               
+                            }
+                            
+                            let picker = CZPickerView(headerTitle: "Products", cancelButtonTitle: "Cancel", confirmButtonTitle: "Confirm")
+                            picker?.delegate = self
+                            picker?.dataSource = self
+                            picker?.needFooterView = false
+                            picker?.allowMultipleSelection = true
+                            picker?.show()
+                        }
+                    }
+                    else
+                    {
+                        if let errorString = error
+                        {
+                            self.AlertMessages(title: "Error", message: errorString, actionTitle: "OK", alertStyle: .alert, actionStyle: .cancel, handler: nil)
+                        }
+                    }
+                    
+                })
+            }
+            else
+            {
+                self.AlertMessages(title: "Internet connection Error", message: "Your Device is not Connect to \"Internet\"", actionTitle: "OK", alertStyle: .alert, actionStyle: .cancel, handler: nil)
+            }
+            
         }
-        else
-        {
-            self.AlertMessages(title: "Internet connection Error", message: "Your Device is not Connect to \"Internet\"", actionTitle: "OK", alertStyle: .alert, actionStyle: .cancel, handler: nil)
-        }
-        
-    }
     
 }
 
@@ -704,15 +748,17 @@ extension AddLeadViewController: CZPickerViewDelegate, CZPickerViewDataSource {
     
     func czpickerView(_ pickerView: CZPickerView!, didConfirmWithItemsAtRows rows: [AnyObject]!) {
         
-        var newString = ""
+        productList.removeAll(keepingCapacity: false)
         for row in rows {
             if let row = row as? Int {
                 
-                newString = newString + Array(self.allProgrammDictionary.keys)[row]
+                //newString = newString + Array(self.allProgrammDictionary.keys)[row] + "~"
+                
+                productList.append(Array(self.allProgrammDictionary.keys)[row])
             }
         }
         
-        self.programmTextView.text = newString
+        self.programmTextView.text = productList.description.replacingOccurrences(of: "\"", with: "").replacingOccurrences(of: "[", with: "").replacingOccurrences(of: "]", with: "")
     }
 }
 

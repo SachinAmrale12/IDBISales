@@ -20,8 +20,8 @@ class ViewController: UIViewController {
     let networkReachability             = Reachability()
     
     var keyForLoginCrendential                  : String!
-    var clientID                                 = "lmst"
-    var loader                     : MaterialLoadingIndicator!
+    var clientID                                = "lmst"
+    var loader                                  : MaterialLoadingIndicator!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -84,7 +84,9 @@ class ViewController: UIViewController {
                                 JNKeychain.saveValue(AESCrypt.encrypt(userID, password: self.keyForLoginCrendential).replacingOccurrences(of: "/", with: ":~:"), forKey: "encryptedCustID")
                                 JNKeychain.saveValue(AESCrypt.encrypt(self.clientID, password: encryptionLey).replacingOccurrences(of: "/", with: ":~:"), forKey: "encryptedClientID")
                                 
-                                DataManager.getAccessToken(custID: AESCrypt.encrypt(userID, password: self.keyForLoginCrendential), clientID: AESCrypt.encrypt(self.clientID, password: encryptionLey), pin: AESCrypt.encrypt("275921", password: encryptionLey), username: AESCrypt.encrypt(self.clientID + "-" + userID, password: encryptionLey), clientSecret: AESCrypt.encrypt("2209@lms", password: encryptionLey), completionClouser: { (isSuccessful, error, result) in
+                                let urseId = String((JNKeychain.loadValue(forKey: "userID") as! String).characters.reversed())
+                        
+                                DataManager.getAccessToken(custID: AESCrypt.encrypt(userID, password: self.keyForLoginCrendential), clientID: AESCrypt.encrypt(self.clientID, password: encryptionLey), pin: AESCrypt.encrypt(urseId, password: encryptionLey), username: AESCrypt.encrypt(self.clientID + "-" + userID, password: encryptionLey), clientSecret: AESCrypt.encrypt("2209@lms", password: encryptionLey), completionClouser: { (isSuccessful, error, result) in
                             
                                     self.loaderView.isHidden = true
                                     self.loader.stopAnimating()
