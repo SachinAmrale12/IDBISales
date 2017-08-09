@@ -122,14 +122,12 @@ class ServerManager: NSObject {
                     }
                     else
                     {
-                        print("Error\(response.result.description)")
-                        completionClouser(response.result.isSuccess,response.error as? String,nil)
+                        completionClouser(response.result.isSuccess,response.error as? String,response.result)
                     }
                 }
                 else
                 {
-                    print(response.result)
-                    completionClouser(response.result.isSuccess,response.error?.localizedDescription,nil)
+                    completionClouser(response.result.isSuccess,response.error?.localizedDescription,response.result)
                 }
         }
         

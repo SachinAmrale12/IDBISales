@@ -13,6 +13,7 @@ import TNCheckBoxGroup
 class AddLeadViewController: UIViewController,UIPickerViewDelegate,UIPickerViewDataSource,UITextFieldDelegate,LUAutocompleteViewDelegate,LUAutocompleteViewDataSource,UITextViewDelegate{
     
     
+    @IBOutlet weak var assigniTextfield                     : UITextView!
     @IBOutlet weak var nonCustomerRadioButton               : DLRadioButton!
     @IBOutlet weak var customerRadioButton                  : DLRadioButton!
     @IBOutlet weak var checkBoxContainerView: UIView!
@@ -56,7 +57,8 @@ class AddLeadViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        
+        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
         self.commonInitialization()
         
         // Do any additional setup after loading the view.
@@ -156,6 +158,7 @@ class AddLeadViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
         }
         else
         {
+            self.view.endEditing(true)
             isCustomer = false
             customerRadioButton.isSelected = false
             nonCustomerRadioButton.isSelected = true
@@ -327,19 +330,21 @@ class AddLeadViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
     
     @IBAction func doneButtonClicked(_ sender: Any)
     {
+        self.view.endEditing(true)
+        
         if nonCustomerRadioButton.isSelected == true
         {
             mainCustomerView.isHidden = true
             checkBoxContainerView.isHidden = true
+            
+            NotificationCenter.default.removeObserver(self)
+            
             return
         }
         if customerIDTextfield.text != "" && customerRadioButton.isSelected == true
         {
             if (networkReachability?.isReachable)!
             {
-                mainCustomerView.isHidden = true
-                checkBoxContainerView.isHidden = true
-                
                 self.loaderView.isHidden = false
                 self.loader.startAnimating()
                 
@@ -348,9 +353,15 @@ class AddLeadViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
                     self.loaderView.isHidden = true
                     self.loader.stopAnimating()
                     
-                    print(result as Any)
                     if isSuccessful
                     {
+                        self.mainCustomerView.isHidden = true
+                        self.checkBoxContainerView.isHidden = true
+                        NotificationCenter.default.removeObserver(self)
+                        
+                        
+                        print(result as! NSDictionary)
+                        
                         if let jsonResult = result as? Dictionary<String, String>
                         {
                             if let clientID = jsonResult["clientId"]
@@ -549,6 +560,24 @@ class AddLeadViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
         return true
     }
     
+    //MARK: Keyboard Dismiss Functions
+    
+    func keyboardWillShow(notification: NSNotification) {
+        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
+            if self.view.frame.origin.y == 0{
+                self.view.frame.origin.y -= keyboardSize.height - 100
+            }
+        }
+    }
+    
+    func keyboardWillHide(notification: NSNotification) {
+        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
+            if self.view.frame.origin.y != 0{
+                self.view.frame.origin.y = 0
+            }
+        }
+    }
+    
     //MARK: Validation Functions
     
     func isValidEmail(testStr:String) -> Bool
@@ -650,6 +679,7 @@ class AddLeadViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
     
     func autocompleteView(_ autocompleteView: LUAutocompleteView, didSelect text: String) {
         
+        self.view.endEditing(true)
         if autocompleteView.textField == self.stateTextfield
         {
             self.cityTextfield.text = ""
@@ -759,6 +789,14 @@ class AddLeadViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
                             {
                                 let emailId = AESCrypt.decrypt(data["emailId"], password: DataManager.SharedInstance().getKeyForEncryption())
                                 self.takerEmailID = emailId
+                                if emailId != nil || emailId != ""
+                                {
+                                    self.assigniTextfield.text = emailId
+                                }
+                                else
+                                {
+                                    self.assigniTextfield.text = "No Record Found"
+                                }
                             }
                         }
                     }
