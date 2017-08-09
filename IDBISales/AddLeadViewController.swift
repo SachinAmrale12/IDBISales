@@ -65,9 +65,11 @@ class AddLeadViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
     func commonInitialization()
     {
        
-        self.firstNameTextfield.text = "amit dhadse"
-        self.mobileNoTextfield.text = "8956128383"
-        self.emailIdTextfield.text = "sachin9083@gmail.com"
+       // self.firstNameTextfield.text = "amit dhadse"
+       // self.mobileNoTextfield.text = "8956128383"
+       // self.emailIdTextfield.text = "sachin9083@gmail.com"
+        
+        self.takerEmailID = ""
         
        // checkBoxView.backgroundColor = UIColor(red: (255.0/255.0), green: (255.0/255.0), blue: (255.0/255.0), alpha: 1.0)
         programmTextView.layer.borderColor = UIColor.orange.cgColor
@@ -166,6 +168,46 @@ class AddLeadViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
     
     @IBAction func addButtonClicked(_ sender: Any)
     {
+        if firstNameTextfield.text == ""
+        {
+            self.AlertMessages(title: "Error", message: "Please Select Name", actionTitle: "OK", alertStyle: .alert, actionStyle: .cancel, handler: nil)
+            return
+        }
+        
+        if mobileNoTextfield.text == ""
+        {
+            self.AlertMessages(title: "Error", message: "Please Select Mobile Number", actionTitle: "OK", alertStyle: .alert, actionStyle: .cancel, handler: nil)
+            return
+        }
+        else
+        {
+            if !self.isValidPhoneNumber(value: mobileNoTextfield.text!)
+            {
+                self.AlertMessages(title: "Error", message: "Please Enter Valid Mobile Number", actionTitle: "OK", alertStyle: .alert, actionStyle: .cancel, handler: nil)
+                return
+            }
+        }
+        
+        if emailIdTextfield.text == ""
+        {
+            self.AlertMessages(title: "Error", message: "Please Select Email Id", actionTitle: "OK", alertStyle: .alert, actionStyle: .cancel, handler: nil)
+            return
+        }
+        else
+        {
+            if !self.isValidEmail(testStr: emailIdTextfield.text!)
+            {
+                self.AlertMessages(title: "Error", message: "Please Enter Valid Email Id", actionTitle: "OK", alertStyle: .alert, actionStyle: .cancel, handler: nil)
+                return
+            }
+        }
+        
+        if programmTextView.text == "" || programmTextView.text == "Select Product"
+        {
+            self.AlertMessages(title: "Error", message: "Please Select Product", actionTitle: "OK", alertStyle: .alert, actionStyle: .cancel, handler: nil)
+            return
+        }
+        
         if (networkReachability?.isReachable)!
         {
             self.loaderView.isHidden = false
@@ -173,6 +215,46 @@ class AddLeadViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
             
             let custID : String!
             let isNewCustomer : String!
+            let stateCode : String!
+            let cityCode : String!
+            let branchCode : String!
+            
+            if stateTextfield.text == ""
+            {
+                stateCode = AESCrypt.encrypt("0", password: DataManager.SharedInstance().getKeyForEncryption()).replacingOccurrences(of: "/", with: ":~:")
+            }
+            else
+            {
+                stateCode = AESCrypt.encrypt(self.allStateDictionary[self.stateTextfield.text!], password: DataManager.SharedInstance().getKeyForEncryption()).replacingOccurrences(of: "/", with: ":~:")
+            }
+            
+            if cityTextfield.text == ""
+            {
+                cityCode = AESCrypt.encrypt("0", password: DataManager.SharedInstance().getKeyForEncryption()).replacingOccurrences(of: "/", with: ":~:")
+            }
+            else
+            {
+                cityCode = AESCrypt.encrypt(self.allCityDictionary[self.cityTextfield.text!], password: DataManager.SharedInstance().getKeyForEncryption()).replacingOccurrences(of: "/", with: ":~:")
+            }
+            
+            if branchTextfield.text == ""
+            {
+                branchCode = AESCrypt.encrypt("0", password: DataManager.SharedInstance().getKeyForEncryption()).replacingOccurrences(of: "/", with: ":~:")
+            }
+            else
+            {
+                branchCode = AESCrypt.encrypt(self.allBranchDictionary[self.branchTextfield.text!], password: DataManager.SharedInstance().getKeyForEncryption()).replacingOccurrences(of: "/", with: ":~:")
+            }
+            
+            if self.takerEmailID == ""
+            {
+                self.takerEmailID = AESCrypt.encrypt("NA", password: DataManager.SharedInstance().getKeyForEncryption()).replacingOccurrences(of: "/", with: ":~:")
+            }
+            else
+            {
+                self.takerEmailID = AESCrypt.encrypt(self.takerEmailID, password: DataManager.SharedInstance().getKeyForEncryption()).replacingOccurrences(of: "/", with: ":~:")
+            }
+            
             if isCustomer == false
             {
                 isNewCustomer = AESCrypt.encrypt("true", password: DataManager.SharedInstance().getKeyForEncryption()).replacingOccurrences(of: "/", with: ":~:")
@@ -192,7 +274,7 @@ class AddLeadViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
             
             let programid = progIdArray.description.replacingOccurrences(of: "\"", with: "").replacingOccurrences(of: "[", with: "").replacingOccurrences(of: "]", with: "").replacingOccurrences(of: ",", with: "~").replacingOccurrences(of: " ", with: "")
             
-            DataManager.createLead(isNewCustomer: isNewCustomer,programId: AESCrypt.encrypt(programid, password: DataManager.SharedInstance().getKeyForEncryption()).replacingOccurrences(of: "/", with: ":~:"), leadCustId: custID, sourceBycode: AESCrypt.encrypt("others", password: DataManager.SharedInstance().getKeyForEncryption()).replacingOccurrences(of: "/", with: ":~:"), custName: AESCrypt.encrypt(self.firstNameTextfield.text, password: DataManager.SharedInstance().getKeyForEncryption()).replacingOccurrences(of: "/", with: ":~:"), cityCode: AESCrypt.encrypt(self.allCityDictionary[self.cityTextfield.text!], password: DataManager.SharedInstance().getKeyForEncryption()).replacingOccurrences(of: "/", with: ":~:"), stateCode: AESCrypt.encrypt(self.allStateDictionary[self.stateTextfield.text!], password: DataManager.SharedInstance().getKeyForEncryption()).replacingOccurrences(of: "/", with: ":~:"), emailID: AESCrypt.encrypt(emailIdTextfield.text, password: DataManager.SharedInstance().getKeyForEncryption()).replacingOccurrences(of: "/", with: ":~:"), empEmailId: AESCrypt.encrypt(JNKeychain.loadValue(forKey: "emailID") as! String, password: DataManager.SharedInstance().getKeyForEncryption()).replacingOccurrences(of: "/", with: ":~:"), takerEmailId: AESCrypt.encrypt(self.takerEmailID, password: DataManager.SharedInstance().getKeyForEncryption()).replacingOccurrences(of: "/", with: ":~:"), custId: JNKeychain.loadValue(forKey: "encryptedCustID") as! String, takerSolId: AESCrypt.encrypt(self.allBranchDictionary[self.branchTextfield.text!], password: DataManager.SharedInstance().getKeyForEncryption()).replacingOccurrences(of: "/", with: ":~:"), mobileNo:  AESCrypt.encrypt(mobileNoTextfield.text, password: DataManager.SharedInstance().getKeyForEncryption()).replacingOccurrences(of: "/", with: ":~:"), clientID: JNKeychain.loadValue(forKey: "encryptedClientID") as! String, completionClouser: { (isSuccessful, error, result) in
+            DataManager.createLead(isNewCustomer: isNewCustomer,programId: AESCrypt.encrypt(programid, password: DataManager.SharedInstance().getKeyForEncryption()).replacingOccurrences(of: "/", with: ":~:"), leadCustId: custID, sourceBycode: AESCrypt.encrypt("others", password: DataManager.SharedInstance().getKeyForEncryption()).replacingOccurrences(of: "/", with: ":~:"), custName: AESCrypt.encrypt(self.firstNameTextfield.text, password: DataManager.SharedInstance().getKeyForEncryption()).replacingOccurrences(of: "/", with: ":~:"), cityCode: cityCode, stateCode: stateCode, emailID: AESCrypt.encrypt(emailIdTextfield.text, password: DataManager.SharedInstance().getKeyForEncryption()).replacingOccurrences(of: "/", with: ":~:"), empEmailId: AESCrypt.encrypt(JNKeychain.loadValue(forKey: "emailID") as! String, password: DataManager.SharedInstance().getKeyForEncryption()).replacingOccurrences(of: "/", with: ":~:"), takerEmailId: self.takerEmailID, custId: JNKeychain.loadValue(forKey: "encryptedCustID") as! String, takerSolId: branchCode, mobileNo:  AESCrypt.encrypt(mobileNoTextfield.text, password: DataManager.SharedInstance().getKeyForEncryption()).replacingOccurrences(of: "/", with: ":~:"), clientID: JNKeychain.loadValue(forKey: "encryptedClientID") as! String, completionClouser: { (isSuccessful, error, result) in
             
                 self.loaderView.isHidden = true
                 self.loader.stopAnimating()
@@ -213,6 +295,12 @@ class AddLeadViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
                                 print(value)
                                 let message = AESCrypt.decrypt(jsonResult["message"], password: DataManager.SharedInstance().getKeyForEncryption()) as String
                                 print(message)
+                                self.AlertMessages(title: "Info", message: message, actionTitle: "OK", alertStyle: .alert, actionStyle: .cancel, handler: nil)
+                            }
+                            else
+                            {
+                                self.AlertMessages(title: "Error", message: error, actionTitle: "OK", alertStyle: .alert, actionStyle: .cancel, handler: nil)
+                                
                             }
                         }
                         
@@ -361,7 +449,7 @@ class AddLeadViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
     }
     override func viewWillAppear(_ animated: Bool)
     {
-        self.programmTextView.text = "Select Program"
+        self.programmTextView.text = "Select Product"
         mainCustomerView.isHidden = false
         checkBoxContainerView.isHidden = false
         isCustomer = true
@@ -456,6 +544,25 @@ class AddLeadViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
         }
         
         return true
+    }
+    
+    //MARK: Validation Functions
+    
+    func isValidEmail(testStr:String) -> Bool
+    {
+        let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}"
+        let emailTest = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
+        return emailTest.evaluate(with: testStr)
+    }
+    
+    func isValidPhoneNumber(value: String) -> (Bool)
+    {
+        let PHONE_REGEX = "^(" + "\\" + "+91[" + "\\" + "-\\" + "s]?)?[0]?(91)?[789]" + "\\d{9}$"
+        let phoneTest = NSPredicate(format: "SELF MATCHES %@", PHONE_REGEX)
+        if phoneTest.evaluate(with: value) {
+            return (true)
+        }
+        return (false)
     }
     
     // MARK: PICKER VIEW Methods
@@ -687,12 +794,14 @@ class AddLeadViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
                             print(jsonResult)
                             for data in jsonResult
                             {
-                                let prgId = AESCrypt.decrypt(data["prgId"], password: DataManager.SharedInstance().getKeyForEncryption())
-                                let prgName = AESCrypt.decrypt(data["prgName"], password: DataManager.SharedInstance().getKeyForEncryption())
-    //                            let clientId = AESCrypt.decrypt(data["clientId"], password: DataManager.SharedInstance().getKeyForEncryption())
-    //                            let custId = AESCrypt.decrypt(data["custId"], password: DataManager.SharedInstance().getKeyForEncryption())
-                                self.allProgrammDictionary.updateValue(prgId!, forKey: prgName!)
-                               
+                                let productType = AESCrypt.decrypt(data["prodType"], password: DataManager.SharedInstance().getKeyForEncryption())
+                                if productType == "Popular Products"
+                                {
+                                    let prgId = AESCrypt.decrypt(data["prgId"], password: DataManager.SharedInstance().getKeyForEncryption())
+                                    let prgName = AESCrypt.decrypt(data["prgName"], password: DataManager.SharedInstance().getKeyForEncryption())
+                                    self.allProgrammDictionary.updateValue(prgId!, forKey: prgName!)
+                                }
+                    
                             }
                             
                             let picker = CZPickerView(headerTitle: "Products", cancelButtonTitle: "Cancel", confirmButtonTitle: "Confirm")

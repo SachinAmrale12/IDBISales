@@ -32,7 +32,7 @@ class ViewController: UIViewController {
         
        keyForLoginCrendential = DataManager.SharedInstance().getGlobalKey()
         
-        userIdTextField.text = "129572"
+        userIdTextField.text = "129574"
         passwordTextField.text = "Pass@12345"
         self.navigationController?.navigationBar.isHidden = true
         self.commonInitialization()
@@ -77,6 +77,9 @@ class ViewController: UIViewController {
                         
                         DataManager.LoginUser(userName: encryptedEINNumber, clientID: encryptedClientID, pin: encryptedPassword, message: deviceIDforPushNotification, completionClouser: { (isSuccessful, error, result) in
                             
+                            self.loaderView.isHidden = true
+                            self.loader.stopAnimating()
+                            
                             if isSuccessful
                             {
                                 if let jsonResult = result as? Dictionary<String, String>
@@ -102,11 +105,12 @@ class ViewController: UIViewController {
                                             JNKeychain.saveValue(AESCrypt.encrypt(userID, password: self.keyForLoginCrendential).replacingOccurrences(of: "/", with: ":~:"), forKey: "encryptedCustID")
                                             JNKeychain.saveValue(AESCrypt.encrypt(self.clientID, password: encryptionLey).replacingOccurrences(of: "/", with: ":~:"), forKey: "encryptedClientID")
                                             
-                                            DataManager.getAccessToken(custID: AESCrypt.encrypt(userID, password: self.keyForLoginCrendential), clientID: AESCrypt.encrypt(self.clientID, password: encryptionLey), pin: AESCrypt.encrypt("275921", password: encryptionLey), username: AESCrypt.encrypt(self.clientID + "-" + userID, password: encryptionLey), clientSecret: AESCrypt.encrypt("2209@lms", password: encryptionLey), completionClouser: { (isSuccessful, error, result) in
+                                            let reverseID = String((JNKeychain.loadValue(forKey: "userID") as! String).characters.reversed())
+                                            print(reverseID)
+                                            DataManager.getAccessToken(custID: AESCrypt.encrypt(userID, password: self.keyForLoginCrendential), clientID: AESCrypt.encrypt(self.clientID, password: encryptionLey), pin: AESCrypt.encrypt(reverseID, password: encryptionLey), username: AESCrypt.encrypt(self.clientID + "-" + (JNKeychain.loadValue(forKey: "userID") as! String), password: encryptionLey), clientSecret: AESCrypt.encrypt("2209@lms", password: encryptionLey), completionClouser: { (isSuccessful, error, result) in
                                                 
                                                 self.loaderView.isHidden = true
                                                 self.loader.stopAnimating()
-                                                
                                                 if isSuccessful
                                                 {
                                                     if let jsonResult = result as? Dictionary<String, String>

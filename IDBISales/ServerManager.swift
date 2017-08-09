@@ -128,6 +128,7 @@ class ServerManager: NSObject {
                 }
                 else
                 {
+                    print(response.result)
                     completionClouser(response.result.isSuccess,response.error?.localizedDescription,nil)
                 }
         }
