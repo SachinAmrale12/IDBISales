@@ -17,7 +17,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var userIdTextField          : RaisePlaceholder!
     @IBOutlet weak var passwordTextField        : RaisePlaceholder!
     @IBOutlet weak var loginButton              : UIButton!
-    let networkReachability             = Reachability()
+    let networkReachability                     = Reachability()
     
     var keyForLoginCrendential                  : String!
     var clientID                                = "lmst"
@@ -66,19 +66,19 @@ class ViewController: UIViewController {
                         self.loaderView.isHidden = false
                         self.loader.startAnimating()
                         
-                        let encryptedEINNumber = AESCrypt.encrypt(userIdTextField.text, password: keyForLoginCrendential).replacingOccurrences(of: "/", with: ":~:")
+                        let encryptedEINNumber = AESCrypt.encrypt(userIdTextField.text, password: keyForLoginCrendential).stringReplace()
                         print(encryptedEINNumber)
-                        let encryptedPassword = AESCrypt.encrypt(passwordTextField.text, password: keyForLoginCrendential).replacingOccurrences(of: "/", with: ":~:")
+                        let encryptedPassword = AESCrypt.encrypt(passwordTextField.text, password: keyForLoginCrendential).stringReplace()
                         print(encryptedPassword)
-                        let encryptedClientID = AESCrypt.encrypt(clientID, password: keyForLoginCrendential).replacingOccurrences(of: "/", with: ":~:")
+                        let encryptedClientID = AESCrypt.encrypt(clientID, password: keyForLoginCrendential).stringReplace()
                         print(encryptedClientID)
-                        let deviceIDforPushNotification = AESCrypt.encrypt("abc", password: keyForLoginCrendential).replacingOccurrences(of: "/", with: ":~:")
+                        let deviceIDforPushNotification = AESCrypt.encrypt("abc", password: keyForLoginCrendential).stringReplace()
                         print(deviceIDforPushNotification)
                         
                         DataManager.LoginUser(userName: encryptedEINNumber, clientID: encryptedClientID, pin: encryptedPassword, message: deviceIDforPushNotification, completionClouser: { (isSuccessful, error, result) in
                             
-                            self.loaderView.isHidden = true
-                            self.loader.stopAnimating()
+                           // self.loaderView.isHidden = true
+                           // self.loader.stopAnimating()
                             
                             if isSuccessful
                             {
@@ -102,12 +102,19 @@ class ViewController: UIViewController {
                                             
                                             let encryptionLey = DataManager.SharedInstance().getKeyForEncryption()
                                             
-                                            JNKeychain.saveValue(AESCrypt.encrypt(userID, password: self.keyForLoginCrendential).replacingOccurrences(of: "/", with: ":~:"), forKey: "encryptedCustID")
-                                            JNKeychain.saveValue(AESCrypt.encrypt(self.clientID, password: encryptionLey).replacingOccurrences(of: "/", with: ":~:"), forKey: "encryptedClientID")
+                                            let encrptedCustid = AESCrypt.encrypt(userID, password: self.keyForLoginCrendential).stringReplace()
+                                            let encryptedClientId = AESCrypt.encrypt(self.clientID, password: encryptionLey).stringReplace()
+                                            
+                                            JNKeychain.saveValue(encrptedCustid, forKey: "encryptedCustID")
+                                            JNKeychain.saveValue(encryptedClientId, forKey: "encryptedClientID")
                                             
                                             let reverseID = String((JNKeychain.loadValue(forKey: "userID") as! String).characters.reversed())
-                                            print(reverseID)
-                                            DataManager.getAccessToken(custID: AESCrypt.encrypt(userID, password: self.keyForLoginCrendential), clientID: AESCrypt.encrypt(self.clientID, password: encryptionLey), pin: AESCrypt.encrypt(reverseID, password: encryptionLey), username: AESCrypt.encrypt(self.clientID + "-" + (JNKeychain.loadValue(forKey: "userID") as! String), password: encryptionLey), clientSecret: AESCrypt.encrypt("2209@lms", password: encryptionLey), completionClouser: { (isSuccessful, error, result) in
+                                            let username = AESCrypt.encrypt("lmst" + "-" + userID, password: encryptionLey).stringReplace()
+                                            
+                                            //self.loaderView.isHidden = false
+                                            //self.loader.startAnimating()
+                                            
+                                            DataManager.getAccessToken(custID: AESCrypt.encrypt(userID, password: self.keyForLoginCrendential).stringReplace(), clientID: AESCrypt.encrypt(self.clientID, password: encryptionLey).stringReplace(), pin: AESCrypt.encrypt(reverseID, password: encryptionLey).stringReplace(), username: username, clientSecret: AESCrypt.encrypt("2209@lms", password: encryptionLey).stringReplace(), completionClouser: { (isSuccessful, error, result) in
                                                 
                                                 self.loaderView.isHidden = true
                                                 self.loader.stopAnimating()
@@ -115,29 +122,34 @@ class ViewController: UIViewController {
                                                 {
                                                     if let jsonResult = result as? Dictionary<String, String>
                                                     {
-                                                        let error = AESCrypt.decrypt(jsonResult["error"], password: encryptionLey) as String
-                                                        if error == "NA"
+                                                        if let error = jsonResult["error"]
                                                         {
-                                                            let accessToken = AESCrypt.decrypt(jsonResult["accessToken"], password: encryptionLey) as String
-                                                            print(accessToken)
-                                                            JNKeychain.saveValue(accessToken, forKey: "accessToken")
+                                                            let error = AESCrypt.decrypt(jsonResult["error"], password: encryptionLey) as String
                                                             
-                                                            let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
-                                                            let contentVC = storyboard.instantiateViewController(withIdentifier: "secondVC")
-                                                            self.navigationController?.pushViewController(contentVC, animated: true)
-                                                            let menuVC = storyboard.instantiateViewController(withIdentifier: "menuVC")
-                                                            let options = MVYSideMenuOptions()
-                                                            options.contentViewScale = 1.0
-                                                            options.contentViewOpacity = 0.05
-                                                            options.shadowOpacity = 0.0
-                                                            let sideMenu1 = MVYSideMenuController(menuViewController: menuVC, contentViewController: contentVC, options: options)
-                                                            sideMenu1?.menuFrame = CGRect(x: 0.0, y: 64.0, width: 228.0, height: self.view.bounds.size.height)
-                                                            self.navigationController?.pushViewController(sideMenu1!, animated: false)
+                                                            if error == "NA"
+                                                            {
+                                                                let accessToken = AESCrypt.decrypt(jsonResult["accessToken"], password: encryptionLey) as String
+                                                                print(accessToken)
+                                                                JNKeychain.saveValue(accessToken, forKey: "accessToken")
+                                                                
+                                                                let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
+                                                                let contentVC = storyboard.instantiateViewController(withIdentifier: "secondVC")
+                                                                self.navigationController?.pushViewController(contentVC, animated: true)
+                                                                let menuVC = storyboard.instantiateViewController(withIdentifier: "menuVC")
+                                                                let options = MVYSideMenuOptions()
+                                                                options.contentViewScale = 1.0
+                                                                options.contentViewOpacity = 0.05
+                                                                options.shadowOpacity = 0.0
+                                                                let sideMenu1 = MVYSideMenuController(menuViewController: menuVC, contentViewController: contentVC, options: options)
+                                                                sideMenu1?.menuFrame = CGRect(x: 0.0, y: 64.0, width: 228.0, height: self.view.bounds.size.height)
+                                                                self.navigationController?.pushViewController(sideMenu1!, animated: false)
+                                                            }
+                                                            else
+                                                            {
+                                                                self.AlertMessages(title: "Error", message: error, actionTitle: "OK", alertStyle: .alert, actionStyle: .cancel, handler: nil)
+                                                            }
                                                         }
-                                                        else
-                                                        {
-                                                            self.AlertMessages(title: "Error", message: error, actionTitle: "OK", alertStyle: .alert, actionStyle: .cancel, handler: nil)
-                                                        }
+                                                        
                                                     }
                                                 }
                                                 else
@@ -163,6 +175,8 @@ class ViewController: UIViewController {
                             {
                                 if let errorString = error
                                 {
+                                     self.loaderView.isHidden = true
+                                     self.loader.stopAnimating()
                                     self.AlertMessages(title: "Error", message: errorString, actionTitle: "OK", alertStyle: .alert, actionStyle: .cancel, handler: nil)
                                 }
                             }

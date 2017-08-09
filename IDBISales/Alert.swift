@@ -18,3 +18,12 @@ extension UIViewController {
         self.present(alert, animated: true, completion: nil)
     }
 }
+
+extension String {
+    
+    func stringReplace() -> String
+    {
+        return self.replacingOccurrences(of: "/", with: ":~:")
+    }
+}
+

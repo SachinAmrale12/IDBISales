@@ -23,6 +23,26 @@ class ServerManager: NSObject {
     }
     
     
+    //http://10.144.118.20:1919/iBus/service/lead/createReport/{"ein":"D2GxY:~:ywCgMTZS604hw==","clientId":"wFLLgAMTRInZuBmeCg==","flg":"l2XwScxx:~:mz3:~:pLkQg=="}?access_token=
+    
+    func getReports(ein: String,clientId: String,flg: String,completionClouser:@escaping (_ isSuccessful: Bool,_ error: String?,_ result: Any?) -> Void)
+    {
+        let urlString = "http://10.144.118.20:1919/iBus/service/lead/createReport/{\"ein\":\"\(ein)\",\"clientId\":\"\(clientId)\",\"flg\":\"\(flg)\"}?access_token=\(JNKeychain.loadValue(forKey: "accessToken")!)"
+        let url = urlString.addingPercentEscapes(using: .ascii)
+        self.webServiceCall(url: url!, completionClouser :completionClouser)
+    }
+    
+    //http://10.144.118.20:1919/iBus/service/lead/viewleads/{"custId":"mScay6eDRV9ZEDfOvyzQ==","clientId":"zL:~:N6QQzWpdZESs6aSbA=="}
+    
+    func viewLead(custId: String,clientId: String,completionClouser:@escaping (_ isSuccessful: Bool,_ error: String?,_ result: Any?) -> Void)
+    {
+        let urlString = "http://10.144.118.20:1919/iBus/service/lead/viewleads/{\"custId\":\"\(custId)\",\"clientId\":\"\(clientId)\"}?access_token=\(JNKeychain.loadValue(forKey: "accessToken")!)"
+        print(urlString)
+        let url = urlString.addingPercentEscapes(using: .ascii)
+        self.webServiceCall(url: url!, completionClouser :completionClouser)
+    }
+    
+    
    //http://10.144.118.20:1919/iBus/service/leadcampaignlist/chmpidname/{"custId":"iDF3kQlXsED x:~:fNQyHpKEA==","clientId":"N06PaZ0IvkdcmiLfH3vmBg=="}?access_token=
     
    // func getCampaign
@@ -41,7 +61,7 @@ class ServerManager: NSObject {
         self.webServiceCall(url: url!, completionClouser :completionClouser)
     }
     
-    //http://10.144.118.20:1919/iBus/service/lead/createlead/{"isNewCustomer":"bfgdc:~:6vqCs0MRT aypwj8w==","prgId":"581xllT8xOfmUdd3:~:jSJ:*:g==","invstAmtEstmtd":"S5XrnXJEMUi9xG bsoyRzkA==","periodNumEstmtd":"S5XrnXJEMUi9xGbsoyRzkA==","periodUnitEstmtd":"HA mG4NBaMiPy:~:Mf2Rljdpw==","remarks":"yvSfDNcbRjYDCHjIEaxq0g==","sourceBycode":" KBePLD:*:yZHJERbjuzxMUUA==","campaignId":"0iQAdBp6nQJZVtSEsZqB6Q==","leadCus tId":"zN980EOX6LI:~:60vXkICkiw==","custName":"6915X0r0sexKdKkzSFOrPEuQmD0d4SbI 0uK4cQ42OvI=","address1":"WNqlzDCBvmsAJAMKD16St4Y3n5T:~:XBDrahi8UNQ3CNXW aVDV5zbS5ScJtDHNHQSb","address2":"TPpIfOGl:~:iF:*:VLz7m3pQIkUxJWIoVoYBKwxzn Q:*:1VA0=","pin":"DrxmlMagFdBOUlBGQu:*:dZw==","citycode":"mZLybM2eyAnzD7Huf:~: yMsw==","stateCode":"xjRix9EnoQYTh8NKKbFyqA==","emailId":"sI08WOZ6hf4X1WBT68l p:*:1kQzKvokLPZGGHhCCqAY1I=","telcell":"J5erLfEtu:~:vSt3sNrvTSyA==","phone1":"78V e77clJ:~:GMVkDqhCv2DA==","phone2":"78Ve77clJ:~:GMVkDqhCv2DA==","custId":"iDF3k QlXsEDx:~:fNQyHpKEA==","mobileNo":"P4AIvSqXGUOawxIqb2WN0g==","appointDt":"E WrWGnObxmc1WQzYsbYAIw==","empEmailId":"KLERYA4Gw8WzWEZ5kTbgvKVeW:*:Js DmF3XJhfwNY5PvU=","takerEmailId":"KLERYA4Gw8WzWEZ5kTbgvKVeW:*:JsDmF3XJhf wNY5PvU=","takerSolId":"EwWQLzTqVAE3R8Kp:*:0QbXw==","centerCode":"gIDFgjsEmZi 7iRlIHGznzg==","clientId":"N06PaZ0IvkdcmiLfH3vmBg=="}?access_token=7994bcf5-f578- 4531-bf1f-5d35805bef03
+    
     
     func createLead(isNewCustomer: String,programId: String,sourceBycode :String,leadCustId: String,custName: String,cityCode: String,stateCode: String,emailID: String,empEmailId :String,takerEmailId :String,custId: String,takerSolId :String,mobileNo :String,clientID: String,completionClouser:@escaping (_ isSuccessful: Bool,_ error: String?,_ result: Any?) -> Void)
     {
@@ -87,6 +107,7 @@ class ServerManager: NSObject {
     func getAccessToken(custID: String,clientID: String,pin :String,username: String,clientSecret: String,completionClouser:@escaping (_ isSuccessful: Bool,_ error: String?,_ result: Any?) -> Void)
     {
         let urlString = "http://10.144.118.20:1919/iBus/user/access/" + "{\"custId\":\"\(custID)\",\"clientId\":\"\(clientID)\", \"pin\":\"\(pin)\",\"username\":\"\(username)\",\"clientSecret\":\"\(clientSecret)\"}"
+        print(urlString)
         let url = urlString.addingPercentEscapes(using: .ascii)
         self.webServiceCall(url: url!, completionClouser :completionClouser)
     }
@@ -96,6 +117,26 @@ class ServerManager: NSObject {
         let urlString = "http://10.144.118.20:1919/iBus/register/ldapLogin/" + "{\"username\":\"\(userName)\",\"pin\":\"\(pin)\",\"clientId\":\"\(clientID)\",\"message\":\"\(message)\"}"
         let url = urlString.addingPercentEscapes(using: .ascii)
         self.webServiceCall(url: url!, completionClouser :completionClouser)
+    }
+    
+    // MARK: Closure Option web service
+    
+    func getLeadClosureReasons(custID: String,clientID: String,completionClouser:@escaping (_ isSuccessful: Bool,_ error: String?,_ result: Any?) -> Void)
+    {
+        let urlString = "http://10.144.118.20:1919/iBus/service/LMSTData/mstidname/" + "{\"custId\":\"\(custID)\",\"clientId\":\"\(clientID)\"}?access_token=\(JNKeychain.loadValue(forKey: "accessToken")!)"
+        
+        let url = urlString.addingPercentEscapes(using: .ascii)
+        self.webServiceCall(url: url!, completionClouser: completionClouser)
+    }
+    
+    func leadClose(custID: String,clientID: String,forceLeadId: String,status: String,remarks:String,completionClouser:@escaping (_ isSuccessful: Bool,_ error: String?,_ result: Any?) -> Void)
+    {
+        ////http://10.144.118.20:1919/iBus/service/lead/closelead/{"custId":"iDF3kQlXsEDx:~:fNQyHpKEA==","clientId":"N06PaZ0IvkdcmiLfH3vmBg==","forceLeadId":"0zyqodw:~:nnsZrhN2a7UuRw==","status":"KzxlvmS8phxDDVZ8Rs8ZQg==","remarks":"Ad26prHVcpIpCodLgiySIg=="}?access_token=
+        
+        
+        let urlString = "http://10.144.118.20:1919/iBus/service/lead/closelead/" + "{\"custId\":\"\(custID)\",\"clientId\":\"\(clientID)\",\"forceLeadId\":\"\(forceLeadId)\",\"status\":\"\(status)\",\"remarks\":\"\(remarks)\"}?access_token=\(JNKeychain.loadValue(forKey: "accessToken")!)"
+        let url = urlString.addingPercentEscapes(using: .ascii)
+        self.webServiceCall(url: url!, completionClouser: completionClouser)
     }
     
     func webServiceCall(url :String,completionClouser :@escaping (_ isSuccessful: Bool,_ error: String?,_ result: Any?) -> Void)
@@ -128,7 +169,6 @@ class ServerManager: NSObject {
                 }
                 else
                 {
-                    print(response.result)
                     completionClouser(response.result.isSuccess,response.error?.localizedDescription,nil)
                 }
         }

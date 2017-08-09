@@ -25,13 +25,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "IDBISales/ServerManager.swift"
-            timestampString = "523893619.777793"
+            filePath = "IDBISales/ReportsViewController.swift"
+            timestampString = "523987425.899042"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "131"
-            endingLineNumber = "131"
-            landmarkName = "webServiceCall(url:completionClouser:)"
+            startingLineNumber = "85"
+            endingLineNumber = "85"
+            landmarkName = "callReportsService(flag:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -41,46 +41,46 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "IDBISales/AddLeadViewController.swift"
-            timestampString = "523898215.203585"
+            filePath = "IDBISales/SecondViewController.swift"
+            timestampString = "523994466.65776"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "757"
-            endingLineNumber = "757"
-            landmarkName = "autocompleteView(_:didSelect:)"
+            startingLineNumber = "70"
+            endingLineNumber = "70"
+            landmarkName = "viewLeadButtonClicked(_:)"
             landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "IDBISales/AddLeadViewController.swift"
-            timestampString = "523898215.203585"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "751"
-            endingLineNumber = "751"
-            landmarkName = "autocompleteView(_:didSelect:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "IDBISales/AddLeadViewController.swift"
-            timestampString = "523898215.203585"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "213"
-            endingLineNumber = "213"
-            landmarkName = "addButtonClicked(_:)"
-            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "IDBISales.SecondViewController.(viewLeadButtonClicked (Any) -&gt; ()).(closure #1)"
+                  moduleName = "IDBISales"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/sachinamrale/Documents/IDBI%20New%20Projects/IDBISales/IDBISales/SecondViewController.swift"
+                  timestampString = "523995864.97244"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "70"
+                  endingLineNumber = "70"
+                  offsetFromSymbolStart = "125">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "IDBISales.SecondViewController.(viewLeadButtonClicked (Any) -&gt; ()).(closure #1)"
+                  moduleName = "IDBISales"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/sachinamrale/Documents/IDBI%20New%20Projects/IDBISales/IDBISales/SecondViewController.swift"
+                  timestampString = "523995864.975294"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "70"
+                  endingLineNumber = "70"
+                  offsetFromSymbolStart = "474">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

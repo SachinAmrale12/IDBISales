@@ -8,13 +8,17 @@
 
 import UIKit
 import Charts
+import ReachabilitySwift
 
 class ReportsViewController: UIViewController {
 
+    let networkReachability         = Reachability()
+    var encryptedFlag               : String!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.updateChartData()
+       // self.updateChartData()
         // Do any additional setup after loading the view.
     }
     
@@ -60,6 +64,64 @@ class ReportsViewController: UIViewController {
         chart.transparentCircleColor = UIColor.clear
         self.view.addSubview(chart)
         
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        
+        self.encryptedFlag = AESCrypt.encrypt("G", password: DataManager.SharedInstance().getKeyForEncryption()).stringReplace()
+        self.callReportsService(flag: encryptedFlag)
+    }
+    
+    func callReportsService(flag: String)
+    {
+        if (networkReachability?.isReachable)!
+        {
+            DataManager.getReports(ein: JNKeychain.loadValue(forKey: "encryptedCustID") as! String, clientId: JNKeychain.loadValue(forKey: "encryptedClientID") as! String, flg: flag, completionClouser: { (isSuccessful, error, result) in
+                
+                if isSuccessful
+                {
+                    if let element = result as? NSDictionary
+                    {
+                        if let error = element["error"]
+                        {
+                            let error = AESCrypt.decrypt(error as! String, password: DataManager.SharedInstance().getKeyForEncryption()) as String
+                            print(error)
+                            if error == "NA"
+                            {
+                                if let value = element["value"]
+                                {
+                                    let value = AESCrypt.decrypt(value as! String, password: DataManager.SharedInstance().getKeyForEncryption()) as String
+                                    print(value)
+                                }
+                                if let message = element["message"]
+                                {
+                                    let message = AESCrypt.decrypt(message as! String, password: DataManager.SharedInstance().getKeyForEncryption()) as String
+                                    print(message)
+                                }
+                            }
+                            else
+                            {
+                                self.AlertMessages(title: "Error", message: error, actionTitle: "OK", alertStyle: .alert, actionStyle: .cancel, handler: nil)
+                                return
+                            }
+                            
+                        }
+                    }
+                }
+                else
+                {
+                    if let errorString = error
+                    {
+                        self.AlertMessages(title: "Error", message: errorString, actionTitle: "OK", alertStyle: .alert, actionStyle: .cancel, handler: nil)
+                    }
+                }
+                
+            })
+        }
+        else
+        {
+            self.AlertMessages(title: "Internet connection Error", message: "Your Device is not Connect to \"Internet\"", actionTitle: "OK", alertStyle: .alert, actionStyle: .cancel, handler: nil)
+        }
     }
 
     override func didReceiveMemoryWarning() {

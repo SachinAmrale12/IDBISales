@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import ReachabilitySwift
 
 class SecondViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {
 
@@ -14,7 +15,10 @@ class SecondViewController: UIViewController,UITableViewDelegate,UITableViewData
     var productName                 = [String]()
     var assignTo                    = [String]()
     var productNameLabel            : UILabel!
-    var assignToLabel            : UILabel!
+    var assignToLabel               : UILabel!
+    let networkReachability         = Reachability()
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -48,11 +52,62 @@ class SecondViewController: UIViewController,UITableViewDelegate,UITableViewData
     }
     
     //
+    
     @IBAction func addLeadButtonClicked(_ sender: Any)
     {
         self.navigationController?.pushViewController(UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "addLeadVCIndentifier"), animated: true)
     }
     
+    
+    @IBAction func viewLeadButtonClicked(_ sender: Any)
+    {
+        if (networkReachability?.isReachable)!
+        {
+            DataManager.viewLead(custId: JNKeychain.loadValue(forKey: "encryptedCustID") as! String, clientId: JNKeychain.loadValue(forKey: "encryptedClientID") as! String, completionClouser: { (isSuccessful, error, result) in
+                
+                if isSuccessful
+                {
+                    if let element = result as? NSDictionary
+                    {
+                        print(element)
+                        if let error = element["error"]
+                        {
+                            let error = AESCrypt.decrypt(element["error"] as! String, password: DataManager.SharedInstance().getKeyForEncryption()) as String
+                            
+                            if error == "NA"
+                            {
+                                if let myList = element["myList"]
+                                {
+                                    let listArray = myList as? Array<Any>
+                                    for value in listArray!
+                                    {
+                                        let lead = AESCrypt.decrypt(value as! String, password: DataManager.SharedInstance().getKeyForEncryption()) as String
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                self.AlertMessages(title: "Error", message: error, actionTitle: "OK", alertStyle: .alert, actionStyle: .cancel, handler: nil)
+                            }
+                        }
+                        
+                    }
+                }
+                else
+                {
+                    if let errorString = error
+                    {
+                        self.AlertMessages(title: "Error", message: errorString, actionTitle: "OK", alertStyle: .alert, actionStyle: .cancel, handler: nil)
+                    }
+                }
+            })
+        }
+        else
+        {
+            self.AlertMessages(title: "Internet connection Error", message: "Your Device is not Connect to \"Internet\"", actionTitle: "OK", alertStyle: .alert, actionStyle: .cancel, handler: nil)
+        }
+        
+    }
     
     
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int

@@ -12,7 +12,7 @@ import TNCheckBoxGroup
 
 class AddLeadViewController: UIViewController,UIPickerViewDelegate,UIPickerViewDataSource,UITextFieldDelegate,LUAutocompleteViewDelegate,LUAutocompleteViewDataSource,UITextViewDelegate{
     
-    
+    @IBOutlet weak var lastNameTextfield                    : RaisePlaceholder!
     @IBOutlet weak var nonCustomerRadioButton               : DLRadioButton!
     @IBOutlet weak var customerRadioButton                  : DLRadioButton!
     @IBOutlet weak var checkBoxContainerView: UIView!
@@ -26,6 +26,7 @@ class AddLeadViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
     @IBOutlet weak var stateTextfield                       : UITextField!
     @IBOutlet weak var cityTextfield                        : UITextField!
     @IBOutlet weak var branchTextfield                      : UITextField!
+    @IBOutlet weak var assignTextView                       : UITextView!
     @IBOutlet weak var firstNameTextfield                   : RaisePlaceholder!
     @IBOutlet weak var mobileNoTextfield                    : RaisePlaceholder!
     @IBOutlet weak var emailIdTextfield                     : RaisePlaceholder!
@@ -56,10 +57,16 @@ class AddLeadViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        
+        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
         self.commonInitialization()
         
         // Do any additional setup after loading the view.
+    }
+    
+    @IBAction func backButtonClicked(_ sender: Any)
+    {
+        
     }
     
     func commonInitialization()
@@ -70,6 +77,9 @@ class AddLeadViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
        // self.emailIdTextfield.text = "sachin9083@gmail.com"
         
         self.takerEmailID = ""
+        
+        assignTextView.layer.borderColor = UIColor.orange.cgColor
+        assignTextView.layer.borderWidth = 1
         
        // checkBoxView.backgroundColor = UIColor(red: (255.0/255.0), green: (255.0/255.0), blue: (255.0/255.0), alpha: 1.0)
         programmTextView.layer.borderColor = UIColor.orange.cgColor
@@ -122,6 +132,10 @@ class AddLeadViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
         emailIdTextfield.subjectColor = UIColor.orange
         emailIdTextfield.underLineColor = UIColor.orange
         
+        lastNameTextfield.animationDuration = 0.5
+        lastNameTextfield.subjectColor = UIColor.orange
+        lastNameTextfield.underLineColor = UIColor.orange
+        
         stateTextfield.drawUnderLineForTextField()
         cityTextfield.drawUnderLineForTextField()
         branchTextfield.drawUnderLineForTextField()
@@ -156,6 +170,7 @@ class AddLeadViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
         }
         else
         {
+            self.view.endEditing(true)
             isCustomer = false
             customerRadioButton.isSelected = false
             nonCustomerRadioButton.isSelected = true
@@ -221,48 +236,48 @@ class AddLeadViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
             
             if stateTextfield.text == ""
             {
-                stateCode = AESCrypt.encrypt("0", password: DataManager.SharedInstance().getKeyForEncryption()).replacingOccurrences(of: "/", with: ":~:")
+                stateCode = AESCrypt.encrypt("0", password: DataManager.SharedInstance().getKeyForEncryption()).stringReplace()
             }
             else
             {
-                stateCode = AESCrypt.encrypt(self.allStateDictionary[self.stateTextfield.text!], password: DataManager.SharedInstance().getKeyForEncryption()).replacingOccurrences(of: "/", with: ":~:")
+                stateCode = AESCrypt.encrypt(self.allStateDictionary[self.stateTextfield.text!], password: DataManager.SharedInstance().getKeyForEncryption()).stringReplace()
             }
             
             if cityTextfield.text == ""
             {
-                cityCode = AESCrypt.encrypt("0", password: DataManager.SharedInstance().getKeyForEncryption()).replacingOccurrences(of: "/", with: ":~:")
+                cityCode = AESCrypt.encrypt("0", password: DataManager.SharedInstance().getKeyForEncryption()).stringReplace()
             }
             else
             {
-                cityCode = AESCrypt.encrypt(self.allCityDictionary[self.cityTextfield.text!], password: DataManager.SharedInstance().getKeyForEncryption()).replacingOccurrences(of: "/", with: ":~:")
+                cityCode = AESCrypt.encrypt(self.allCityDictionary[self.cityTextfield.text!], password: DataManager.SharedInstance().getKeyForEncryption()).stringReplace()
             }
             
             if branchTextfield.text == ""
             {
-                branchCode = AESCrypt.encrypt("0", password: DataManager.SharedInstance().getKeyForEncryption()).replacingOccurrences(of: "/", with: ":~:")
+                branchCode = AESCrypt.encrypt("0", password: DataManager.SharedInstance().getKeyForEncryption()).stringReplace()
             }
             else
             {
-                branchCode = AESCrypt.encrypt(self.allBranchDictionary[self.branchTextfield.text!], password: DataManager.SharedInstance().getKeyForEncryption()).replacingOccurrences(of: "/", with: ":~:")
+                branchCode = AESCrypt.encrypt(self.allBranchDictionary[self.branchTextfield.text!], password: DataManager.SharedInstance().getKeyForEncryption()).stringReplace()
             }
             
             if self.takerEmailID == ""
             {
-                self.takerEmailID = AESCrypt.encrypt("NA", password: DataManager.SharedInstance().getKeyForEncryption()).replacingOccurrences(of: "/", with: ":~:")
+                self.takerEmailID = AESCrypt.encrypt("NA", password: DataManager.SharedInstance().getKeyForEncryption()).stringReplace()
             }
             else
             {
-                self.takerEmailID = AESCrypt.encrypt(self.takerEmailID, password: DataManager.SharedInstance().getKeyForEncryption()).replacingOccurrences(of: "/", with: ":~:")
+                self.takerEmailID = AESCrypt.encrypt(self.takerEmailID, password: DataManager.SharedInstance().getKeyForEncryption()).stringReplace()
             }
             
             if isCustomer == false
             {
-                isNewCustomer = AESCrypt.encrypt("true", password: DataManager.SharedInstance().getKeyForEncryption()).replacingOccurrences(of: "/", with: ":~:")
-                custID = AESCrypt.encrypt("NA", password: DataManager.SharedInstance().getKeyForEncryption()).replacingOccurrences(of: "/", with: ":~:")
+                isNewCustomer = AESCrypt.encrypt("true", password: DataManager.SharedInstance().getKeyForEncryption()).stringReplace()
+                custID = AESCrypt.encrypt("NA", password: DataManager.SharedInstance().getKeyForEncryption()).stringReplace()
             }
             else
             {
-                isNewCustomer = AESCrypt.encrypt("false", password: DataManager.SharedInstance().getKeyForEncryption()).replacingOccurrences(of: "/", with: ":~:")
+                isNewCustomer = AESCrypt.encrypt("false", password: DataManager.SharedInstance().getKeyForEncryption()).stringReplace()
                 custID = JNKeychain.loadValue(forKey: "EncryptedCustomerID") as! String
             }
             
@@ -274,36 +289,49 @@ class AddLeadViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
             
          //   let programid = progIdArray.description.replacingOccurrences(of: "\"", with: "").replacingOccurrences(of: "[", with: "").replacingOccurrences(of: "]", with: "").replacingOccurrences(of: ",", with: "~").replacingOccurrences(of: " ", with: "")
             
-            let programid = AESCrypt.encrypt(self.programmTextView.text, password: DataManager.SharedInstance().getKeyForEncryption()).replacingOccurrences(of: "/", with: ":~:")
+            let programid = AESCrypt.encrypt(self.allProgrammDictionary[self.programmTextView.text]!, password: DataManager.SharedInstance().getKeyForEncryption()).stringReplace()
             
-            DataManager.createLead(isNewCustomer: isNewCustomer,programId: programid, leadCustId: custID, sourceBycode: AESCrypt.encrypt("others", password: DataManager.SharedInstance().getKeyForEncryption()).replacingOccurrences(of: "/", with: ":~:"), custName: AESCrypt.encrypt(self.firstNameTextfield.text, password: DataManager.SharedInstance().getKeyForEncryption()).replacingOccurrences(of: "/", with: ":~:"), cityCode: cityCode, stateCode: stateCode, emailID: AESCrypt.encrypt(emailIdTextfield.text, password: DataManager.SharedInstance().getKeyForEncryption()).replacingOccurrences(of: "/", with: ":~:"), empEmailId: AESCrypt.encrypt(JNKeychain.loadValue(forKey: "emailID") as! String, password: DataManager.SharedInstance().getKeyForEncryption()).replacingOccurrences(of: "/", with: ":~:"), takerEmailId: self.takerEmailID, custId: JNKeychain.loadValue(forKey: "encryptedCustID") as! String, takerSolId: branchCode, mobileNo:  AESCrypt.encrypt(mobileNoTextfield.text, password: DataManager.SharedInstance().getKeyForEncryption()).replacingOccurrences(of: "/", with: ":~:"), clientID: JNKeychain.loadValue(forKey: "encryptedClientID") as! String, completionClouser: { (isSuccessful, error, result) in
+            DataManager.createLead(isNewCustomer: isNewCustomer,programId: programid, leadCustId: custID, sourceBycode: AESCrypt.encrypt("others", password: DataManager.SharedInstance().getKeyForEncryption()).stringReplace(), custName: AESCrypt.encrypt(self.firstNameTextfield.text, password: DataManager.SharedInstance().getKeyForEncryption()).stringReplace(), cityCode: cityCode, stateCode: stateCode, emailID: AESCrypt.encrypt(emailIdTextfield.text, password: DataManager.SharedInstance().getKeyForEncryption()).stringReplace(), empEmailId: AESCrypt.encrypt(JNKeychain.loadValue(forKey: "emailID") as! String, password: DataManager.SharedInstance().getKeyForEncryption()).stringReplace(), takerEmailId: self.takerEmailID, custId: JNKeychain.loadValue(forKey: "encryptedCustID") as! String, takerSolId: branchCode, mobileNo:  AESCrypt.encrypt(mobileNoTextfield.text, password: DataManager.SharedInstance().getKeyForEncryption()).stringReplace(), clientID: JNKeychain.loadValue(forKey: "encryptedClientID") as! String, completionClouser: { (isSuccessful, error, result) in
             
                 self.loaderView.isHidden = true
                 self.loader.stopAnimating()
                 print(result as Any)
                 if isSuccessful
                 {
-                    if let jsonResult = result as? Dictionary<String, String>
+                    if let jsonResult = result as? NSDictionary
                     {
-                        print(jsonResult)
                         if let test3 = jsonResult["error"]
                         {
-                            let error = AESCrypt.decrypt(test3, password: DataManager.SharedInstance().getKeyForEncryption()) as String
-                            print(error)
-                            
-                            if error == "NA"
+                            if !(test3 is NSNull)
                             {
-                                let value = AESCrypt.decrypt(jsonResult["value"], password: DataManager.SharedInstance().getKeyForEncryption()) as String
-                                print(value)
-                                let message = AESCrypt.decrypt(jsonResult["message"], password: DataManager.SharedInstance().getKeyForEncryption()) as String
-                                print(message)
-                                self.AlertMessages(title: "Info", message: message, actionTitle: "OK", alertStyle: .alert, actionStyle: .cancel, handler: nil)
+                                let error = AESCrypt.decrypt(test3 as! String, password: DataManager.SharedInstance().getKeyForEncryption()) as String
+                                
+                                if error == "NA"
+                                {
+                                    if let value = jsonResult["value"]
+                                    {
+                                        let value = AESCrypt.decrypt(value as! String, password: DataManager.SharedInstance().getKeyForEncryption()) as String
+                                        print(value)
+                                    }
+                                    if let message = jsonResult["message"]
+                                    {
+                                        let message = AESCrypt.decrypt(message as! String, password: DataManager.SharedInstance().getKeyForEncryption()) as String
+                                        
+                                        self.AlertMessages(title: "Info", message: message, actionTitle: "OK", alertStyle: .alert, actionStyle: .cancel, handler: nil)
+                                    }
+                                    
+                                }
+                                else
+                                {
+                                    self.AlertMessages(title: "Error", message: "Lead Not Added", actionTitle: "OK", alertStyle: .alert, actionStyle: .cancel, handler: nil)
+                                    
+                                }
                             }
                             else
                             {
-                                self.AlertMessages(title: "Error", message: error, actionTitle: "OK", alertStyle: .alert, actionStyle: .cancel, handler: nil)
-                                
+                                self.AlertMessages(title: "Error", message: "Lead Not Added", actionTitle: "OK", alertStyle: .alert, actionStyle: .cancel, handler: nil)
                             }
+                           
                         }
                         
                     }
@@ -327,105 +355,163 @@ class AddLeadViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
     
     @IBAction func doneButtonClicked(_ sender: Any)
     {
+        self.view.endEditing(true)
+        
         if nonCustomerRadioButton.isSelected == true
         {
             mainCustomerView.isHidden = true
             checkBoxContainerView.isHidden = true
+            
+            NotificationCenter.default.removeObserver(self)
+            
             return
         }
         if customerIDTextfield.text != "" && customerRadioButton.isSelected == true
         {
             if (networkReachability?.isReachable)!
             {
-                mainCustomerView.isHidden = true
-                checkBoxContainerView.isHidden = true
-                
                 self.loaderView.isHidden = false
                 self.loader.startAnimating()
                 
-                DataManager.getCustomerDetails(ein: JNKeychain.loadValue(forKey: "encryptedCustID") as! String,custID: AESCrypt.encrypt(customerIDTextfield.text, password: DataManager.SharedInstance().getKeyForEncryption()).replacingOccurrences(of: "/", with: ":~:"), clientID: JNKeychain.loadValue(forKey: "encryptedClientID") as! String, completionClouser: { (isSuccessful, error, result) in
+                DataManager.getCustomerDetails(ein: JNKeychain.loadValue(forKey: "encryptedCustID") as! String,custID: AESCrypt.encrypt(customerIDTextfield.text, password: DataManager.SharedInstance().getKeyForEncryption()).stringReplace(), clientID: JNKeychain.loadValue(forKey: "encryptedClientID") as! String, completionClouser: { (isSuccessful, error, result) in
                     
                     self.loaderView.isHidden = true
                     self.loader.stopAnimating()
                     
-                    print(result as Any)
                     if isSuccessful
                     {
-                        if let jsonResult = result as? Dictionary<String, String>
+                       
+                        if let element = result as? NSDictionary
                         {
-                            if let clientID = jsonResult["clientId"]
+                            if let error = element["error"]
                             {
-                                let clientId = AESCrypt.decrypt(clientID, password: DataManager.SharedInstance().getKeyForEncryption())
-                                print(clientId!)
-                            }
-                            if let add1 = jsonResult["custComuAddr1"]
-                            {
-                                let custComuAddr1 = AESCrypt.decrypt(add1, password: DataManager.SharedInstance().getKeyForEncryption()) as String
-                                print(custComuAddr1)
-                            }
-                            if let add2 = jsonResult["custComuAddr2"]
-                            {
-                                let custComuAddr2 = AESCrypt.decrypt(add2, password: DataManager.SharedInstance().getKeyForEncryption()) as String
-                                print(custComuAddr2)
-                            }
-                            if let city = jsonResult["custComuCityCode"]
-                            {
-                                let custComuCityCode = AESCrypt.decrypt(city, password: DataManager.SharedInstance().getKeyForEncryption()) as String
-                                print(custComuCityCode)
-                            }
-                            if let phone1 = jsonResult["custComuPhone1"]
-                            {
-                                let custComuPhone1 = AESCrypt.decrypt(phone1, password: DataManager.SharedInstance().getKeyForEncryption()) as String
-                                print(custComuPhone1)
-                            }
-                            if let phone2 = jsonResult["custComuPhone2"]
-                            {
-                                let custComuPhone2 = AESCrypt.decrypt(phone2, password: DataManager.SharedInstance().getKeyForEncryption()) as String
-                                print(custComuPhone2)
-                            }
-                            if let pinCode = jsonResult["custComuPinCode"]
-                            {
-                                let custComuPinCode = AESCrypt.decrypt(pinCode, password: DataManager.SharedInstance().getKeyForEncryption()) as String
-                                print(custComuPinCode)
-                            }
-                            if let stateCode = jsonResult["custComuStateCode"]
-                            {
-                                let custComuStateCode = AESCrypt.decrypt(stateCode, password: DataManager.SharedInstance().getKeyForEncryption()) as String
-                                print(custComuStateCode)
-                            }
-                            if let custID = jsonResult["custId"]
-                            {
-                                let custId = AESCrypt.decrypt(custID, password: DataManager.SharedInstance().getKeyForEncryption()) as String
-                                let encryptedCustomerID = AESCrypt.encrypt(custId, password: DataManager.SharedInstance().getKeyForEncryption()).replacingOccurrences(of: "/", with: ":~:")
-                                JNKeychain.saveValue(encryptedCustomerID, forKey: "EncryptedCustomerID")
-                                print(custId)
-                            }
-                            if let name = jsonResult["custName"]
-                            {
-                                let custName = AESCrypt.decrypt(name, password: DataManager.SharedInstance().getKeyForEncryption()) as String
-                                self.firstNameTextfield.text = custName
-                                print(custName)
-                            }
-                            if let email = jsonResult["emailId"]
-                            {
-                                let emailId = AESCrypt.decrypt(email, password: DataManager.SharedInstance().getKeyForEncryption()) as String
-                                self.emailIdTextfield.text = emailId
-                                print(emailId)
-                            }
-                            if let error = jsonResult["error"]
-                            {
-                                let error = AESCrypt.decrypt(error, password: DataManager.SharedInstance().getKeyForEncryption()) as String
-                                print(error)
-                            }
-                            if let mobile = jsonResult["mobileNo"]
-                            {
-                                let mobileNo = AESCrypt.decrypt(mobile, password: DataManager.SharedInstance().getKeyForEncryption()) as String
-                                self.mobileNoTextfield.text = mobileNo
-                                print(mobileNo)
+                                if !(error is NSNull)
+                                {
+                                    let error = AESCrypt.decrypt(error as! String, password: DataManager.SharedInstance().getKeyForEncryption()) as String
+                                    print(error)
+                                }
+                                else
+                                {
+                                    self.customerIDTextfield.text = ""
+                                    self.AlertMessages(title: "Alert", message: "Invalid Customer ID", actionTitle: "OK", alertStyle: .alert, actionStyle: .cancel, handler: nil)
+                                    return
+                                }
                             }
                             
+                            self.mainCustomerView.isHidden = true
+                            self.checkBoxContainerView.isHidden = true
+                            NotificationCenter.default.removeObserver(self)
                             
+                           // let jsonResult = element as! Dictionary<String, Any>
+                            if let clientID = element["clientId"]
+                            {
+                                if !(clientID is NSNull)
+                                {
+                                    let clientId = AESCrypt.decrypt(clientID as! String, password: DataManager.SharedInstance().getKeyForEncryption())
+                                    print(clientId!)
+                                }
+                            }
+                            if let add1 = element["custComuAddr1"]
+                            {
+                                if !(add1 is NSNull)
+                                {
+                                    let custComuAddr1 = AESCrypt.decrypt(add1 as! String, password: DataManager.SharedInstance().getKeyForEncryption()) as String
+                                    print(custComuAddr1)
+                                }
+                            }
+                            if let add2 = element["custComuAddr2"]
+                            {
+                                if !(add2 is NSNull)
+                                {
+                                    let custComuAddr2 = AESCrypt.decrypt(add2 as! String, password: DataManager.SharedInstance().getKeyForEncryption()) as String
+                                    print(custComuAddr2)
+                                }
+                            }
+                            if let city = element["custComuCityCode"]
+                            {
+                                if !(city is NSNull)
+                                {
+                                    let custComuCityCode = AESCrypt.decrypt(city as! String, password: DataManager.SharedInstance().getKeyForEncryption()) as String
+                                    print(custComuCityCode)
+                                }
+                            }
+                            if let phone1 = element["custComuPhone1"]
+                            {
+                                if !(phone1 is NSNull)
+                                {
+                                    let custComuPhone1 = AESCrypt.decrypt(phone1 as! String, password: DataManager.SharedInstance().getKeyForEncryption()) as String
+                                    print(custComuPhone1)
+                                }
+                            }
+                            if let phone2 = element["custComuPhone2"]
+                            {
+                                if !(phone2 is NSNull)
+                                {
+                                    let custComuPhone2 = AESCrypt.decrypt(phone2 as! String, password: DataManager.SharedInstance().getKeyForEncryption()) as String
+                                    print(custComuPhone2)
+                                }
+                            }
+                            if let pinCode = element["custComuPinCode"]
+                            {
+                                if !(pinCode is NSNull)
+                                {
+                                    let custComuPinCode = AESCrypt.decrypt(pinCode as! String, password: DataManager.SharedInstance().getKeyForEncryption()) as String
+                                    print(custComuPinCode)
+                                }
+                            }
+                            if let stateCode = element["custComuStateCode"]
+                            {
+                                if !(stateCode is NSNull)
+                                {
+                                    let custComuStateCode = AESCrypt.decrypt(stateCode as! String, password: DataManager.SharedInstance().getKeyForEncryption()) as String
+                                    print(custComuStateCode)
+                                }
+                            }
+                            if let custID = element["custId"]
+                            {
+                                if !(custID is NSNull)
+                                {
+                                    let custId = AESCrypt.decrypt(custID as! String, password: DataManager.SharedInstance().getKeyForEncryption()) as String
+                                    let encryptedCustomerID = AESCrypt.encrypt(custId, password: DataManager.SharedInstance().getKeyForEncryption()).replacingOccurrences(of: "/", with: ":~:")
+                                    JNKeychain.saveValue(encryptedCustomerID, forKey: "EncryptedCustomerID")
+                                    print(custId)
+                                }
+                            }
+                            if let name = element["custName"]
+                            {
+                                if !(name is NSNull)
+                                {
+                                    let custName = AESCrypt.decrypt(name as! String, password: DataManager.SharedInstance().getKeyForEncryption()) as String
+                                    self.firstNameTextfield.text = custName
+                                    print(custName)
+                                }
+                            }
+                            if let email = element["emailId"]
+                            {
+                                if !(email is NSNull)
+                                {
+                                    let emailId = AESCrypt.decrypt(email as! String, password: DataManager.SharedInstance().getKeyForEncryption()) as String
+                                    self.emailIdTextfield.text = emailId
+                                    print(emailId)
+                                }
+                            }
+                            if let mobile = element["mobileNo"]
+                            {
+                                if !(mobile is NSNull)
+                                {
+                                    let mobileNo = AESCrypt.decrypt(mobile as! String, password: DataManager.SharedInstance().getKeyForEncryption()) as String
+                                    self.mobileNoTextfield.text = mobileNo
+                                    print(mobileNo)
+                                }
+                            }
+
                         }
+                        
+                        
+//                        if let jsonResult = result as? Dictionary<String, String>
+//                        {
+//                            
+//                        }
                        
                     }
                     else
@@ -477,6 +563,25 @@ class AddLeadViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
         self.productListClicked()
         return false
     }
+    
+    //MARK: Keyboard Dismiss Functions
+    
+    func keyboardWillShow(notification: NSNotification) {
+        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
+            if self.view.frame.origin.y == 0{
+                self.view.frame.origin.y -= keyboardSize.height - 100
+            }
+        }
+    }
+    
+    func keyboardWillHide(notification: NSNotification) {
+        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
+            if self.view.frame.origin.y != 0{
+                self.view.frame.origin.y = 0
+            }
+        }
+    }
+    
     
     // MARK: Textfield Methods
     
@@ -650,6 +755,7 @@ class AddLeadViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
     
     func autocompleteView(_ autocompleteView: LUAutocompleteView, didSelect text: String) {
         
+        self.view.endEditing(true)
         if autocompleteView.textField == self.stateTextfield
         {
             self.cityTextfield.text = ""
@@ -753,14 +859,40 @@ class AddLeadViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
                     self.loader.stopAnimating()
                     if isSuccessful
                     {
-                        if let jsonResult = result as? Array<Dictionary<String, String>>
+                        var emailArray = [String]()
+                        for element in result as! Array<AnyObject>
                         {
-                            for data in jsonResult
-                            {
-                                let emailId = AESCrypt.decrypt(data["emailId"], password: DataManager.SharedInstance().getKeyForEncryption())
-                                self.takerEmailID = emailId
-                            }
+                            let data = element as! Dictionary<String, Any>
+                            let emailId = AESCrypt.decrypt(data["emailId"] as! String, password: DataManager.SharedInstance().getKeyForEncryption())
+                            emailArray.append(emailId!)
                         }
+                        
+                        if emailArray.count > 0
+                        {
+                            self.assignTextView.text = emailArray[0]
+                            self.takerEmailID = self.assignTextView.text
+                        }
+                        else
+                        {
+                            self.assignTextView.text = "No Record Found."
+                        }
+                        
+//                        if let jsonResult = result as? Array<Dictionary<String, String>>
+//                        {
+//                            for data in jsonResult
+//                            {
+//                                let emailId = AESCrypt.decrypt(data["emailId"], password: DataManager.SharedInstance().getKeyForEncryption())
+//                                self.takerEmailID = emailId
+//                                if emailId != nil || emailId != ""
+//                                {
+//                                    self.assignTextView.text = emailId
+//                                }
+//                                else
+//                                {
+//                                    self.assignTextView.text = "No Record Found." 
+//                                }
+//                            }
+//                        }
                     }
                     else
                     {

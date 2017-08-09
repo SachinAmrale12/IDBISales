@@ -32,6 +32,36 @@ class DataManager: NSObject {
     }
     
     
+    class func getReports(ein: String,clientId: String,flg: String,completionClouser:@escaping (_ isSuccessful: Bool,_ error: String?,_ result: Any?) -> Void)
+    {
+        ServerManager.SharedInstance().getReports(ein: ein, clientId: clientId, flg: flg) { (isSuccessful, error, result) in
+            
+            if isSuccessful
+            {
+                completionClouser(isSuccessful,nil,result)
+            }
+            else
+            {
+                completionClouser(isSuccessful,error,nil)
+            }
+        }
+    }
+    
+    class func viewLead(custId: String,clientId: String,completionClouser:@escaping (_ isSuccessful: Bool,_ error: String?,_ result: Any?) -> Void)
+    {
+        ServerManager.SharedInstance().viewLead(custId: custId, clientId: clientId) { (isSuccessful, error, result) in
+            
+            if isSuccessful
+            {
+                completionClouser(isSuccessful,nil,result)
+            }
+            else
+            {
+                completionClouser(isSuccessful,error,nil)
+            }
+        }
+    }
+    
     class func createLead(isNewCustomer: String,programId: String,leadCustId: String,sourceBycode :String,custName: String,cityCode: String,stateCode: String,emailID: String,empEmailId :String,takerEmailId :String,custId: String,takerSolId :String,mobileNo :String,clientID: String,completionClouser:@escaping (_ isSuccessful: Bool,_ error: String?,_ result: Any?) -> Void)
     {
         ServerManager.SharedInstance().createLead(isNewCustomer: isNewCustomer,programId: programId,sourceBycode: sourceBycode, leadCustId: leadCustId, custName: custName, cityCode: cityCode, stateCode: stateCode, emailID: emailID, empEmailId: empEmailId, takerEmailId: takerEmailId, custId: custId, takerSolId: takerSolId, mobileNo: mobileNo, clientID: clientID) { (isSuccessful, error, result) in
@@ -166,6 +196,38 @@ class DataManager: NSObject {
                 completionClouser(isSucessful,error,nil)
             }
         }
+    }
+    
+    class func getLeadClosureReasons(custID: String,clientID: String,completionClouser:@escaping (_ isSuccessful: Bool,_ error: String?,_ result: Any?) -> Void)
+    {
+        ServerManager.SharedInstance().getLeadClosureReasons(custID: custID, clientID: clientID) { (isSucessful, error, result) in
+            
+            if isSucessful
+            {
+                completionClouser(isSucessful,nil,result)
+            }
+            else
+            {
+                completionClouser(isSucessful,error,nil)
+            }
+        }
+    }
+    
+    class func leadClose(custID: String,clientID: String,forceLeadId: String,status: String,remarks: String,completionClouser:@escaping (_ isSuccessful: Bool,_ error: String?,_ result: Any?) -> Void)
+    {
+        ServerManager.SharedInstance().leadClose(custID: custID, clientID: clientID, forceLeadId: forceLeadId, status: status, remarks: remarks) {
+            (isSucessful, error, result) in
+            
+            if isSucessful
+            {
+                completionClouser(isSucessful,nil,result)
+            }
+            else
+            {
+                completionClouser(isSucessful,error,nil)
+            }
+        }
+        
     }
 
 }
