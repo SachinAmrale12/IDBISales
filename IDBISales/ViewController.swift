@@ -114,6 +114,7 @@ class ViewController: UIViewController {
                                                 {
                                                     if let jsonResult = result as? Dictionary<String, String>
                                                     {
+                                                        print(jsonResult["error"]!)
                                                         let error = AESCrypt.decrypt(jsonResult["error"], password: encryptionLey) as String
                                                         if error == "NA"
                                                         {
