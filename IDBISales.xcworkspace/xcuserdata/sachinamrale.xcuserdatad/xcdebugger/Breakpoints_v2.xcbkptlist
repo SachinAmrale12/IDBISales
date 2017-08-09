@@ -25,6 +25,7 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
+<<<<<<< HEAD
             filePath = "IDBISales/ReportsViewController.swift"
             timestampString = "523987425.899042"
             startingColumnNumber = "9223372036854775807"
@@ -48,6 +49,15 @@
             startingLineNumber = "70"
             endingLineNumber = "70"
             landmarkName = "viewLeadButtonClicked(_:)"
+=======
+            filePath = "IDBISales/ViewController.swift"
+            timestampString = "523962475.211035"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "117"
+            endingLineNumber = "117"
+            landmarkName = "loginClicked(_:)"
+>>>>>>> 40bbb1b6c9ca2d24023f7c5b8490319b697ce120
             landmarkType = "7">
             <Locations>
                <Location

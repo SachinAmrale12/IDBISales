@@ -163,7 +163,6 @@ class ServerManager: NSObject {
                     }
                     else
                     {
-                        print("Error\(response.result.description)")
                         completionClouser(response.result.isSuccess,response.error as? String,nil)
                     }
                 }

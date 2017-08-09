@@ -13,10 +13,11 @@ import ReachabilitySwift
 
 class ViewController: UIViewController {
 
-    @IBOutlet weak var loaderView: UIView!
+    @IBOutlet weak var loaderView               : UIView!
     @IBOutlet weak var userIdTextField          : RaisePlaceholder!
     @IBOutlet weak var passwordTextField        : RaisePlaceholder!
     @IBOutlet weak var loginButton              : UIButton!
+    
     let networkReachability                     = Reachability()
     
     var keyForLoginCrendential                  : String!
@@ -122,7 +123,9 @@ class ViewController: UIViewController {
                                                 {
                                                     if let jsonResult = result as? Dictionary<String, String>
                                                     {
-                                                        if let error = jsonResult["error"]
+                                                        print(jsonResult["error"]!)
+                                                        let error = AESCrypt.decrypt(jsonResult["error"], password: encryptionLey) as String
+                                                        if error == "NA"
                                                         {
                                                             let error = AESCrypt.decrypt(jsonResult["error"], password: encryptionLey) as String
                                                             

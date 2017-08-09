@@ -13,6 +13,7 @@ import TNCheckBoxGroup
 class AddLeadViewController: UIViewController,UIPickerViewDelegate,UIPickerViewDataSource,UITextFieldDelegate,LUAutocompleteViewDelegate,LUAutocompleteViewDataSource,UITextViewDelegate{
     
     @IBOutlet weak var lastNameTextfield                    : RaisePlaceholder!
+    @IBOutlet weak var assigniTextfield                     : UITextView!
     @IBOutlet weak var nonCustomerRadioButton               : DLRadioButton!
     @IBOutlet weak var customerRadioButton                  : DLRadioButton!
     @IBOutlet weak var checkBoxContainerView: UIView!
