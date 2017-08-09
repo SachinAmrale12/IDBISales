@@ -65,7 +65,7 @@ class DataManager: NSObject {
     class func getCustomerDetails(ein: String,custID: String,clientID: String,completionClouser:@escaping (_ isSuccessful: Bool,_ error: String?,_ result: Any?) -> Void)
     {
         ServerManager.SharedInstance().getCustomerDetails(ein: ein,custID: custID, clientID: clientID) { (isSuccessful, error, result) in
-            
+            print(result)
             if isSuccessful
             {
                 completionClouser(isSuccessful,nil,result)

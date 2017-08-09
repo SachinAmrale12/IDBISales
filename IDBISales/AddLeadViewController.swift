@@ -48,7 +48,7 @@ class AddLeadViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
     private let autocompleteViewForCity                     = LUAutocompleteView()
     private let autocompleteViewForBranch                   = LUAutocompleteView()
     var isCustomer                                          : Bool!
-   var productList                                          = [String]()
+  // var productList                                          = [String]()
     
     
     var takerEmailID                                        : String!
@@ -266,15 +266,17 @@ class AddLeadViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
                 custID = JNKeychain.loadValue(forKey: "EncryptedCustomerID") as! String
             }
             
-            var progIdArray = [String]()
-            for string in productList
-            {
-                progIdArray.append(self.allProgrammDictionary[string]!)
-            }
+           // var progIdArray = [String]()
+          //  for string in productList
+          //  {
+          //      progIdArray.append(self.allProgrammDictionary[string]!)
+          //  }
             
-            let programid = progIdArray.description.replacingOccurrences(of: "\"", with: "").replacingOccurrences(of: "[", with: "").replacingOccurrences(of: "]", with: "").replacingOccurrences(of: ",", with: "~").replacingOccurrences(of: " ", with: "")
+         //   let programid = progIdArray.description.replacingOccurrences(of: "\"", with: "").replacingOccurrences(of: "[", with: "").replacingOccurrences(of: "]", with: "").replacingOccurrences(of: ",", with: "~").replacingOccurrences(of: " ", with: "")
             
-            DataManager.createLead(isNewCustomer: isNewCustomer,programId: AESCrypt.encrypt(programid, password: DataManager.SharedInstance().getKeyForEncryption()).replacingOccurrences(of: "/", with: ":~:"), leadCustId: custID, sourceBycode: AESCrypt.encrypt("others", password: DataManager.SharedInstance().getKeyForEncryption()).replacingOccurrences(of: "/", with: ":~:"), custName: AESCrypt.encrypt(self.firstNameTextfield.text, password: DataManager.SharedInstance().getKeyForEncryption()).replacingOccurrences(of: "/", with: ":~:"), cityCode: cityCode, stateCode: stateCode, emailID: AESCrypt.encrypt(emailIdTextfield.text, password: DataManager.SharedInstance().getKeyForEncryption()).replacingOccurrences(of: "/", with: ":~:"), empEmailId: AESCrypt.encrypt(JNKeychain.loadValue(forKey: "emailID") as! String, password: DataManager.SharedInstance().getKeyForEncryption()).replacingOccurrences(of: "/", with: ":~:"), takerEmailId: self.takerEmailID, custId: JNKeychain.loadValue(forKey: "encryptedCustID") as! String, takerSolId: branchCode, mobileNo:  AESCrypt.encrypt(mobileNoTextfield.text, password: DataManager.SharedInstance().getKeyForEncryption()).replacingOccurrences(of: "/", with: ":~:"), clientID: JNKeychain.loadValue(forKey: "encryptedClientID") as! String, completionClouser: { (isSuccessful, error, result) in
+            let programid = AESCrypt.encrypt(self.programmTextView.text, password: DataManager.SharedInstance().getKeyForEncryption()).replacingOccurrences(of: "/", with: ":~:")
+            
+            DataManager.createLead(isNewCustomer: isNewCustomer,programId: programid, leadCustId: custID, sourceBycode: AESCrypt.encrypt("others", password: DataManager.SharedInstance().getKeyForEncryption()).replacingOccurrences(of: "/", with: ":~:"), custName: AESCrypt.encrypt(self.firstNameTextfield.text, password: DataManager.SharedInstance().getKeyForEncryption()).replacingOccurrences(of: "/", with: ":~:"), cityCode: cityCode, stateCode: stateCode, emailID: AESCrypt.encrypt(emailIdTextfield.text, password: DataManager.SharedInstance().getKeyForEncryption()).replacingOccurrences(of: "/", with: ":~:"), empEmailId: AESCrypt.encrypt(JNKeychain.loadValue(forKey: "emailID") as! String, password: DataManager.SharedInstance().getKeyForEncryption()).replacingOccurrences(of: "/", with: ":~:"), takerEmailId: self.takerEmailID, custId: JNKeychain.loadValue(forKey: "encryptedCustID") as! String, takerSolId: branchCode, mobileNo:  AESCrypt.encrypt(mobileNoTextfield.text, password: DataManager.SharedInstance().getKeyForEncryption()).replacingOccurrences(of: "/", with: ":~:"), clientID: JNKeychain.loadValue(forKey: "encryptedClientID") as! String, completionClouser: { (isSuccessful, error, result) in
             
                 self.loaderView.isHidden = true
                 self.loader.stopAnimating()
@@ -424,6 +426,7 @@ class AddLeadViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
                             
                             
                         }
+                       
                     }
                     else
                     {
@@ -808,7 +811,7 @@ class AddLeadViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
                             picker?.delegate = self
                             picker?.dataSource = self
                             picker?.needFooterView = false
-                            picker?.allowMultipleSelection = true
+                            picker?.allowMultipleSelection = false
                             picker?.show()
                         }
                     }
@@ -849,6 +852,10 @@ extension AddLeadViewController: CZPickerViewDelegate, CZPickerViewDataSource {
     
     func czpickerView(_ pickerView: CZPickerView!, didConfirmWithItemAtRow row: Int){
         self.navigationController?.setNavigationBarHidden(true, animated: true)
+        
+       // self.programmTextView.text = productList.[IndexPath].row.replacingOccurrences(of: "\"", with: "").replacingOccurrences(of: "[", with: "").replacingOccurrences(of: "]", with: "")
+        self.programmTextView.text = (Array(self.allProgrammDictionary.keys)[row])
+       
     }
     
     func czpickerViewDidClickCancelButton(_ pickerView: CZPickerView!) {
@@ -857,17 +864,16 @@ extension AddLeadViewController: CZPickerViewDelegate, CZPickerViewDataSource {
     
     func czpickerView(_ pickerView: CZPickerView!, didConfirmWithItemsAtRows rows: [AnyObject]!) {
         
-        productList.removeAll(keepingCapacity: false)
-        for row in rows {
-            if let row = row as? Int {
-                
-                //newString = newString + Array(self.allProgrammDictionary.keys)[row] + "~"
-                
-                productList.append(Array(self.allProgrammDictionary.keys)[row])
-            }
-        }
+       // productList.removeAll(keepingCapacity: false)
+//        for row in rows {
+//            if let row = row as? Int {
+//                
+//                //newString = newString + Array(self.allProgrammDictionary.keys)[row] + "~"
+//               // productList.append(Array(self.allProgrammDictionary.keys)[row])
+//            }
+//        }
         
-        self.programmTextView.text = productList.description.replacingOccurrences(of: "\"", with: "").replacingOccurrences(of: "[", with: "").replacingOccurrences(of: "]", with: "")
+       // self.programmTextView.text = productList.description.replacingOccurrences(of: "\"", with: "").replacingOccurrences(of: "[", with: "").replacingOccurrences(of: "]", with: "")
     }
 }
 
