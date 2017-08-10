@@ -14,23 +14,32 @@ class LeadDetails: UIViewController {
     let networkReachability             = Reachability()
     var closureReasonDictionary         = [String:String]()
     
-    @IBOutlet var leadName: UILabel!
+    @IBOutlet var leadName              : UILabel!
+    @IBOutlet var productName           : UILabel!
+    @IBOutlet var mobileNumber          : UILabel!
+    @IBOutlet var email                 : UILabel!
+    @IBOutlet var giverEmailID          : UILabel!
+    @IBOutlet var giverName             : UILabel!
     
-    @IBOutlet var productName: UILabel!
+    var name                            : String!
+    var product                         : String!
+    var mobile                            : String!
+    var mail                            : String!
+    var givermail                       : String!
+    var givername                       : String!
     
-    
-    @IBOutlet var mobileNumber: UILabel!
-    
-    
-    @IBOutlet var email: UILabel!
-    
-    @IBOutlet var giverEmailID: UILabel!
-    @IBOutlet var giverName: UILabel!
     override func viewDidLoad()
     {
         super.viewDidLoad()
-        
+        self.commonInitialization()
         // Do any additional setup after loading the view.
+    }
+    
+    func commonInitialization()
+    {
+        self.leadName.text = name
+        self.productName.text = product
+        self.mobileNumber.text = mobile
     }
     
     override func didReceiveMemoryWarning() {
