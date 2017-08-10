@@ -40,7 +40,7 @@ class AddLeadViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
     var allCityDictionary                                   = [String:String]()
     var allBranchDictionary                                 = [String:String]()
     var allProgrammDictionary                               = [String:String]()
-    
+    var emailArray                                          = [String]()
     var preferredTimeArray                                  = ["10AM-12PM","12PM-2PM","2PM-4PM","4PM-6PM"]
     var ageArray                                            = ["0-17","18-24","25-34","35-44","45-60","60+"]
     var Products                                            = [String]()
@@ -50,6 +50,7 @@ class AddLeadViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
     private let autocompleteViewForCity                     = LUAutocompleteView()
     private let autocompleteViewForBranch                   = LUAutocompleteView()
     var isCustomer                                          : Bool!
+    var picker                                             = CZPickerView()
   // var productList                                          = [String]()
     
     
@@ -540,6 +541,7 @@ class AddLeadViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
     override func viewWillAppear(_ animated: Bool)
     {
         self.programmTextView.text = "Select Product"
+        self.assignTextView.text = "Select Email ID"
         mainCustomerView.isHidden = false
         checkBoxContainerView.isHidden = false
         isCustomer = true
@@ -860,18 +862,29 @@ class AddLeadViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
                     self.loader.stopAnimating()
                     if isSuccessful
                     {
-                        var emailArray = [String]()
+                        
                         for element in result as! Array<AnyObject>
                         {
                             let data = element as! Dictionary<String, Any>
                             let emailId = AESCrypt.decrypt(data["emailId"] as! String, password: DataManager.SharedInstance().getKeyForEncryption())
-                            emailArray.append(emailId!)
+                            self.emailArray.append(emailId!)
                         }
                         
-                        if emailArray.count > 0
+                        if self.emailArray.count > 0
                         {
-                            self.assignTextView.text = emailArray[0]
-                            self.takerEmailID = self.assignTextView.text
+//                            self.assignTextView.text = self.emailArray[0]
+//                            self.takerEmailID = self.assignTextView.text
+                            
+                            self.picker = CZPickerView(headerTitle: "Products", cancelButtonTitle: "Cancel", confirmButtonTitle: "Confirm")
+                            self.picker.tag = 2
+                            self.picker.delegate = self
+                            self.picker.dataSource = self
+                            self.picker.needFooterView = false
+                            self.picker.allowMultipleSelection = false
+                            self.picker.show()
+
+                            
+                            
                         }
                         else
                         {
@@ -940,12 +953,13 @@ class AddLeadViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
                     
                             }
                             
-                            let picker = CZPickerView(headerTitle: "Products", cancelButtonTitle: "Cancel", confirmButtonTitle: "Confirm")
-                            picker?.delegate = self
-                            picker?.dataSource = self
-                            picker?.needFooterView = false
-                            picker?.allowMultipleSelection = false
-                            picker?.show()
+                            self.picker = CZPickerView(headerTitle: "Products", cancelButtonTitle: "Cancel", confirmButtonTitle: "Confirm")
+                            self.picker.tag = 1
+                            self.picker.delegate = self
+                            self.picker.dataSource = self
+                            self.picker.needFooterView = false
+                            self.picker.allowMultipleSelection = false
+                            self.picker.show()
                         }
                     }
                     else
@@ -976,18 +990,47 @@ extension AddLeadViewController: CZPickerViewDelegate, CZPickerViewDataSource {
     }
     
     func numberOfRows(in pickerView: CZPickerView!) -> Int {
-        return Array(self.allProgrammDictionary.keys).count
+        var count = 0
+        
+        if pickerView.tag == 1
+        {
+            count = Array(self.allProgrammDictionary.keys).count
+        }
+        else
+        {
+            count = self.emailArray.count
+        }
+        return count
     }
     
     func czpickerView(_ pickerView: CZPickerView!, titleForRow row: Int) -> String! {
-        return Array(self.allProgrammDictionary.keys)[row]
+        if pickerView.tag == 1
+        {
+            return Array(self.allProgrammDictionary.keys)[row]
+
+        }
+        else
+        {
+            return Array(self.emailArray)[row]
+        }
     }
     
     func czpickerView(_ pickerView: CZPickerView!, didConfirmWithItemAtRow row: Int){
         self.navigationController?.setNavigationBarHidden(true, animated: true)
         
        // self.programmTextView.text = productList.[IndexPath].row.replacingOccurrences(of: "\"", with: "").replacingOccurrences(of: "[", with: "").replacingOccurrences(of: "]", with: "")
-        self.programmTextView.text = (Array(self.allProgrammDictionary.keys)[row])
+        
+        if pickerView.tag == 1
+        {
+            self.programmTextView.text = (Array(self.allProgrammDictionary.keys)[row])
+        }
+        else
+        {
+                self.assignTextView.text = self.emailArray[row]
+                self.takerEmailID = self.assignTextView.text
+        }
+        
+        print(self.takerEmailID)
        
     }
     
