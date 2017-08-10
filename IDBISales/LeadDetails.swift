@@ -9,7 +9,7 @@
 import UIKit
 import ReachabilitySwift
 
-class LeadDetails: UIViewController {
+class LeadDetails: UIViewController,UITextFieldDelegate,UITextViewDelegate {
     
     let networkReachability             = Reachability()
     var closureReasonDictionary         = [String:String]()
@@ -27,6 +27,13 @@ class LeadDetails: UIViewController {
     var mail                            : String!
     var givermail                       : String!
     var givername                       : String!
+
+    @IBOutlet var scheduleParentContainerView: UIView!
+    @IBOutlet var scheduleChildView: UIView!
+    
+    @IBOutlet var dateTimeTextField: UITextField!
+    @IBOutlet var remarkTextView: UITextView!
+
     
     override func viewDidLoad()
     {
@@ -35,11 +42,16 @@ class LeadDetails: UIViewController {
         // Do any additional setup after loading the view.
     }
     
+    // MARK: commonInitialization
+    
     func commonInitialization()
     {
         self.leadName.text = name
         self.productName.text = product
         self.mobileNumber.text = mobile
+        remarkTextView.layer.borderWidth = 1
+        remarkTextView.layer.cornerRadius = 4
+        remarkTextView.layer.borderColor = UIColor.orange.cgColor
     }
     
     override func didReceiveMemoryWarning() {
@@ -99,9 +111,25 @@ class LeadDetails: UIViewController {
     
     @IBAction func resheduleMeeting(_ sender: Any)
     {
-        
+        self.scheduleParentContainerView.isHidden = false
+        self.scheduleChildView.isHidden = false
+
     }
     
+    @IBAction func scheduleAppointment(_ sender: Any)
+    {
+        self.scheduleParentContainerView.isHidden = true
+        self.scheduleChildView.isHidden = true
+    }
+    @IBAction func assignClicked(_ sender: Any)
+    {
+    }
+    
+    @IBAction func hideAppointmentView(_ sender: Any)
+    {
+        scheduleChildView.isHidden = true
+        scheduleParentContainerView.isHidden = true
+    }
     func closeLead()
     {
         DataManager.leadClose(custID: JNKeychain.loadValue(forKey: "encryptedCustID") as! String, clientID: JNKeychain.loadValue(forKey: "encryptedClientID") as! String, forceLeadId: "", status: "", remarks: "", completionClouser: { (isSuccessful, error, result) in
@@ -124,16 +152,44 @@ class LeadDetails: UIViewController {
         })
     }
     
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destinationViewController.
-     // Pass the selected object to the new view controller.
-     }
-     */
+   // MARK: textfield delegate methods
     
+    public func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool
+    {
+        self.showPicker()
+        return false
+    }
+    // MARK: textview delegate methods
+    
+    
+    public func textViewShouldBeginEditing(_ textView: UITextView) -> Bool
+    {
+        remarkTextView.text = ""
+        return true
+    }
+    
+    // MARK: picker method
+    
+    func showPicker()
+    {
+        let min = Date()
+        let max = Date().addingTimeInterval(60 * 60 * 24 * 30)
+        let picker = DateTimePicker.show(minimumDate: min, maximumDate: max)
+        picker.highlightColor = UIColor(red: 255.0/255.0, green: 138.0/255.0, blue: 138.0/255.0, alpha: 1)
+        picker.darkColor = UIColor.darkGray
+        picker.doneButtonTitle = "DONE"
+        picker.todayButtonTitle = "Today"
+        picker.is12HourFormat = true
+        picker.dateFormat = "hh:mm aa dd/MM/YYYY"
+        //        picker.isDatePickerOnly = true
+        picker.completionHandler = { date in
+            let formatter = DateFormatter()
+            formatter.dateFormat = "hh:mm aa dd/MM/YYYY"
+            self.dateTimeTextField.text = formatter.string(from: date)
+        }
+
+    }
+
 }
 
 
