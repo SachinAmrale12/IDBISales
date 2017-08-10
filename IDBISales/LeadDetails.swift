@@ -236,6 +236,33 @@ class LeadDetails: UIViewController,UITextFieldDelegate,UITextViewDelegate {
     }
     @IBAction func assignClicked(_ sender: Any)
     {
+        
+        self.navigationController?.pushViewController(UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "assignLeadIdentifier"), animated: true)
+        //assignLeadIdentifier
+        
+        
+        
+//        //{"error":"gxheYfNVBV4NCDBnMyDg==","message":"Pkxg3kPSKHcnnHSKesZzQ==","value":"IpvWnZCKCYtRd9f6B64opN4WWYvZTY07VFZeTpWO8aBVVht21R2P0+ybeUVvAD"}
+//        
+//        
+//        if (networkReachability?.isReachable)!
+//        {
+//            
+//            DataManager.assignLead(tranLeadId: <#T##String#>, giverEmail: <#T##String#>, giverRemarks: <#T##String#>, takerEmail: <#T##String#>, takerSol: <#T##String#>, custId: <#T##String#>, clientId: <#T##String#>, completionClouser: <#T##(Bool, String?, Any?) -> Void#>)
+////            DataManager.getCities(custID: JNKeychain.loadValue(forKey: "encryptedCustID") as! String, clientID: JNKeychain.loadValue(forKey: "encryptedClientID") as! String, message: AESCrypt.encrypt(self.allStateDictionary[text]!, password: DataManager.SharedInstance().getKeyForEncryption()).replacingOccurrences(of: "/", with: ":~:"), completionClouser: { (isSuccessful, error, result) in
+////                self.loaderView.isHidden = true
+////                self.loader.stopAnimating()
+////                if isSuccessful
+////                {
+////                }
+//        }
+//        else
+//        {
+//            self.AlertMessages(title: "Internet connection Error", message: "Your Device is not Connect to \"Internet\"", actionTitle: "OK", alertStyle: .alert, actionStyle: .cancel, handler: nil)
+//        }
+//        
+        
+        
     }
     
     @IBAction func hideAppointmentView(_ sender: Any)

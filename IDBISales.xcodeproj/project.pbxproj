@@ -48,6 +48,7 @@
 		9C243EE81F2B17B400AE8499 /* IDBISalesUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C243EE71F2B17B400AE8499 /* IDBISalesUITests.swift */; };
 		9CFD1B4F1F39AC500061A642 /* LeadDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CFD1B4E1F39AC500061A642 /* LeadDetails.swift */; };
 		9CFD1B511F3AEB920061A642 /* 640x1136-bg.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 9CFD1B501F3AEB920061A642 /* 640x1136-bg.jpg */; };
+		9CFD1B531F3C6D3B0061A642 /* AssignLeadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CFD1B521F3C6D3B0061A642 /* AssignLeadViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -132,6 +133,7 @@
 		9C243EE91F2B17B400AE8499 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9CFD1B4E1F39AC500061A642 /* LeadDetails.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LeadDetails.swift; sourceTree = "<group>"; };
 		9CFD1B501F3AEB920061A642 /* 640x1136-bg.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "640x1136-bg.jpg"; sourceTree = "<group>"; };
+		9CFD1B521F3C6D3B0061A642 /* AssignLeadViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssignLeadViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -350,6 +352,7 @@
 				9C243EC91F2B17B400AE8499 /* ViewController.swift */,
 				5CCAB6CC1F2C4D6500E24BEB /* SecondViewController.swift */,
 				9CFD1B4E1F39AC500061A642 /* LeadDetails.swift */,
+				9CFD1B521F3C6D3B0061A642 /* AssignLeadViewController.swift */,
 				5CCAB6D31F2C66AD00E24BEB /* MenuViewController.swift */,
 				5CF1CB601F30562D006CEBA7 /* AddLeadViewController.swift */,
 				5C7835AC1F358A7200C45685 /* ReportsViewController.swift */,
@@ -612,6 +615,7 @@
 				5CC89EEF1F33058500AA0336 /* NSData+Base64.m in Sources */,
 				9C243EC81F2B17B400AE8499 /* AppDelegate.swift in Sources */,
 				5C9F218C1F3478DF00DB5274 /* DateTimePicker.swift in Sources */,
+				9CFD1B531F3C6D3B0061A642 /* AssignLeadViewController.swift in Sources */,
 				5CC89EE11F33049F00AA0336 /* ServerManager.swift in Sources */,
 				5CBBEF4B1F31E2AE0032B57B /* CZPickerView.m in Sources */,
 			);
