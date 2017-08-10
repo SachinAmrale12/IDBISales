@@ -395,6 +395,14 @@
                                     <constraint firstItem="pw9-kZ-oir" firstAttribute="top" secondItem="IYV-O6-Njj" secondAttribute="bottom" constant="8" id="xeq-wB-T4G"/>
                                 </constraints>
                             </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DAD-Q3-jrB">
+                                <rect key="frame" x="140" y="220" width="40" height="40"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="KDn-lv-RTL"/>
+                                    <constraint firstAttribute="width" constant="40" id="fD9-6S-hZ6"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -407,6 +415,7 @@
                             <constraint firstItem="1rN-aR-2RG" firstAttribute="leading" secondItem="V3C-Mi-ycS" secondAttribute="leading" id="73h-O4-Oez"/>
                             <constraint firstItem="ikt-u0-zwc" firstAttribute="width" secondItem="57w-FU-k2I" secondAttribute="width" id="8TP-5H-tfb"/>
                             <constraint firstAttribute="trailing" secondItem="LSO-di-rZG" secondAttribute="trailing" constant="15" id="CdN-aa-COZ"/>
+                            <constraint firstItem="DAD-Q3-jrB" firstAttribute="centerX" secondItem="V3C-Mi-ycS" secondAttribute="centerX" id="DkH-Bb-fFn"/>
                             <constraint firstItem="hWZ-bv-6lM" firstAttribute="top" secondItem="QCc-Yl-eGb" secondAttribute="bottom" id="Dxl-St-VNS"/>
                             <constraint firstAttribute="trailing" secondItem="HTS-07-VML" secondAttribute="trailing" constant="15" id="G2g-nk-dv7"/>
                             <constraint firstAttribute="trailing" secondItem="QCc-Yl-eGb" secondAttribute="trailing" id="GeS-JA-Scw"/>
@@ -421,6 +430,7 @@
                             <constraint firstItem="QCc-Yl-eGb" firstAttribute="leading" secondItem="V3C-Mi-ycS" secondAttribute="leading" id="QaX-5P-wwG"/>
                             <constraint firstItem="hWZ-bv-6lM" firstAttribute="top" secondItem="57w-FU-k2I" secondAttribute="bottom" constant="70" id="Qvy-kV-YXN"/>
                             <constraint firstItem="ikt-u0-zwc" firstAttribute="top" secondItem="nmS-a3-JfB" secondAttribute="bottom" constant="9" id="UTx-lX-y2c"/>
+                            <constraint firstItem="DAD-Q3-jrB" firstAttribute="centerY" secondItem="V3C-Mi-ycS" secondAttribute="centerY" id="VAi-ca-aqz"/>
                             <constraint firstAttribute="trailing" secondItem="g8U-8Z-tqk" secondAttribute="trailing" constant="15" id="W68-vD-5cV"/>
                             <constraint firstAttribute="trailing" secondItem="OVg-B2-WDf" secondAttribute="trailing" constant="15" id="WKl-HO-I8g"/>
                             <constraint firstItem="OVg-B2-WDf" firstAttribute="top" secondItem="LSO-di-rZG" secondAttribute="bottom" constant="8" id="WzC-Be-XpY"/>
@@ -452,6 +462,7 @@
                         <outlet property="giverEmailID" destination="dg1-H2-0lM" id="5pz-jQ-Q33"/>
                         <outlet property="giverName" destination="OVg-B2-WDf" id="OuW-sn-o1T"/>
                         <outlet property="leadName" destination="HTS-07-VML" id="GLx-Li-hHr"/>
+                        <outlet property="loaderView" destination="DAD-Q3-jrB" id="ssi-1a-YhS"/>
                         <outlet property="mobileNumber" destination="g8U-8Z-tqk" id="UM8-tQ-06y"/>
                         <outlet property="productName" destination="wgk-eJ-Kb4" id="cuo-Y5-a74"/>
                         <outlet property="remarkTextView" destination="pw9-kZ-oir" id="yLN-jy-CDA"/>

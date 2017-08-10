@@ -23,11 +23,10 @@ class ServerManager: NSObject {
     }
     
     
-    //http://10.144.118.20:1919/iBus/service/lead/createappointment/{"tranLeadId":"Rbo:*:dBhHBK6SnqbD9mTuIw==","giverEmail":"KLERYA4Gw8WzWEZ5kTbgvKVeW:*:JsDmF3XJhfwNY5PvU=","giverSol":"EwWQLzTqVAE3R8Kp:*:0QbXw==","giverName":"6915X0r0sexKdKkzSFOrPEuQmD0d4SbI0uK4cQ42OvI=","giverDesg":"We4DKphIfmsfAfAsUQiRkw==","giverRemarks":"yvSfDNcbRjYDCHjIEaxq0g==","takerEmail":"KLERYA4Gw8WzWEZ5kTbgvKVeW:*:JsDmF3XJhfwNY5PvU=","takerSol":"EwWQLzTqVAE3R8Kp:*:0QbXw==","appointmentDt":"YchCyplhzmvDaioMuVa8ew==","appmntRemarks":"yvSfDNcbRjYDCHjIEaxq0g==","custId":"iDF3kQlXsEDx:~:fNQyHpKEA==","clientId":"N06PaZ0IvkdcmiLfH3vmBg=="}?access_token=
-    
-    func createAppointment(tranLeadId: String,giverEmail: String,giverSol: String,giverName: String,giverDesg: String,giverRemarks: String,takerEmail: String,takerSol :String,appointmentDt: String,appmntRemarks: String,custId: String,clientId: String,completionClouser:@escaping (_ isSuccessful: Bool,_ error: String?,_ result: Any?) -> Void)
+    func createAppointment(tranLeadId: String,takerEmail: String,appointmentDt: String,appmntRemarks: String,custId: String,clientId: String,completionClouser:@escaping (_ isSuccessful: Bool,_ error: String?,_ result: Any?) -> Void)
     {
-        let urlString = "http://10.144.118.20:1919/iBus/service/lead/createappointment/{\"tranLeadId\":\"\(tranLeadId)\",\"giverEmail\":\"\(giverEmail)\",\"giverSol\":\"\(giverSol)\",\"giverName\":\"\(giverName)\",\"giverDesg\":\"\(giverDesg)\",\"giverRemarks\":\"\(giverRemarks)\",\"takerEmail\":\"\(takerEmail)\",\"takerSol\":\"\(takerSol)\",\"appointmentDt\":\"\(appointmentDt)\",\"appmntRemarks\":\"\(appmntRemarks)\",\"custId\":\"\(custId)\",\"clientId\":\"\(clientId)\"}?access_token=\(JNKeychain.loadValue(forKey: "accessToken")!)"
+        let urlString = "http://10.144.118.20:1919/iBus/service/lead/createappointment/{\"tranLeadId\":\"\(tranLeadId)\",\"giverEmail\":\"\(takerEmail)\",\"appointmentDt\":\"\(appointmentDt)\",\"appmntRemarks\":\"\(appmntRemarks)\",\"custId\":\"\(custId)\",\"clientId\":\"\(clientId)\"}?access_token=\(JNKeychain.loadValue(forKey: "accessToken")!)"
+        print(urlString)
         let url = urlString.addingPercentEscapes(using: .ascii)
         self.webServiceCall(url: url!, completionClouser :completionClouser)
     }

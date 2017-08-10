@@ -14,6 +14,7 @@ class LeadDetails: UIViewController,UITextFieldDelegate,UITextViewDelegate {
     let networkReachability             = Reachability()
     var closureReasonDictionary         = [String:String]()
     
+    @IBOutlet weak var loaderView: UIView!
     @IBOutlet var leadName              : UILabel!
     @IBOutlet var productName           : UILabel!
     @IBOutlet var mobileNumber          : UILabel!
@@ -21,13 +22,15 @@ class LeadDetails: UIViewController,UITextFieldDelegate,UITextViewDelegate {
     @IBOutlet var giverEmailID          : UILabel!
     @IBOutlet var giverName             : UILabel!
     
-    @IBOutlet weak var fromLabel: UILabel!
+    @IBOutlet weak var fromLabel        : UILabel!
     var name                            : String!
     var product                         : String!
     var mobile                          : String!
     var mail                            : String!
     var givermail                       : String!
     var givername                       : String!
+    var loader                          : MaterialLoadingIndicator!
+    var leadID                          : String!
 
     @IBOutlet var scheduleParentContainerView: UIView!
     @IBOutlet var scheduleChildView: UIView!
@@ -51,9 +54,15 @@ class LeadDetails: UIViewController,UITextFieldDelegate,UITextViewDelegate {
     
     func commonInitialization()
     {
+        self.loader = MaterialLoadingIndicator(frame: self.loaderView.bounds)
+        self.loaderView.addSubview(loader)
+        self.loaderView.isHidden = true
+        
         self.leadName.text = name
         self.productName.text = product
         self.mobileNumber.text = mobile
+        self.giverName.text = givername
+        self.giverEmailID.text = JNKeychain.loadValue(forKey: "emailID") as? String
         
         remarkTextView.layer.borderWidth = 1
         remarkTextView.layer.cornerRadius = 4
@@ -107,7 +116,6 @@ class LeadDetails: UIViewController,UITextFieldDelegate,UITextViewDelegate {
     {
         if (networkReachability?.isReachable)!
         {
-            
             DataManager.getLeadClosureReasons(custID: JNKeychain.loadValue(forKey: "encryptedCustID") as! String, clientID: JNKeychain.loadValue(forKey: "encryptedClientID") as! String, completionClouser: { (isSuccessful, error, result) in
                 //self.loaderView.isHidden = true
                 //self.loader.stopAnimating()
@@ -138,6 +146,10 @@ class LeadDetails: UIViewController,UITextFieldDelegate,UITextViewDelegate {
                 }
             })
         }
+        else
+        {
+            self.AlertMessages(title: "Internet connection Error", message: "Your Device is not Connect to \"Internet\"", actionTitle: "OK", alertStyle: .alert, actionStyle: .cancel, handler: nil)
+        }
     }
     
     
@@ -154,8 +166,73 @@ class LeadDetails: UIViewController,UITextFieldDelegate,UITextViewDelegate {
     
     @IBAction func scheduleAppointment(_ sender: Any)
     {
+        if (networkReachability?.isReachable)!
+        {
+
+            let encryptedLeadId = AESCrypt.encrypt(self.leadID, password: DataManager.SharedInstance().getKeyForEncryption()).stringReplace()
+            let encryptedAppointmentDate = AESCrypt.encrypt(self.dateTimeTextField.text, password: DataManager.SharedInstance().getKeyForEncryption()).stringReplace()
+            let encryptedRemark = AESCrypt.encrypt(self.remarkTextView.text, password: DataManager.SharedInstance().getKeyForEncryption()).stringReplace()
+            //remarkTextView
+            
+            DataManager.createAppointment(tranLeadId: encryptedLeadId, takerEmail: JNKeychain.loadValue(forKey: "encryptedEmailId") as! String, appointmentDt: encryptedAppointmentDate, appmntRemarks: encryptedRemark, custId: JNKeychain.loadValue(forKey: "encryptedCustID") as! String, clientId: JNKeychain.loadValue(forKey: "encryptedClientID") as! String, completionClouser: { (isSuccessful, error, result) in
+                
+                if isSuccessful
+                {
+                    if let element = result as? NSDictionary
+                    {
+                        print(element)
+                        if let error = element["error"]
+                        {
+                            if !(error is NSNull)
+                            {
+                                let error = AESCrypt.decrypt(error as! String, password: DataManager.SharedInstance().getKeyForEncryption()) as String
+                                print(error)
+                                if error == "NA"
+                                {
+                                    if let value = element["value"]
+                                    {
+                                        let value = AESCrypt.decrypt(value as! String, password: DataManager.SharedInstance().getKeyForEncryption()) as String
+                                        print(value)
+                                    }
+                                    if let message = element["message"]
+                                    {
+                                        let message = AESCrypt.decrypt(message as! String, password: DataManager.SharedInstance().getKeyForEncryption()) as String
+                                        print(message)
+                                    }
+                                }
+                                else
+                                {
+                                    self.AlertMessages(title: "Error", message: error, actionTitle: "OK", alertStyle: .alert, actionStyle: .cancel, handler: nil)
+                                    return
+                                }
+                            }
+                            else
+                            {
+                                self.AlertMessages(title: "Error", message: "Please Try Again", actionTitle: "OK", alertStyle: .alert, actionStyle: .cancel, handler: nil)
+                            }
+                            
+                        }
+                    }
+                }
+                else
+                {
+                    if let errorString = error
+                    {
+                        self.AlertMessages(title: "Error", message: errorString, actionTitle: "OK", alertStyle: .alert, actionStyle: .cancel, handler: nil)
+                    }
+                }
+                
+            })
+        }
+        else
+        {
+            self.AlertMessages(title: "Internet connection Error", message: "Your Device is not Connect to \"Internet\"", actionTitle: "OK", alertStyle: .alert, actionStyle: .cancel, handler: nil)
+        }
+        
         self.scheduleParentContainerView.isHidden = true
         self.scheduleChildView.isHidden = true
+        
+        
     }
     @IBAction func assignClicked(_ sender: Any)
     {
@@ -168,14 +245,16 @@ class LeadDetails: UIViewController,UITextFieldDelegate,UITextViewDelegate {
     }
     func closeLead()
     {
-        DataManager.leadClose(custID: JNKeychain.loadValue(forKey: "encryptedCustID") as! String, clientID: JNKeychain.loadValue(forKey: "encryptedClientID") as! String, forceLeadId: "", status: "", remarks: "", completionClouser: { (isSuccessful, error, result) in
+        if (networkReachability?.isReachable)!
+        {
+            DataManager.leadClose(custID: JNKeychain.loadValue(forKey: "encryptedCustID") as! String, clientID: JNKeychain.loadValue(forKey: "encryptedClientID") as! String, forceLeadId: "", status: "", remarks: "", completionClouser: { (isSuccessful, error, result) in
             
             
             //self.loaderView.isHidden = true
             //self.loader.stopAnimating()
             
-            if isSuccessful
-            {
+                if isSuccessful
+                {
                 //                let jsonResult = result as? NSDictionary
                 //
                 //                if jsonResult["error"] == "NA"
@@ -183,9 +262,14 @@ class LeadDetails: UIViewController,UITextFieldDelegate,UITextViewDelegate {
                 //
                 //                }
                 //{"error":"-","message":"AUyXMVKm3WYZgcmxvtibJp2Mky8vbOoV/c5k9hjFOs8=","value":"-"}
-            }
+                }
             
-        })
+            })
+        }
+        else
+        {
+            self.AlertMessages(title: "Internet connection Error", message: "Your Device is not Connect to \"Internet\"", actionTitle: "OK", alertStyle: .alert, actionStyle: .cancel, handler: nil)
+        }
     }
     
    // MARK: textfield delegate methods
@@ -225,7 +309,7 @@ class LeadDetails: UIViewController,UITextFieldDelegate,UITextViewDelegate {
         //        picker.isDatePickerOnly = true
         picker.completionHandler = { date in
             let formatter = DateFormatter()
-            formatter.dateFormat = "hh:mm aa dd/MM/YYYY"
+            formatter.dateFormat = "dd/MM/YY hh:mm aa"
             self.dateTimeTextField.text = formatter.string(from: date)
         }
 

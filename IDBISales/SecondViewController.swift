@@ -17,12 +17,14 @@ class SecondViewController: UIViewController,UITableViewDelegate,UITableViewData
     var custPhoneNumber                     = [String]()
     var leadCreationDate                    = [String]()
     var leadID                              = [String]()
+    var giverName                           = [String]()
     
     var productNameBranch                   = [String]()
     var custNameBranch                      = [String]()
     var custPhoneNumberBranch               = [String]()
     var leadCreationDateBranch              = [String]()
     var leadIDBranch                        = [String]()
+    var giverNameBranch                     = [String]()
     
     var assignTo                            = [String]()
     var productNameLabel                    : UILabel!
@@ -132,6 +134,13 @@ class SecondViewController: UIViewController,UITableViewDelegate,UITableViewData
                                     let listArray = myList as? Array<Any>
                                     if (listArray?.count)! > 0
                                     {
+                                        self.custName.removeAll(keepingCapacity: false)
+                                        self.custPhoneNumber.removeAll(keepingCapacity: false)
+                                        self.leadCreationDate.removeAll(keepingCapacity: false)
+                                        self.productName.removeAll(keepingCapacity: false)
+                                        self.leadID.removeAll(keepingCapacity: false)
+                                        self.giverName.removeAll(keepingCapacity: false)
+                                        
                                         for value in listArray!
                                         {
                                             let lead = AESCrypt.decrypt(value as! String, password: DataManager.SharedInstance().getKeyForEncryption()) as String
@@ -144,6 +153,7 @@ class SecondViewController: UIViewController,UITableViewDelegate,UITableViewData
                                                 self.leadCreationDate.append(leadDetailArray[2])
                                                 self.productName.append(leadDetailArray[3])
                                                 self.leadID.append(leadDetailArray[4])
+                                                self.giverName.append(leadDetailArray[5])
                                             }
                                         }
                                         
@@ -160,6 +170,13 @@ class SecondViewController: UIViewController,UITableViewDelegate,UITableViewData
                                     let listArray = mybranchList as? Array<Any>
                                     if (listArray?.count)! > 0
                                     {
+                                        self.custNameBranch.removeAll(keepingCapacity: false)
+                                        self.custPhoneNumberBranch.removeAll(keepingCapacity: false)
+                                        self.leadCreationDateBranch.removeAll(keepingCapacity: false)
+                                        self.productNameBranch.removeAll(keepingCapacity: false)
+                                        self.leadIDBranch.removeAll(keepingCapacity: false)
+                                        self.giverNameBranch.removeAll(keepingCapacity: false)
+                                        
                                         for value in listArray!
                                         {
                                             let lead = AESCrypt.decrypt(value as! String, password: DataManager.SharedInstance().getKeyForEncryption()) as String
@@ -172,6 +189,7 @@ class SecondViewController: UIViewController,UITableViewDelegate,UITableViewData
                                                 self.leadCreationDateBranch.append(leadDetailArray[2])
                                                 self.productNameBranch.append(leadDetailArray[3])
                                                 self.leadIDBranch.append(leadDetailArray[4])
+                                                self.giverNameBranch.append(leadDetailArray[5])
                                             }
                                         }
                                         
@@ -273,6 +291,8 @@ class SecondViewController: UIViewController,UITableViewDelegate,UITableViewData
             leadDetailsVC.name = custName[indexPath.row]
             leadDetailsVC.product = productName[indexPath.row]
             leadDetailsVC.mobile = custPhoneNumber[indexPath.row]
+            leadDetailsVC.leadID = self.leadID[indexPath.row]
+            leadDetailsVC.givername = self.giverName[indexPath.row]
           //  leadDetailsVC.email = [indexPath.row]
            // leadDetailsVC.giverName.text = custName[indexPath.row]
            // leadDetailsVC.giverEmailID.text =
@@ -282,6 +302,8 @@ class SecondViewController: UIViewController,UITableViewDelegate,UITableViewData
             leadDetailsVC.name = custNameBranch[indexPath.row]
             leadDetailsVC.product = productNameBranch[indexPath.row]
             leadDetailsVC.mobile = custPhoneNumberBranch[indexPath.row]
+            leadDetailsVC.leadID = self.leadIDBranch[indexPath.row]
+            leadDetailsVC.givername = self.giverNameBranch[indexPath.row]
             //  leadDetailsVC.email = [indexPath.row]
             // leadDetailsVC.giverName.text = custName[indexPath.row]
             // leadDetailsVC.giverEmailID.text =

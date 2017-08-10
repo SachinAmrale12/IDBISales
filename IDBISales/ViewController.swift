@@ -100,6 +100,8 @@ class ViewController: UIViewController {
                                             JNKeychain.saveValue(userID, forKey: "userID")
                                             JNKeychain.saveValue(mobileNumber, forKey: "mobileNumber")
                                             JNKeychain.saveValue(emailID, forKey: "emailID")
+                                            let encryptedEmailId = AESCrypt.encrypt(emailID, password: DataManager.SharedInstance().getKeyForEncryption()).stringReplace()
+                                            JNKeychain.saveValue(encryptedEmailId, forKey: "encryptedEmailId")
                                             
                                             let encryptionLey = DataManager.SharedInstance().getKeyForEncryption()
                                             
