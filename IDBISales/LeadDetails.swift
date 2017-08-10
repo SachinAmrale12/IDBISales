@@ -21,9 +21,10 @@ class LeadDetails: UIViewController,UITextFieldDelegate,UITextViewDelegate {
     @IBOutlet var giverEmailID          : UILabel!
     @IBOutlet var giverName             : UILabel!
     
+    @IBOutlet weak var fromLabel: UILabel!
     var name                            : String!
     var product                         : String!
-    var mobile                            : String!
+    var mobile                          : String!
     var mail                            : String!
     var givermail                       : String!
     var givername                       : String!
@@ -38,6 +39,10 @@ class LeadDetails: UIViewController,UITextFieldDelegate,UITextViewDelegate {
     override func viewDidLoad()
     {
         super.viewDidLoad()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+        
         self.commonInitialization()
         // Do any additional setup after loading the view.
     }
@@ -49,9 +54,21 @@ class LeadDetails: UIViewController,UITextFieldDelegate,UITextViewDelegate {
         self.leadName.text = name
         self.productName.text = product
         self.mobileNumber.text = mobile
+        
         remarkTextView.layer.borderWidth = 1
         remarkTextView.layer.cornerRadius = 4
         remarkTextView.layer.borderColor = UIColor.orange.cgColor
+        
+        leadName.drawUnderLineForLabel()
+        productName.drawUnderLineForLabel()
+        mobileNumber.drawUnderLineForLabel()
+        email.drawUnderLineForLabel()
+        giverEmailID.drawUnderLineForLabel()
+        giverName.drawUnderLineForLabel()
+        
+        fromLabel.layer.borderWidth = 1
+        fromLabel.layer.cornerRadius = 4
+        fromLabel.layer.borderColor = UIColor.orange.cgColor
     }
     
     override func didReceiveMemoryWarning() {
@@ -62,6 +79,25 @@ class LeadDetails: UIViewController,UITextFieldDelegate,UITextViewDelegate {
     @IBAction func backClicked(_ sender: Any)
     {
         self.navigationController?.popViewController(animated: false)
+    }
+    
+    
+    //MARK: Keyboard Dismiss Functions
+    
+    func keyboardWillShow(notification: NSNotification) {
+        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
+            if self.view.frame.origin.y == 0{
+                self.view.frame.origin.y -= keyboardSize.height - 110
+            }
+        }
+    }
+    
+    func keyboardWillHide(notification: NSNotification) {
+        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
+            if self.view.frame.origin.y != 0{
+                self.view.frame.origin.y = 0
+            }
+        }
     }
     
     // MARK: closure methods
@@ -168,10 +204,15 @@ class LeadDetails: UIViewController,UITextFieldDelegate,UITextViewDelegate {
         return true
     }
     
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
+    
     // MARK: picker method
     
     func showPicker()
     {
+        self.view.endEditing(true)
         let min = Date()
         let max = Date().addingTimeInterval(60 * 60 * 24 * 30)
         let picker = DateTimePicker.show(minimumDate: min, maximumDate: max)
