@@ -56,6 +56,7 @@ class LeadDetails: UIViewController {
                             self.closureReasonDictionary.updateValue(statusName!, forKey: statusID!)
                             
                         }
+                        
                         let picker = CZPickerView(headerTitle: "Products", cancelButtonTitle: "Cancel", confirmButtonTitle: "Confirm")
                         picker?.delegate = self
                         picker?.dataSource = self

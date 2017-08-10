@@ -83,7 +83,8 @@ class SecondViewController: UIViewController,UITableViewDelegate,UITableViewData
                         print(element)
                         if let error = element["error"]
                         {
-                            let error = AESCrypt.decrypt(element["error"] as! String, password: DataManager.SharedInstance().getKeyForEncryption()) as String
+                            let errorValue = (error as! String).replacingOccurrences(of: "error ::", with: "")
+                            let error = AESCrypt.decrypt(errorValue, password: DataManager.SharedInstance().getKeyForEncryption()) as String
                             
                             if error == "NA"
                             {

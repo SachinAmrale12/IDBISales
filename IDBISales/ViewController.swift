@@ -168,6 +168,8 @@ class ViewController: UIViewController {
                                         }
                                         else
                                         {
+                                            self.loaderView.isHidden = true
+                                            self.loader.stopAnimating()
                                             self.AlertMessages(title: "Error", message: error, actionTitle: "OK", alertStyle: .alert, actionStyle: .cancel, handler: nil)
                                         }
                                     }

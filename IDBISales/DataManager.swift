@@ -32,6 +32,36 @@ class DataManager: NSObject {
     }
     
     
+    class func createAppointment(tranLeadId: String,giverEmail: String,giverSol: String,giverName: String,giverDesg: String,giverRemarks: String,takerEmail: String,takerSol :String,appointmentDt: String,appmntRemarks: String,custId: String,clientId: String,completionClouser:@escaping (_ isSuccessful: Bool,_ error: String?,_ result: Any?) -> Void)
+    {
+        ServerManager.SharedInstance().createAppointment(tranLeadId: tranLeadId, giverEmail: giverEmail, giverSol: giverSol, giverName: giverName, giverDesg: giverDesg, giverRemarks: giverRemarks, takerEmail: takerEmail, takerSol: takerSol, appointmentDt: appointmentDt, appmntRemarks: appmntRemarks, custId: custId, clientId: clientId) { (isSuccessful, error, result) in
+            
+            if isSuccessful
+            {
+                completionClouser(isSuccessful,nil,result)
+            }
+            else
+            {
+                completionClouser(isSuccessful,error,nil)
+            }
+        }
+    }
+    
+    class func assignLead(tranLeadId: String,giverEmail: String,giverSol: String,giverName: String,giverDesg: String,giverRemarks: String,takerEmail: String,takerSol :String,custId: String,clientId: String,completionClouser:@escaping (_ isSuccessful: Bool,_ error: String?,_ result: Any?) -> Void)
+    {
+        ServerManager.SharedInstance().assignLead(tranLeadId: tranLeadId, giverEmail: giverEmail, giverSol: giverSol, giverName: giverName, giverDesg: giverDesg, giverRemarks: giverRemarks, takerEmail: takerEmail, takerSol: takerSol, custId: custId, clientId: clientId) { (isSuccessful, error, result) in
+            
+            if isSuccessful
+            {
+                completionClouser(isSuccessful,nil,result)
+            }
+            else
+            {
+                completionClouser(isSuccessful,error,nil)
+            }
+        }
+    }
+    
     class func getReports(ein: String,clientId: String,flg: String,completionClouser:@escaping (_ isSuccessful: Bool,_ error: String?,_ result: Any?) -> Void)
     {
         ServerManager.SharedInstance().getReports(ein: ein, clientId: clientId, flg: flg) { (isSuccessful, error, result) in

@@ -23,7 +23,21 @@ class ServerManager: NSObject {
     }
     
     
-    //http://10.144.118.20:1919/iBus/service/lead/createReport/{"ein":"D2GxY:~:ywCgMTZS604hw==","clientId":"wFLLgAMTRInZuBmeCg==","flg":"l2XwScxx:~:mz3:~:pLkQg=="}?access_token=
+    //http://10.144.118.20:1919/iBus/service/lead/createappointment/{"tranLeadId":"Rbo:*:dBhHBK6SnqbD9mTuIw==","giverEmail":"KLERYA4Gw8WzWEZ5kTbgvKVeW:*:JsDmF3XJhfwNY5PvU=","giverSol":"EwWQLzTqVAE3R8Kp:*:0QbXw==","giverName":"6915X0r0sexKdKkzSFOrPEuQmD0d4SbI0uK4cQ42OvI=","giverDesg":"We4DKphIfmsfAfAsUQiRkw==","giverRemarks":"yvSfDNcbRjYDCHjIEaxq0g==","takerEmail":"KLERYA4Gw8WzWEZ5kTbgvKVeW:*:JsDmF3XJhfwNY5PvU=","takerSol":"EwWQLzTqVAE3R8Kp:*:0QbXw==","appointmentDt":"YchCyplhzmvDaioMuVa8ew==","appmntRemarks":"yvSfDNcbRjYDCHjIEaxq0g==","custId":"iDF3kQlXsEDx:~:fNQyHpKEA==","clientId":"N06PaZ0IvkdcmiLfH3vmBg=="}?access_token=
+    
+    func createAppointment(tranLeadId: String,giverEmail: String,giverSol: String,giverName: String,giverDesg: String,giverRemarks: String,takerEmail: String,takerSol :String,appointmentDt: String,appmntRemarks: String,custId: String,clientId: String,completionClouser:@escaping (_ isSuccessful: Bool,_ error: String?,_ result: Any?) -> Void)
+    {
+        let urlString = "http://10.144.118.20:1919/iBus/service/lead/createappointment/{\"tranLeadId\":\"\(tranLeadId)\",\"giverEmail\":\"\(giverEmail)\",\"giverSol\":\"\(giverSol)\",\"giverName\":\"\(giverName)\",\"giverDesg\":\"\(giverDesg)\",\"giverRemarks\":\"\(giverRemarks)\",\"takerEmail\":\"\(takerEmail)\",\"takerSol\":\"\(takerSol)\",\"appointmentDt\":\"\(appointmentDt)\",\"appmntRemarks\":\"\(appmntRemarks)\",\"custId\":\"\(custId)\",\"clientId\":\"\(clientId)\"}?access_token=\(JNKeychain.loadValue(forKey: "accessToken")!)"
+        let url = urlString.addingPercentEscapes(using: .ascii)
+        self.webServiceCall(url: url!, completionClouser :completionClouser)
+    }
+    
+    func assignLead(tranLeadId: String,giverEmail: String,giverSol: String,giverName: String,giverDesg: String,giverRemarks: String,takerEmail: String,takerSol :String,custId: String,clientId: String,completionClouser:@escaping (_ isSuccessful: Bool,_ error: String?,_ result: Any?) -> Void)
+    {
+        let urlString = "http://10.144.118.20:1919/iBus/service/lead/reassignlead/{\"tranLeadId\":\"\(tranLeadId)\",\"giverEmail\":\"\(giverEmail)\",\"giverSol\":\"\(giverSol)\",\"giverName\":\"\(giverName)\",\"giverDesg\":\"\(giverDesg)\",\"giverRemarks\":\"\(giverRemarks)\",\"takerEmail\":\"\(takerEmail)\",\"takerSol\":\"\(takerSol)\",\"custId\":\"\(custId)\",\"clientId\":\"\(clientId)\"}?access_token=\(JNKeychain.loadValue(forKey: "accessToken")!)"
+        let url = urlString.addingPercentEscapes(using: .ascii)
+        self.webServiceCall(url: url!, completionClouser :completionClouser)
+    }
     
     func getReports(ein: String,clientId: String,flg: String,completionClouser:@escaping (_ isSuccessful: Bool,_ error: String?,_ result: Any?) -> Void)
     {
@@ -60,7 +74,6 @@ class ServerManager: NSObject {
         let url = urlString.addingPercentEscapes(using: .ascii)
         self.webServiceCall(url: url!, completionClouser :completionClouser)
     }
-    
     
     
     func createLead(isNewCustomer: String,programId: String,sourceBycode :String,leadCustId: String,custName: String,cityCode: String,stateCode: String,emailID: String,empEmailId :String,takerEmailId :String,custId: String,takerSolId :String,mobileNo :String,clientID: String,completionClouser:@escaping (_ isSuccessful: Bool,_ error: String?,_ result: Any?) -> Void)
@@ -131,9 +144,6 @@ class ServerManager: NSObject {
     
     func leadClose(custID: String,clientID: String,forceLeadId: String,status: String,remarks:String,completionClouser:@escaping (_ isSuccessful: Bool,_ error: String?,_ result: Any?) -> Void)
     {
-        ////http://10.144.118.20:1919/iBus/service/lead/closelead/{"custId":"iDF3kQlXsEDx:~:fNQyHpKEA==","clientId":"N06PaZ0IvkdcmiLfH3vmBg==","forceLeadId":"0zyqodw:~:nnsZrhN2a7UuRw==","status":"KzxlvmS8phxDDVZ8Rs8ZQg==","remarks":"Ad26prHVcpIpCodLgiySIg=="}?access_token=
-        
-        
         let urlString = "http://10.144.118.20:1919/iBus/service/lead/closelead/" + "{\"custId\":\"\(custID)\",\"clientId\":\"\(clientID)\",\"forceLeadId\":\"\(forceLeadId)\",\"status\":\"\(status)\",\"remarks\":\"\(remarks)\"}?access_token=\(JNKeychain.loadValue(forKey: "accessToken")!)"
         let url = urlString.addingPercentEscapes(using: .ascii)
         self.webServiceCall(url: url!, completionClouser: completionClouser)
