@@ -13,12 +13,20 @@ class SecondViewController: UIViewController,UITableViewDelegate,UITableViewData
 
     var sideMenu                    = MVYSideMenuController()
     var productName                 = [String]()
+    var custName                    = [String]()
+    var custPhoneNumber             = [String]()
+    var leadCreationDate            = [String]()
+    var leadID                      = [String]()
+    
     var assignTo                    = [String]()
     var productNameLabel            : UILabel!
     var assignToLabel               : UILabel!
     let networkReachability         = Reachability()
+    var loader                      : MaterialLoadingIndicator!
     
+    @IBOutlet weak var tableView: UITableView!
     
+    @IBOutlet weak var loaderView: UIView!
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -29,17 +37,14 @@ class SecondViewController: UIViewController,UITableViewDelegate,UITableViewData
     
     func commonInitialization()
     {
-        productName.append("car Loan")
-        productName.append("home loan")
-        productName.append("bike loan")
-        productName.append("home loan")
-
+        self.loader = MaterialLoadingIndicator(frame: self.loaderView.bounds)
+        self.loaderView.addSubview(loader)
+        self.loaderView.isHidden = true
         
         assignTo.append("Amit")
         assignTo.append("Sachin")
         assignTo.append("vikrant")
         assignTo.append("nish")
-        
     }
 
     @IBAction func menuButtonClicked(_ sender: Any)
@@ -63,7 +68,13 @@ class SecondViewController: UIViewController,UITableViewDelegate,UITableViewData
     {
         if (networkReachability?.isReachable)!
         {
+            self.loaderView.isHidden = false
+            self.loader.startAnimating()
+            
             DataManager.viewLead(custId: JNKeychain.loadValue(forKey: "encryptedCustID") as! String, clientId: JNKeychain.loadValue(forKey: "encryptedClientID") as! String, completionClouser: { (isSuccessful, error, result) in
+                
+                self.loaderView.isHidden = true
+                self.loader.stopAnimating()
                 
                 if isSuccessful
                 {
@@ -82,7 +93,15 @@ class SecondViewController: UIViewController,UITableViewDelegate,UITableViewData
                                     for value in listArray!
                                     {
                                         let lead = AESCrypt.decrypt(value as! String, password: DataManager.SharedInstance().getKeyForEncryption()) as String
+                                        let leadDetailArray = lead.components(separatedBy: "~")
+                                        self.custName.append(leadDetailArray[0])
+                                        self.custPhoneNumber.append(leadDetailArray[1])
+                                        self.leadCreationDate.append(leadDetailArray[2])
+                                        self.productName.append(leadDetailArray[3])
+                                        self.leadID.append(leadDetailArray[4])
                                     }
+                                    
+                                    self.tableView.reloadData()
                                 }
                             }
                             else
@@ -128,8 +147,8 @@ class SecondViewController: UIViewController,UITableViewDelegate,UITableViewData
         productNameLabel = cell?.viewWithTag(1) as! UILabel
         assignToLabel = cell?.viewWithTag(2) as! UILabel
         
-        productNameLabel.text = productName[indexPath.row]
-        assignToLabel.text = assignTo[indexPath.row]
+        productNameLabel.text = custName[indexPath.row]
+        assignToLabel.text = productName[indexPath.row]
         
         
         return cell!

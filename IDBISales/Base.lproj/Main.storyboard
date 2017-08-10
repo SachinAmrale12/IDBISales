@@ -274,7 +274,7 @@
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Email ID" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OVg-B2-WDf">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OVg-B2-WDf">
                                 <rect key="frame" x="15" y="267" width="290" height="29"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
@@ -480,6 +480,14 @@
                                     <outlet property="delegate" destination="2iw-Fl-Bw1" id="QPc-m3-aul"/>
                                 </connections>
                             </tableView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="37e-BI-n2m">
+                                <rect key="frame" x="140" y="220" width="40" height="40"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="40" id="OtD-k1-v7R"/>
+                                    <constraint firstAttribute="height" constant="40" id="mgi-Zc-oYX"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -493,12 +501,18 @@
                             <constraint firstItem="YHp-Cj-HOX" firstAttribute="leading" secondItem="Np9-Zf-kAS" secondAttribute="leading" id="X83-KW-20g"/>
                             <constraint firstItem="gGz-WL-dxg" firstAttribute="leading" secondItem="Np9-Zf-kAS" secondAttribute="leading" id="c52-he-VpY"/>
                             <constraint firstItem="fEX-wg-bdo" firstAttribute="leading" secondItem="Np9-Zf-kAS" secondAttribute="leading" id="hfD-jL-ecp"/>
+                            <constraint firstItem="37e-BI-n2m" firstAttribute="centerY" secondItem="Np9-Zf-kAS" secondAttribute="centerY" id="lzE-7e-Ewk"/>
                             <constraint firstItem="YHp-Cj-HOX" firstAttribute="top" secondItem="fEX-wg-bdo" secondAttribute="bottom" id="nQi-UM-a7s"/>
                             <constraint firstAttribute="trailing" secondItem="gGz-WL-dxg" secondAttribute="trailing" id="nXq-mO-sm7"/>
+                            <constraint firstItem="37e-BI-n2m" firstAttribute="centerX" secondItem="Np9-Zf-kAS" secondAttribute="centerX" id="wA8-kA-D7X"/>
                             <constraint firstAttribute="trailing" secondItem="fEX-wg-bdo" secondAttribute="trailing" id="xgA-LF-dRE"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="LDl-rr-VVw"/>
+                    <connections>
+                        <outlet property="loaderView" destination="37e-BI-n2m" id="UiI-vo-Cef"/>
+                        <outlet property="tableView" destination="YHp-Cj-HOX" id="IQe-7Q-hsR"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jRr-eJ-MwX" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
