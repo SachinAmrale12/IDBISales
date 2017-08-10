@@ -47,9 +47,11 @@ class DataManager: NSObject {
         }
     }
     
-    class func assignLead(tranLeadId: String,giverEmail: String,giverSol: String,giverName: String,giverDesg: String,giverRemarks: String,takerEmail: String,takerSol :String,custId: String,clientId: String,completionClouser:@escaping (_ isSuccessful: Bool,_ error: String?,_ result: Any?) -> Void)
+    //func assignLead(tranLeadId: String,giverEmail: String,giverRemarks: String,takerEmail: String,takerSol: String,custId: String,clientId: String,completionClouser:@escaping (_ isSuccessful: Bool,_ error: String?,_ result: Any?) -> Void)
+    
+    class func assignLead(tranLeadId: String,giverEmail: String,giverRemarks: String,takerEmail: String,takerSol: String,custId: String,clientId: String,completionClouser:@escaping (_ isSuccessful: Bool,_ error: String?,_ result: Any?) -> Void)
     {
-        ServerManager.SharedInstance().assignLead(tranLeadId: tranLeadId, giverEmail: giverEmail, giverSol: giverSol, giverName: giverName, giverDesg: giverDesg, giverRemarks: giverRemarks, takerEmail: takerEmail, takerSol: takerSol, custId: custId, clientId: clientId) { (isSuccessful, error, result) in
+        ServerManager.SharedInstance().assignLead(tranLeadId: tranLeadId, giverEmail: giverEmail, giverRemarks: giverRemarks,takerEmail: takerEmail,takerSol: takerSol,custId: custId, clientId: clientId) { (isSuccessful, error, result) in
             
             if isSuccessful
             {

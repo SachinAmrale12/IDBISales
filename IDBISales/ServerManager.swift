@@ -31,10 +31,11 @@ class ServerManager: NSObject {
         let url = urlString.addingPercentEscapes(using: .ascii)
         self.webServiceCall(url: url!, completionClouser :completionClouser)
     }
+    //http://10.144.118.20:1919/iBus/service/lead/reassignlead/{"tranLeadId":"Rbo:*:dBhHBK6SnqbD9mTuIw==","giverEmail":"KLERYA4Gw8WzWEZ5kTbgvKVeW:*:JsDmF3XJhfwNY5PvU=","giverRemarks":"yvSfDNcbRjYDCHjIEaxq0g==","takerEmail":"KLERYA4Gw8WzWEZ5kTbgvKVeW:*:JsDmF3XJhfwNY5PvU=","takerSol":"EwWQLzTqVAE3R8Kp:*:0QbXw==","custId":"iDF3kQlXsEDx:~:fNQyHpKEA==","clientId":"N06PaZ0IvkdcmiLfH3vmBg=="}?access_token=
     
-    func assignLead(tranLeadId: String,giverEmail: String,giverSol: String,giverName: String,giverDesg: String,giverRemarks: String,takerEmail: String,takerSol :String,custId: String,clientId: String,completionClouser:@escaping (_ isSuccessful: Bool,_ error: String?,_ result: Any?) -> Void)
+    func assignLead(tranLeadId: String,giverEmail: String,giverRemarks: String,takerEmail: String,takerSol: String,custId: String,clientId: String,completionClouser:@escaping (_ isSuccessful: Bool,_ error: String?,_ result: Any?) -> Void)
     {
-        let urlString = "http://10.144.118.20:1919/iBus/service/lead/reassignlead/{\"tranLeadId\":\"\(tranLeadId)\",\"giverEmail\":\"\(giverEmail)\",\"giverSol\":\"\(giverSol)\",\"giverName\":\"\(giverName)\",\"giverDesg\":\"\(giverDesg)\",\"giverRemarks\":\"\(giverRemarks)\",\"takerEmail\":\"\(takerEmail)\",\"takerSol\":\"\(takerSol)\",\"custId\":\"\(custId)\",\"clientId\":\"\(clientId)\"}?access_token=\(JNKeychain.loadValue(forKey: "accessToken")!)"
+        let urlString = "http://10.144.118.20:1919/iBus/service/lead/reassignlead/{\"tranLeadId\":\"\(tranLeadId)\",\"giverEmail\":\"\(giverEmail)\",\"giverRemarks\":\"\(giverRemarks)\",\"takerEmail\":\"\(takerEmail)\",\"takerSol\":\"\(takerSol)\",\"custId\":\"\(custId)\",\"clientId\":\"\(clientId)\",}?access_token=\(JNKeychain.loadValue(forKey: "accessToken")!)"
         let url = urlString.addingPercentEscapes(using: .ascii)
         self.webServiceCall(url: url!, completionClouser :completionClouser)
     }
