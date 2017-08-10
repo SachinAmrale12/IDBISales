@@ -24,6 +24,10 @@ class SecondViewController: UIViewController,UITableViewDelegate,UITableViewData
     let networkReachability         = Reachability()
     var loader                      : MaterialLoadingIndicator!
     
+    @IBOutlet var containerView       : UIView!
+    
+    
+    
     @IBOutlet weak var tableView: UITableView!
     
     @IBOutlet weak var loaderView: UIView!
@@ -32,6 +36,10 @@ class SecondViewController: UIViewController,UITableViewDelegate,UITableViewData
         
         self.commonInitialization()
         //sideMenu.disable()
+    }
+    override func viewWillAppear(_ animated: Bool)
+    {
+        self.containerView.isHidden = false
     }
     
     
@@ -46,6 +54,18 @@ class SecondViewController: UIViewController,UITableViewDelegate,UITableViewData
         assignTo.append("vikrant")
         assignTo.append("nish")
     }
+    @IBAction func viewLeadsClicked(_ sender: Any)
+    {
+        self.containerView.isHidden = true
+    }
+    @IBAction func addLeadsClicked(_ sender: Any)
+    {
+        self.navigationController?.pushViewController(UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "addLeadVCIndentifier"), animated: true)
+    }
+    @IBAction func backClicked(_ sender: Any)
+    {
+        containerView.isHidden = false
+    }
 
     @IBAction func menuButtonClicked(_ sender: Any)
     {
@@ -58,9 +78,9 @@ class SecondViewController: UIViewController,UITableViewDelegate,UITableViewData
     
     //
     
-    @IBAction func addLeadButtonClicked(_ sender: Any)
+    @IBAction func allLeadsClicked(_ sender: Any)
     {
-        self.navigationController?.pushViewController(UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "addLeadVCIndentifier"), animated: true)
+      //  self.navigationController?.pushViewController(UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "addLeadVCIndentifier"), animated: true)
     }
     
     

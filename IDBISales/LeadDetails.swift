@@ -13,6 +13,19 @@ class LeadDetails: UIViewController {
     
     let networkReachability             = Reachability()
     var closureReasonDictionary         = [String:String]()
+    
+    @IBOutlet var leadName: UILabel!
+    
+    @IBOutlet var productName: UILabel!
+    
+    
+    @IBOutlet var mobileNumber: UILabel!
+    
+    
+    @IBOutlet var email: UILabel!
+    
+    @IBOutlet var giverEmailID: UILabel!
+    @IBOutlet var giverName: UILabel!
     override func viewDidLoad()
     {
         super.viewDidLoad()

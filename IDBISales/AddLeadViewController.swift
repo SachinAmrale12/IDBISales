@@ -68,7 +68,7 @@ class AddLeadViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
     
     @IBAction func backButtonClicked(_ sender: Any)
     {
-        
+        self.navigationController?.popViewController(animated: true)
     }
     
     func commonInitialization()
