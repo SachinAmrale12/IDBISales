@@ -44,12 +44,11 @@ class SecondViewController: UIViewController,UITableViewDelegate,UITableViewData
         super.viewDidLoad()
         
         self.commonInitialization()
-        //sideMenu.disable()
     }
     override func viewWillAppear(_ animated: Bool)
     {
+        self.viewLeadsService()
         self.isMyLead = true
-        self.containerView.isHidden = false
     }
     
     
@@ -59,43 +58,34 @@ class SecondViewController: UIViewController,UITableViewDelegate,UITableViewData
         self.loaderView.addSubview(loader)
         self.loaderView.isHidden = true
         
-//        assignTo.append("Amit")
-//        assignTo.append("Sachin")
-//        assignTo.append("vikrant")
-//        assignTo.append("nish")
+
     }
-    @IBAction func viewLeadsClicked(_ sender: Any)
-    {
-        self.containerView.isHidden = true
-        self.viewLeadsService()
-    }
-    @IBAction func addLeadsClicked(_ sender: Any)
-    {
-        self.navigationController?.pushViewController(UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "addLeadVCIndentifier"), animated: true)
-    }
+   
+   
     @IBAction func backClicked(_ sender: Any)
     {
-        containerView.isHidden = false
+        self.navigationController?.popViewController(animated: true)
     }
 
-    @IBAction func menuButtonClicked(_ sender: Any)
-    {
-        sideMenu = self.sideMenuController()
-        if (sideMenu != nil)
-        {
-            sideMenu.openMenu()
-        }
-    }
     
-    //
-    
-    @IBAction func allLeadsClicked(_ sender: Any)
+    @IBAction func allLeadClicked(_ sender: Any)
     {
-      //  self.navigationController?.pushViewController(UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "addLeadVCIndentifier"), animated: true)
-        
         if custNameBranch.count > 0
         {
             self.isMyLead = false
+            self.tableView.reloadData()
+        }
+        else
+        {
+            self.AlertMessages(title: "Oops !", message: "No Record Found", actionTitle: "OK", alertStyle: .alert, actionStyle: .cancel, handler: nil)
+        }
+    }
+    
+    @IBAction func myLeadsClicked(_ sender: Any)
+    {
+        if custName.count > 0
+        {
+            self.isMyLead = true
             self.tableView.reloadData()
         }
         else
@@ -218,21 +208,6 @@ class SecondViewController: UIViewController,UITableViewDelegate,UITableViewData
         }
 
     }
-    
-    @IBAction func viewLeadButtonClicked(_ sender: Any)
-    {
-        if custName.count > 0
-        {
-            self.isMyLead = true
-            self.tableView.reloadData()
-        }
-        else
-        {
-            self.AlertMessages(title: "Oops !", message: "No Record Found", actionTitle: "OK", alertStyle: .alert, actionStyle: .cancel, handler: nil)
-        }
-        
-    }
-    
     
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
     {

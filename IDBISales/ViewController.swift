@@ -138,7 +138,7 @@ class ViewController: UIViewController {
                                                                 JNKeychain.saveValue(accessToken, forKey: "accessToken")
                                                                 
                                                                 let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
-                                                                let contentVC = storyboard.instantiateViewController(withIdentifier: "secondVC")
+                                                                let contentVC = storyboard.instantiateViewController(withIdentifier: "firstVCIdentifier")
                                                                 self.navigationController?.pushViewController(contentVC, animated: true)
                                                                 let menuVC = storyboard.instantiateViewController(withIdentifier: "menuVC")
                                                                 let options = MVYSideMenuOptions()
