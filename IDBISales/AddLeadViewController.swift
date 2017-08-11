@@ -46,6 +46,7 @@ class AddLeadViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
     var Products                                            = [String]()
     var testPicker                                          : UIPickerView!
     var isBool                                              : Bool!
+    var fullNameforAddLead                                           : String!
     private let autocompleteView                            = LUAutocompleteView()
     private let autocompleteViewForCity                     = LUAutocompleteView()
     private let autocompleteViewForBranch                   = LUAutocompleteView()
@@ -123,20 +124,20 @@ class AddLeadViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
         //    self.contactTimeTextfield.inputAccessoryView = toolBar
         
         firstNameTextfield.animationDuration = 0.5
-        firstNameTextfield.subjectColor = UIColor.orange
-        firstNameTextfield.underLineColor = UIColor.orange
+        firstNameTextfield.subjectColor = UIColor.black
+        firstNameTextfield.underLineColor = UIColor(red: (25.0/255.0), green: (111.0/255.0), blue: (61.0/255.0), alpha: 1.0)
         
         mobileNoTextfield.animationDuration = 0.5
-        mobileNoTextfield.subjectColor = UIColor.orange
-        mobileNoTextfield.underLineColor = UIColor.orange
+        mobileNoTextfield.subjectColor = UIColor.black
+        mobileNoTextfield.underLineColor = UIColor(red: (25.0/255.0), green: (111.0/255.0), blue: (61.0/255.0), alpha: 1.0)
         
         emailIdTextfield.animationDuration = 0.5
-        emailIdTextfield.subjectColor = UIColor.orange
-        emailIdTextfield.underLineColor = UIColor.orange
+        emailIdTextfield.subjectColor = UIColor.black
+        emailIdTextfield.underLineColor = UIColor(red: (25.0/255.0), green: (111.0/255.0), blue: (61.0/255.0), alpha: 1.0)
         
         lastNameTextfield.animationDuration = 0.5
-        lastNameTextfield.subjectColor = UIColor.orange
-        lastNameTextfield.underLineColor = UIColor.orange
+        lastNameTextfield.subjectColor = UIColor.black
+        lastNameTextfield.underLineColor = UIColor(red: (25.0/255.0), green: (111.0/255.0), blue: (61.0/255.0), alpha: 1.0)
         
         stateTextfield.drawUnderLineForTextField()
         cityTextfield.drawUnderLineForTextField()
@@ -149,8 +150,8 @@ class AddLeadViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
         // customer ID textfiled
         
         customerIDTextfield.animationDuration = 0.5
-        customerIDTextfield.subjectColor = UIColor.orange
-        customerIDTextfield.underLineColor = UIColor.orange
+        customerIDTextfield.subjectColor = UIColor.black
+        customerIDTextfield.underLineColor = UIColor(red: (25.0/255.0), green: (111.0/255.0), blue: (61.0/255.0), alpha: 1.0)
               
         
     }
@@ -291,9 +292,17 @@ class AddLeadViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
             
          //   let programid = progIdArray.description.replacingOccurrences(of: "\"", with: "").replacingOccurrences(of: "[", with: "").replacingOccurrences(of: "]", with: "").replacingOccurrences(of: ",", with: "~").replacingOccurrences(of: " ", with: "")
             
+            self.fullNameforAddLead = self.firstNameTextfield.text! + " " + self.lastNameTextfield.text!
+            print(self.fullNameforAddLead)
+            
+            
+            
+            
+            
+            
             let programid = AESCrypt.encrypt(self.allProgrammDictionary[self.programmTextView.text]!, password: DataManager.SharedInstance().getKeyForEncryption()).stringReplace()
             
-            DataManager.createLead(isNewCustomer: isNewCustomer,programId: programid, leadCustId: custID, sourceBycode: AESCrypt.encrypt("others", password: DataManager.SharedInstance().getKeyForEncryption()).stringReplace(), custName: AESCrypt.encrypt(self.firstNameTextfield.text, password: DataManager.SharedInstance().getKeyForEncryption()).stringReplace(), cityCode: cityCode, stateCode: stateCode, emailID: AESCrypt.encrypt(emailIdTextfield.text, password: DataManager.SharedInstance().getKeyForEncryption()).stringReplace(), empEmailId: AESCrypt.encrypt(JNKeychain.loadValue(forKey: "emailID") as! String, password: DataManager.SharedInstance().getKeyForEncryption()).stringReplace(), takerEmailId: self.takerEmailID, custId: JNKeychain.loadValue(forKey: "encryptedCustID") as! String, takerSolId: branchCode, mobileNo:  AESCrypt.encrypt(mobileNoTextfield.text, password: DataManager.SharedInstance().getKeyForEncryption()).stringReplace(), clientID: JNKeychain.loadValue(forKey: "encryptedClientID") as! String, completionClouser: { (isSuccessful, error, result) in
+            DataManager.createLead(isNewCustomer: isNewCustomer,programId: programid, leadCustId: custID, sourceBycode: AESCrypt.encrypt("others", password: DataManager.SharedInstance().getKeyForEncryption()).stringReplace(), custName: AESCrypt.encrypt(self.fullNameforAddLead, password: DataManager.SharedInstance().getKeyForEncryption()).stringReplace(), cityCode: cityCode, stateCode: stateCode, emailID: AESCrypt.encrypt(emailIdTextfield.text, password: DataManager.SharedInstance().getKeyForEncryption()).stringReplace(), empEmailId: AESCrypt.encrypt(JNKeychain.loadValue(forKey: "emailID") as! String, password: DataManager.SharedInstance().getKeyForEncryption()).stringReplace(), takerEmailId: self.takerEmailID, custId: JNKeychain.loadValue(forKey: "encryptedCustID") as! String, takerSolId: branchCode, mobileNo:  AESCrypt.encrypt(mobileNoTextfield.text, password: DataManager.SharedInstance().getKeyForEncryption()).stringReplace(), clientID: JNKeychain.loadValue(forKey: "encryptedClientID") as! String, completionClouser: { (isSuccessful, error, result) in
             
                 self.loaderView.isHidden = true
                 self.loader.stopAnimating()
@@ -319,7 +328,10 @@ class AddLeadViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
                                     {
                                         let message = AESCrypt.decrypt(message as! String, password: DataManager.SharedInstance().getKeyForEncryption()) as String
                                         
-                                        self.AlertMessages(title: "Info", message: message, actionTitle: "OK", alertStyle: .alert, actionStyle: .cancel, handler: nil)
+                                        self.AlertMessages(title: "Info", message: message, actionTitle: "OK", alertStyle: .alert, actionStyle: .cancel, handler:{(action) in
+                                            
+                                            self.navigationController?.popViewController(animated: true)
+                                        })
                                     }
                                     
                                 }
@@ -361,6 +373,17 @@ class AddLeadViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
         
         if nonCustomerRadioButton.isSelected == true
         {
+            firstNameTextfield.isUserInteractionEnabled = true
+            lastNameTextfield.isUserInteractionEnabled = true
+            mobileNoTextfield.isUserInteractionEnabled = true
+            emailIdTextfield.isUserInteractionEnabled = true
+            
+            firstNameTextfield.textColor = UIColor.black
+            lastNameTextfield.textColor = UIColor.black
+            mobileNoTextfield.textColor = UIColor.black
+            emailIdTextfield.textColor = UIColor.black
+            
+            
             mainCustomerView.isHidden = true
             checkBoxContainerView.isHidden = true
             
@@ -370,6 +393,18 @@ class AddLeadViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
         }
         if customerIDTextfield.text != "" && customerRadioButton.isSelected == true
         {
+            firstNameTextfield.isUserInteractionEnabled = false
+            lastNameTextfield.isUserInteractionEnabled = false
+            mobileNoTextfield.isUserInteractionEnabled = false
+            emailIdTextfield.isUserInteractionEnabled = false
+            
+            firstNameTextfield.textColor = UIColor.lightGray
+            lastNameTextfield.textColor = UIColor.lightGray
+            mobileNoTextfield.textColor = UIColor.lightGray
+            emailIdTextfield.textColor = UIColor.lightGray
+
+            
+            
             if (networkReachability?.isReachable)!
             {
                 self.loaderView.isHidden = false
@@ -484,8 +519,10 @@ class AddLeadViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
                                 if !(name is NSNull)
                                 {
                                     let custName = AESCrypt.decrypt(name as! String, password: DataManager.SharedInstance().getKeyForEncryption()) as String
-                                    self.firstNameTextfield.text = custName
-                                    print(custName)
+                                    let fullName = custName.components(separatedBy: " ")
+                                    self.firstNameTextfield.text = fullName[0]
+                                    self.lastNameTextfield.text = fullName.last
+                                    
                                 }
                             }
                             if let email = element["emailId"]
@@ -862,6 +899,8 @@ class AddLeadViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
                     self.loader.stopAnimating()
                     if isSuccessful
                     {
+                        
+                        self.emailArray.removeAll(keepingCapacity: false)
                         
                         for element in result as! Array<AnyObject>
                         {
