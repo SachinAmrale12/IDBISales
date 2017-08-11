@@ -31,6 +31,8 @@ class LeadDetails: UIViewController,UITextFieldDelegate,UITextViewDelegate {
     var givername                       : String!
     var loader                          : MaterialLoadingIndicator!
     var leadID                          : String!
+    
+    var closureReson                    : String!
 
     @IBOutlet var scheduleParentContainerView: UIView!
     @IBOutlet var scheduleChildView: UIView!
@@ -116,9 +118,14 @@ class LeadDetails: UIViewController,UITextFieldDelegate,UITextViewDelegate {
     {
         if (networkReachability?.isReachable)!
         {
+            self.loaderView.isHidden = false
+            self.loader.startAnimating()
+            
             DataManager.getLeadClosureReasons(custID: JNKeychain.loadValue(forKey: "encryptedCustID") as! String, clientID: JNKeychain.loadValue(forKey: "encryptedClientID") as! String, completionClouser: { (isSuccessful, error, result) in
-                //self.loaderView.isHidden = true
-                //self.loader.stopAnimating()
+                
+                self.loaderView.isHidden = true
+                self.loader.stopAnimating()
+                
                 if isSuccessful
                 {
                     print(result as Any)
@@ -128,14 +135,14 @@ class LeadDetails: UIViewController,UITextFieldDelegate,UITextViewDelegate {
                         for data in jsonResult
                         {
                             let statusName = AESCrypt.decrypt(data["statusName"], password: DataManager.SharedInstance().getKeyForEncryption())
-                            //print(statusName as Any)
+                            print(statusName as Any)
                             let statusID = AESCrypt.decrypt(data["statusId"], password: DataManager.SharedInstance().getKeyForEncryption())
-                            //print(statusID as Any)
+                            print(statusID as Any)
                             self.closureReasonDictionary.updateValue(statusName!, forKey: statusID!)
                             
                         }
                         
-                        let picker = CZPickerView(headerTitle: "Products", cancelButtonTitle: "Cancel", confirmButtonTitle: "Confirm")
+                        let picker = CZPickerView(headerTitle: "Closure List", cancelButtonTitle: "Cancel", confirmButtonTitle: "Confirm")
                         picker?.delegate = self
                         picker?.dataSource = self
                         picker?.needFooterView = false
@@ -169,12 +176,18 @@ class LeadDetails: UIViewController,UITextFieldDelegate,UITextViewDelegate {
         if (networkReachability?.isReachable)!
         {
 
+            self.loaderView.isHidden = false
+            self.loader.startAnimating()
+            
             let encryptedLeadId = AESCrypt.encrypt(self.leadID, password: DataManager.SharedInstance().getKeyForEncryption()).stringReplace()
             let encryptedAppointmentDate = AESCrypt.encrypt(self.dateTimeTextField.text, password: DataManager.SharedInstance().getKeyForEncryption()).stringReplace()
             let encryptedRemark = AESCrypt.encrypt(self.remarkTextView.text, password: DataManager.SharedInstance().getKeyForEncryption()).stringReplace()
             //remarkTextView
             
             DataManager.createAppointment(tranLeadId: encryptedLeadId, takerEmail: JNKeychain.loadValue(forKey: "encryptedEmailId") as! String, appointmentDt: encryptedAppointmentDate, appmntRemarks: encryptedRemark, custId: JNKeychain.loadValue(forKey: "encryptedCustID") as! String, clientId: JNKeychain.loadValue(forKey: "encryptedClientID") as! String, completionClouser: { (isSuccessful, error, result) in
+                
+                self.loaderView.isHidden = true
+                self.loader.stopAnimating()
                 
                 if isSuccessful
                 {
@@ -198,7 +211,11 @@ class LeadDetails: UIViewController,UITextFieldDelegate,UITextViewDelegate {
                                     {
                                         let message = AESCrypt.decrypt(message as! String, password: DataManager.SharedInstance().getKeyForEncryption()) as String
                                         print(message)
+                                        
                                     }
+                                    
+                                    self.AlertMessages(title: "Error", message: "Appointment created successfully", actionTitle: "OK", alertStyle: .alert, actionStyle: .cancel, handler: nil)
+                                    
                                 }
                                 else
                                 {
@@ -236,33 +253,10 @@ class LeadDetails: UIViewController,UITextFieldDelegate,UITextViewDelegate {
     }
     @IBAction func assignClicked(_ sender: Any)
     {
-        
-        self.navigationController?.pushViewController(UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "assignLeadIdentifier"), animated: true)
+        let assignLeadVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "assignLeadIdentifier") as! AssignLeadViewController
+        assignLeadVC.encryptedLead = self.leadID
+        self.navigationController?.pushViewController(assignLeadVC, animated: true)
         //assignLeadIdentifier
-        
-        
-        
-//        //{"error":"gxheYfNVBV4NCDBnMyDg==","message":"Pkxg3kPSKHcnnHSKesZzQ==","value":"IpvWnZCKCYtRd9f6B64opN4WWYvZTY07VFZeTpWO8aBVVht21R2P0+ybeUVvAD"}
-//        
-//        
-//        if (networkReachability?.isReachable)!
-//        {
-//            
-//            DataManager.assignLead(tranLeadId: <#T##String#>, giverEmail: <#T##String#>, giverRemarks: <#T##String#>, takerEmail: <#T##String#>, takerSol: <#T##String#>, custId: <#T##String#>, clientId: <#T##String#>, completionClouser: <#T##(Bool, String?, Any?) -> Void#>)
-////            DataManager.getCities(custID: JNKeychain.loadValue(forKey: "encryptedCustID") as! String, clientID: JNKeychain.loadValue(forKey: "encryptedClientID") as! String, message: AESCrypt.encrypt(self.allStateDictionary[text]!, password: DataManager.SharedInstance().getKeyForEncryption()).replacingOccurrences(of: "/", with: ":~:"), completionClouser: { (isSuccessful, error, result) in
-////                self.loaderView.isHidden = true
-////                self.loader.stopAnimating()
-////                if isSuccessful
-////                {
-////                }
-//        }
-//        else
-//        {
-//            self.AlertMessages(title: "Internet connection Error", message: "Your Device is not Connect to \"Internet\"", actionTitle: "OK", alertStyle: .alert, actionStyle: .cancel, handler: nil)
-//        }
-//        
-        
-        
     }
     
     @IBAction func hideAppointmentView(_ sender: Any)
@@ -274,21 +268,62 @@ class LeadDetails: UIViewController,UITextFieldDelegate,UITextViewDelegate {
     {
         if (networkReachability?.isReachable)!
         {
-            DataManager.leadClose(custID: JNKeychain.loadValue(forKey: "encryptedCustID") as! String, clientID: JNKeychain.loadValue(forKey: "encryptedClientID") as! String, forceLeadId: "", status: "", remarks: "", completionClouser: { (isSuccessful, error, result) in
+            self.loaderView.isHidden = false
+            self.loader.startAnimating()
             
+            let encryptedStatusCode = AESCrypt.encrypt(self.closureReasonDictionary[self.closureReson], password: DataManager.SharedInstance().getKeyForEncryption()).stringReplace()
+            let encryptedNA = AESCrypt.encrypt("NA", password: DataManager.SharedInstance().getKeyForEncryption()).stringReplace()
+            let encryptedLeadID = AESCrypt.encrypt(self.leadID, password: DataManager.SharedInstance().getKeyForEncryption()).stringReplace()
             
-            //self.loaderView.isHidden = true
-            //self.loader.stopAnimating()
+            DataManager.leadClose(custID: JNKeychain.loadValue(forKey: "encryptedCustID") as! String, clientID: JNKeychain.loadValue(forKey: "encryptedClientID") as! String, forceLeadId: encryptedLeadID, status: encryptedStatusCode, remarks: encryptedNA, completionClouser: { (isSuccessful, error, result) in
+            
+                self.loaderView.isHidden = true
+                self.loader.stopAnimating()
             
                 if isSuccessful
                 {
-                //                let jsonResult = result as? NSDictionary
-                //
-                //                if jsonResult["error"] == "NA"
-                //                {
-                //
-                //                }
-                //{"error":"-","message":"AUyXMVKm3WYZgcmxvtibJp2Mky8vbOoV/c5k9hjFOs8=","value":"-"}
+                    if let element = result as? NSDictionary
+                    {
+                        print(element)
+                        if let error = element["error"]
+                        {
+                            if !(error is NSNull)
+                            {
+                                let error = AESCrypt.decrypt(error as! String, password: DataManager.SharedInstance().getKeyForEncryption()) as String
+                                print(error)
+                                
+                                if let message = element["message"]
+                                {
+                                    let message = AESCrypt.decrypt(message as! String, password: DataManager.SharedInstance().getKeyForEncryption()) as String
+                                    print(message)
+                                }
+                                
+                                if error == "NA"
+                                {
+                                    if let value = element["value"]
+                                    {
+                                        let value = AESCrypt.decrypt(value as! String, password: DataManager.SharedInstance().getKeyForEncryption()) as String
+                                        print(value)
+                                    }
+                                    if let message = element["message"]
+                                    {
+                                        let message = AESCrypt.decrypt(message as! String, password: DataManager.SharedInstance().getKeyForEncryption()) as String
+                                        print(message)
+                                    }
+                                }
+                                else
+                                {
+                                    self.AlertMessages(title: "Error", message: error, actionTitle: "OK", alertStyle: .alert, actionStyle: .cancel, handler: nil)
+                                    return
+                                }
+                            }
+                            else
+                            {
+                                self.AlertMessages(title: "Error", message: "Please Try Again", actionTitle: "OK", alertStyle: .alert, actionStyle: .cancel, handler: nil)
+                            }
+                            
+                        }
+                    }
                 }
             
             })
@@ -336,16 +371,13 @@ class LeadDetails: UIViewController,UITextFieldDelegate,UITextViewDelegate {
         //        picker.isDatePickerOnly = true
         picker.completionHandler = { date in
             let formatter = DateFormatter()
-            formatter.dateFormat = "dd/MM/YY hh:mm aa"
+            formatter.dateFormat = "dd/MMM/YY"
             self.dateTimeTextField.text = formatter.string(from: date)
         }
 
     }
 
 }
-
-
-
 
 
 extension LeadDetails: CZPickerViewDelegate, CZPickerViewDataSource {
@@ -368,6 +400,7 @@ extension LeadDetails: CZPickerViewDelegate, CZPickerViewDataSource {
         self.navigationController?.setNavigationBarHidden(true, animated: true)
         
         // self.programmTextView.text = productList.[IndexPath].row.replacingOccurrences(of: "\"", with: "").replacingOccurrences(of: "[", with: "").replacingOccurrences(of: "]", with: "")
+        self.closureReson = Array(self.closureReasonDictionary.values)[row]
         print(Array(self.closureReasonDictionary.values)[row])
         
         let message = "Are you sure\n You want to close this Lead with reason \"\((Array(self.closureReasonDictionary.values)[row]))\""

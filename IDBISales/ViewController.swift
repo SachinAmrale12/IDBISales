@@ -33,7 +33,7 @@ class ViewController: UIViewController {
         
        keyForLoginCrendential = DataManager.SharedInstance().getGlobalKey()
         
-        userIdTextField.text = "129572"
+        userIdTextField.text = "129571"
         passwordTextField.text = "Pass@12345"
         self.navigationController?.navigationBar.isHidden = true
         self.commonInitialization()

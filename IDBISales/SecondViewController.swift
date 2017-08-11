@@ -144,17 +144,16 @@ class SecondViewController: UIViewController,UITableViewDelegate,UITableViewData
                                         for value in listArray!
                                         {
                                             let lead = AESCrypt.decrypt(value as! String, password: DataManager.SharedInstance().getKeyForEncryption()) as String
+                                            print(lead)
                                             let leadDetailArray = lead.components(separatedBy: "~")
                                             
                                             self.custName.append(leadDetailArray[0])
-                                            if leadDetailArray.count > 1
-                                            {
-                                                self.custPhoneNumber.append(leadDetailArray[1])
-                                                self.leadCreationDate.append(leadDetailArray[2])
-                                                self.productName.append(leadDetailArray[3])
-                                                self.leadID.append(leadDetailArray[4])
-                                                self.giverName.append(leadDetailArray[5])
-                                            }
+                                            self.custPhoneNumber.append(leadDetailArray[1])
+                                            self.leadCreationDate.append(leadDetailArray[2])
+                                            self.productName.append(leadDetailArray[3])
+                                            self.leadID.append(leadDetailArray[4])
+                                            self.giverName.append(leadDetailArray[5])
+                                            
                                         }
                                         
                                         self.tableView.reloadData()
@@ -181,16 +180,14 @@ class SecondViewController: UIViewController,UITableViewDelegate,UITableViewData
                                         {
                                             let lead = AESCrypt.decrypt(value as! String, password: DataManager.SharedInstance().getKeyForEncryption()) as String
                                             let leadDetailArray = lead.components(separatedBy: "~")
-                                            self.custNameBranch.append(leadDetailArray[0])
                                             
-                                            if leadDetailArray.count > 1
-                                            {
-                                                self.custPhoneNumberBranch.append(leadDetailArray[1])
-                                                self.leadCreationDateBranch.append(leadDetailArray[2])
-                                                self.productNameBranch.append(leadDetailArray[3])
-                                                self.leadIDBranch.append(leadDetailArray[4])
-                                                self.giverNameBranch.append(leadDetailArray[5])
-                                            }
+                                            self.custNameBranch.append(leadDetailArray[0])
+                                            self.custPhoneNumberBranch.append(leadDetailArray[1])
+                                            self.leadCreationDateBranch.append(leadDetailArray[2])
+                                            self.productNameBranch.append(leadDetailArray[3])
+                                            self.leadIDBranch.append(leadDetailArray[4])
+                                            self.giverNameBranch.append(leadDetailArray[5])
+                                            
                                         }
                                         
                                     }
@@ -287,7 +284,7 @@ class SecondViewController: UIViewController,UITableViewDelegate,UITableViewData
         
         if isMyLead
         {
-            print(custName)
+            print(leadID)
             leadDetailsVC.name = custName[indexPath.row]
             leadDetailsVC.product = productName[indexPath.row]
             leadDetailsVC.mobile = custPhoneNumber[indexPath.row]
