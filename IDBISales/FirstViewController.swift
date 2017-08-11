@@ -12,8 +12,6 @@ import Charts
 
 class FirstViewController: UIViewController {
 
-    
-    
     var sideMenu                        = MVYSideMenuController()
     let networkReachability             = Reachability()
     @IBOutlet var loaderView              : UIView!
@@ -22,6 +20,8 @@ class FirstViewController: UIViewController {
     var leadOpen                        : String!
     var leadClose                       : String!
     //secondVC
+    @IBOutlet weak var chartContainerView: UIView!
+    var chart                           = PieChartView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,6 +35,7 @@ class FirstViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         
+        self.chart.removeFromSuperview()
         let encryptedFlag = AESCrypt.encrypt("G", password: DataManager.SharedInstance().getKeyForEncryption()).stringReplace()
         self.callReportsService(flag: encryptedFlag)
     }
@@ -42,9 +43,9 @@ class FirstViewController: UIViewController {
     
     func updateChartData()  {
         
-        let chart = PieChartView(frame: self.view.frame)
-        let track = ["Total Leads", "Leads Close", "Leads Open"]
-        let money = [Double(self.totalLead), Double(self.leadClose), Double(self.leadOpen)]
+        chart = PieChartView(frame: self.view.frame)
+        let track = ["Leads Close", "Leads Open"]
+        let money = [Double(self.leadClose), Double(self.leadOpen)]
         
         var entries = [PieChartDataEntry]()
         for (index, value) in money.enumerated() {
@@ -55,17 +56,20 @@ class FirstViewController: UIViewController {
         }
         
         // 3. chart setup
-        let set = PieChartDataSet( values: entries, label: "Giver")
+        let set = PieChartDataSet( values: entries, label: "")
         // this is custom extension method. Download the code for more details.
         var colors: [UIColor] = []
         
-        for _ in 0..<money.count {
-            let red = Double(arc4random_uniform(256))
-            let green = Double(arc4random_uniform(256))
-            let blue = Double(arc4random_uniform(256))
-            let color = UIColor(red: CGFloat(red/255), green: CGFloat(green/255), blue: CGFloat(blue/255), alpha: 1)
-            colors.append(color)
-        }
+        colors.append(UIColor(red: (236.0/255.0), green: (147.0/255.0), blue: (88.0/255.0), alpha: 1.0))
+        colors.append(UIColor(red: (25.0/255.0), green: (111.0/255.0), blue: (61.0/255.0), alpha: 1.0))
+//        for _ in 0..<money.count {
+//            let red = Double(arc4random_uniform(256))
+//            let green = Double(arc4random_uniform(256))
+//            let blue = Double(arc4random_uniform(256))
+//            let color = UIColor(red: CGFloat(red/255), green: CGFloat(green/255), blue: CGFloat(blue/255), alpha: 1)
+//            colors.append(color)
+//        }
+        
         set.colors = colors
         let data = PieChartData(dataSet: set)
         chart.data = data
@@ -74,12 +78,13 @@ class FirstViewController: UIViewController {
         chart.isUserInteractionEnabled = true
         
         let d = Description()
-        d.text = "iOSCharts.io"
+        d.text = nil
         chart.chartDescription = d
-        chart.centerText = "Pie Chart"
-        chart.holeRadiusPercent = 0.2
+        chart.centerText = "Leads"
+        chart.holeRadiusPercent = 0.15
+        chart.frame = self.chartContainerView.bounds
         chart.transparentCircleColor = UIColor.clear
-        self.view.addSubview(chart)
+        self.chartContainerView.addSubview(chart)
         
     }
     
@@ -102,7 +107,6 @@ class FirstViewController: UIViewController {
                         if let error = element["error"]
                         {
                             let error = AESCrypt.decrypt(error as! String, password: DataManager.SharedInstance().getKeyForEncryption()) as String
-                            print(error)
                             if error == "NA"
                             {
                                 if let value = element["value"]

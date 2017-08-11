@@ -12,43 +12,58 @@ import ReachabilitySwift
 
 class ReportsViewController: UIViewController {
 
-    let networkReachability         = Reachability()
-    var encryptedFlag               : String!
+    let networkReachability                 = Reachability()
+    var encryptedFlag                       : String!
+    var leadOpen                            : String!
+    var leadClose                           : String!
+    @IBOutlet weak var loaderView           : UIView!
+    var loader                              : MaterialLoadingIndicator!
+    @IBOutlet weak var reportContainerView  : UIView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        self.loader = MaterialLoadingIndicator(frame: self.loaderView.bounds)
+        self.loaderView.addSubview(loader)
+        self.loaderView.isHidden = true
        // self.updateChartData()
         // Do any additional setup after loading the view.
+    }
+    
+    @IBAction func backButtonClicked(_ sender: Any)
+    {
+        self.navigationController?.popViewController(animated: true)
     }
     
     func updateChartData()  {
         
         let chart = PieChartView(frame: self.view.frame)
         // 2. generate chart data entries
-        let track = ["Income", "Expense", "Wallet", "Bank"]
-        let money = [650, 456.13, 78.67, 856.52]
+        let track = ["Leads Close", "Leads Open"]
+        let money = [Double(self.leadClose), Double(self.leadOpen)]
         
         var entries = [PieChartDataEntry]()
         for (index, value) in money.enumerated() {
             let entry = PieChartDataEntry()
-            entry.y = value
+            entry.y = value!
             entry.label = track[index]
             entries.append( entry)
         }
         
         // 3. chart setup
-        let set = PieChartDataSet( values: entries, label: "Pie Chart")
+        let set = PieChartDataSet( values: entries, label: "")
         // this is custom extension method. Download the code for more details.
         var colors: [UIColor] = []
+        colors.append(UIColor(red: (236.0/255.0), green: (147.0/255.0), blue: (88.0/255.0), alpha: 1.0))
+        colors.append(UIColor(red: (25.0/255.0), green: (111.0/255.0), blue: (61.0/255.0), alpha: 1.0))
         
-        for _ in 0..<money.count {
-            let red = Double(arc4random_uniform(256))
-            let green = Double(arc4random_uniform(256))
-            let blue = Double(arc4random_uniform(256))
-            let color = UIColor(red: CGFloat(red/255), green: CGFloat(green/255), blue: CGFloat(blue/255), alpha: 1)
-            colors.append(color)
-        }
+//        for _ in 0..<money.count {
+//            let red = Double(arc4random_uniform(256))
+//            let green = Double(arc4random_uniform(256))
+//            let blue = Double(arc4random_uniform(256))
+//            let color = UIColor(red: CGFloat(red/255), green: CGFloat(green/255), blue: CGFloat(blue/255), alpha: 1)
+//            colors.append(color)
+//        }
         set.colors = colors
         let data = PieChartData(dataSet: set)
         chart.data = data
@@ -57,18 +72,19 @@ class ReportsViewController: UIViewController {
         chart.isUserInteractionEnabled = true
         
         let d = Description()
-        d.text = "iOSCharts.io"
+        d.text = nil
         chart.chartDescription = d
-        chart.centerText = "Pie Chart"
-        chart.holeRadiusPercent = 0.2
+        chart.centerText = "Leads"
+        chart.holeRadiusPercent = 0.15
+        chart.frame = self.reportContainerView.bounds
         chart.transparentCircleColor = UIColor.clear
-        self.view.addSubview(chart)
+        self.reportContainerView.addSubview(chart)
         
     }
     
     override func viewWillAppear(_ animated: Bool) {
         
-        self.encryptedFlag = AESCrypt.encrypt("G", password: DataManager.SharedInstance().getKeyForEncryption()).stringReplace()
+        self.encryptedFlag = AESCrypt.encrypt("T", password: DataManager.SharedInstance().getKeyForEncryption()).stringReplace()
         self.callReportsService(flag: encryptedFlag)
     }
     
@@ -76,7 +92,13 @@ class ReportsViewController: UIViewController {
     {
         if (networkReachability?.isReachable)!
         {
+            self.loaderView.isHidden = false
+            self.loader.startAnimating()
+            
             DataManager.getReports(ein: JNKeychain.loadValue(forKey: "encryptedCustID") as! String, clientId: JNKeychain.loadValue(forKey: "encryptedClientID") as! String, flg: flag, completionClouser: { (isSuccessful, error, result) in
+                
+                self.loaderView.isHidden = true
+                self.loader.stopAnimating()
                 
                 if isSuccessful
                 {
@@ -92,6 +114,11 @@ class ReportsViewController: UIViewController {
                                 {
                                     let value = AESCrypt.decrypt(value as! String, password: DataManager.SharedInstance().getKeyForEncryption()) as String
                                     print(value)
+                                    let valuesArray = value.components(separatedBy: "~")
+                                    self.leadClose = valuesArray[1]
+                                    self.leadOpen = valuesArray[2]
+                                    
+                                    self.updateChartData()
                                 }
                                 if let message = element["message"]
                                 {
