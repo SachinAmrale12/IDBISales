@@ -10,7 +10,7 @@ import UIKit
 
 class MenuViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {
 
-    let contentArray                    = ["Home","Search Lead","Add Meeting","Reports"]
+    let contentArray                    = ["Reports","Logout"]
     @IBOutlet weak var menuTableView    : UITableView!
     var parrentViewInstance             : SecondViewController!
     
@@ -62,10 +62,11 @@ class MenuViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             userImage.layer.cornerRadius = userImage.frame.size.width / 2
             
             let userName = cell?.viewWithTag(2) as! UILabel
-            userName.text = "TestUser"
+            userName.text = JNKeychain.loadValue(forKey: "userID") as? String
             
             let userID = cell?.viewWithTag(3) as! UILabel
-            userID.text = "TESTID"
+            userID.numberOfLines = 2
+            userID.text = JNKeychain.loadValue(forKey: "emailID") as? String
             
             return cell!
         }
@@ -87,9 +88,13 @@ class MenuViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
     {
-        if indexPath.row == 4
+        if indexPath.row == 1
         {
             self.performSegue(withIdentifier: "reportVCIdentifier", sender: nil)
+        }
+        if indexPath.row == 2
+        {
+            self.navigationController?.popToRootViewController(animated: true)
         }
     }
 

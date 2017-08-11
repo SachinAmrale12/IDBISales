@@ -81,7 +81,6 @@ class AssignLeadViewController: UIViewController,UITextViewDelegate,UITextFieldD
             let encryptedRemark = AESCrypt.encrypt(self.remarkTextView.text, password: DataManager.SharedInstance().getKeyForEncryption()).stringReplace()
             let encryptedMail = AESCrypt.encrypt(self.takerMailID.text, password: DataManager.SharedInstance().getKeyForEncryption()).stringReplace()
             let encryptedSolID = AESCrypt.encrypt(self.solID, password: DataManager.SharedInstance().getKeyForEncryption()).stringReplace()
-            print(self.encryptedLead)
             let encryptedlead = AESCrypt.encrypt(self.encryptedLead, password: DataManager.SharedInstance().getKeyForEncryption()).stringReplace()
             
             DataManager.assignLead(tranLeadId: encryptedlead, giverEmail: JNKeychain.loadValue(forKey: "encryptedEmailId") as! String, giverRemarks: encryptedRemark, takerEmail: encryptedMail, takerSol: encryptedSolID, custId: JNKeychain.loadValue(forKey: "encryptedCustID") as! String, clientId: JNKeychain.loadValue(forKey: "encryptedClientID") as! String, completionClouser: { (isSuccessful, error, result) in
@@ -111,6 +110,8 @@ class AssignLeadViewController: UIViewController,UITextViewDelegate,UITextFieldD
                                     {
                                         let message = AESCrypt.decrypt(message as! String, password: DataManager.SharedInstance().getKeyForEncryption()) as String
                                         print(message)
+                                        
+                                        self.AlertMessages(title: "Error", message: message, actionTitle: "OK", alertStyle: .alert, actionStyle: .cancel, handler: nil)
                                     }
                                 }
                                 else
