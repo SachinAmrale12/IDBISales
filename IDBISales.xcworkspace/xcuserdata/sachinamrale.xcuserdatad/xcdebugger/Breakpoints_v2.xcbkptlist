@@ -42,7 +42,7 @@
                   moduleName = "IDBISales"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/sachinamrale/Documents/IDBI%20New%20Projects/IDBISales/IDBISales/LeadDetails.swift"
-                  timestampString = "524071872.071679"
+                  timestampString = "524120630.500694"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "194"
@@ -57,7 +57,7 @@
                   moduleName = "IDBISales"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/sachinamrale/Documents/IDBI%20New%20Projects/IDBISales/IDBISales/LeadDetails.swift"
-                  timestampString = "524071872.075961"
+                  timestampString = "524120630.504029"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "194"
@@ -80,22 +80,6 @@
             startingLineNumber = "196"
             endingLineNumber = "196"
             landmarkName = "scheduleAppointment(_:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "IDBISales/AssignLeadViewController.swift"
-            timestampString = "524068243.754268"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "92"
-            endingLineNumber = "92"
-            landmarkName = "assignButtonClicked(_:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -144,22 +128,6 @@
             startingLineNumber = "43"
             endingLineNumber = "43"
             landmarkName = "getReports(ein:clientId:flg:completionClouser:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "IDBISales/AssignLeadViewController.swift"
-            timestampString = "524069625.895689"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "84"
-            endingLineNumber = "84"
-            landmarkName = "assignButtonClicked(_:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

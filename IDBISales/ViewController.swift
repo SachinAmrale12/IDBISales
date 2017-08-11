@@ -33,8 +33,8 @@ class ViewController: UIViewController {
         
        keyForLoginCrendential = DataManager.SharedInstance().getGlobalKey()
         
-        userIdTextField.text = "129571"
-        passwordTextField.text = "Pass@12345"
+       // userIdTextField.text = "129571"
+      //  passwordTextField.text = "Pass@12345"
         self.navigationController?.navigationBar.isHidden = true
         self.commonInitialization()
         
@@ -208,16 +208,16 @@ class ViewController: UIViewController {
         self.loaderView.isHidden = true
         
         userIdTextField.animationDuration = 0.5
-        userIdTextField.subjectColor = UIColor.orange
-        userIdTextField.underLineColor = UIColor.orange
+        userIdTextField.subjectColor = UIColor.black
+        userIdTextField.underLineColor = UIColor(red: (25.0/255.0), green: (111.0/255.0), blue: (61.0/255.0), alpha: 1.0)
         
         passwordTextField.animationDuration = 0.5
-        passwordTextField.subjectColor = UIColor.orange
-        passwordTextField.underLineColor = UIColor.orange
+        passwordTextField.subjectColor = UIColor.black
+        passwordTextField.underLineColor = UIColor(red: (25.0/255.0), green: (111.0/255.0), blue: (61.0/255.0), alpha: 1.0)
         
-        loginButton.layer.cornerRadius = loginButton.frame.size.height / 2
-        loginButton.layer.borderColor = UIColor.orange.cgColor
-        loginButton.layer.borderWidth = 1
+       // loginButton.layer.cornerRadius = loginButton.frame.size.height / 2
+       // loginButton.layer.borderColor = UIColor.orange.cgColor
+       // loginButton.layer.borderWidth = 1
         
     }
     

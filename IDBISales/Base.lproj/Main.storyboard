@@ -36,7 +36,7 @@
                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LoginBackground" translatesAutoresizingMaskIntoConstraints="NO" id="9rn-CW-QA6">
                                                 <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                                             </imageView>
-                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="rN5-sT-Sdl" customClass="RaisePlaceholder" customModule="IDBISales" customModuleProvider="target">
+                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" placeholder="User ID" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="rN5-sT-Sdl" customClass="RaisePlaceholder" customModule="IDBISales" customModuleProvider="target">
                                                 <rect key="frame" x="40" y="228" width="240" height="37"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="240" id="1NP-Y0-Fxz"/>
@@ -47,25 +47,25 @@
                                                 <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute type="color" keyPath="underLineColor">
-                                                        <color key="value" red="0.92549019610000005" green="0.57647058819999997" blue="0.34509803919999998" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <color key="value" red="0.098039215690000001" green="0.43529411759999997" blue="0.23921568630000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
                                             </textField>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uSG-CN-Fs3">
-                                                <rect key="frame" x="76" y="395" width="168" height="40"/>
-                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                <rect key="frame" x="110" y="395" width="100" height="45"/>
+                                                <color key="backgroundColor" red="0.92549019610000005" green="0.57647058819999997" blue="0.34509803919999998" alpha="1" colorSpace="calibratedRGB"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="width" secondItem="uSG-CN-Fs3" secondAttribute="height" multiplier="21:5" id="dTa-ob-uCg"/>
+                                                    <constraint firstAttribute="width" secondItem="uSG-CN-Fs3" secondAttribute="height" multiplier="21:5" constant="-89" id="dTa-ob-uCg"/>
                                                 </constraints>
-                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
-                                                <state key="normal" title="Login">
-                                                    <color key="titleColor" red="0.92549019610000005" green="0.57647058819999997" blue="0.34509803919999998" alpha="1" colorSpace="calibratedRGB"/>
+                                                <fontDescription key="fontDescription" type="system" weight="thin" pointSize="18"/>
+                                                <state key="normal" title="LOGIN">
+                                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                                 </state>
                                                 <connections>
                                                     <action selector="loginClicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Jgk-2c-HK6"/>
                                                 </connections>
                                             </button>
-                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ceo-6D-o0a" customClass="RaisePlaceholder" customModule="IDBISales" customModuleProvider="target">
+                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ceo-6D-o0a" customClass="RaisePlaceholder" customModule="IDBISales" customModuleProvider="target">
                                                 <rect key="frame" x="40" y="292" width="240" height="37"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="ceo-6D-o0a" secondAttribute="height" multiplier="80:7" constant="-182.85714285714289" id="jhZ-Jf-U4J"/>
@@ -75,7 +75,7 @@
                                                 <textInputTraits key="textInputTraits"/>
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute type="color" keyPath="underLineColor">
-                                                        <color key="value" red="0.92549019610000005" green="0.57647058819999997" blue="0.34509803919999998" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <color key="value" red="0.098039215690000001" green="0.43529411759999997" blue="0.23921568630000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
                                             </textField>
@@ -92,7 +92,7 @@
                                             <constraint firstItem="9rn-CW-QA6" firstAttribute="top" secondItem="g2v-2K-hwt" secondAttribute="top" id="eLE-CB-gsL"/>
                                             <constraint firstItem="ceo-6D-o0a" firstAttribute="top" secondItem="rN5-sT-Sdl" secondAttribute="bottom" constant="27" id="gg6-8H-xuc"/>
                                             <constraint firstItem="uSG-CN-Fs3" firstAttribute="top" secondItem="ceo-6D-o0a" secondAttribute="bottom" constant="66" id="rs5-Rw-Wfl"/>
-                                            <constraint firstItem="uSG-CN-Fs3" firstAttribute="width" secondItem="g2v-2K-hwt" secondAttribute="height" multiplier="7:20" id="ssl-FX-acr"/>
+                                            <constraint firstItem="uSG-CN-Fs3" firstAttribute="width" secondItem="g2v-2K-hwt" secondAttribute="height" multiplier="7:20" constant="-68" id="ssl-FX-acr"/>
                                             <constraint firstAttribute="trailing" secondItem="9rn-CW-QA6" secondAttribute="trailing" id="uej-KQ-P2D"/>
                                         </constraints>
                                     </view>
