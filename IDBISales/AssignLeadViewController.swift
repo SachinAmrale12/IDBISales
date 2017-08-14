@@ -15,23 +15,24 @@ class AssignLeadViewController: UIViewController,UITextViewDelegate,UITextFieldD
     private let autocompleteViewForCity                     = LUAutocompleteView()
     private let autocompleteViewForBranch                   = LUAutocompleteView()
 
-    let networkReachability             = Reachability()
-    var loader                          : MaterialLoadingIndicator!
-    @IBOutlet weak var loaderView: UIView!
-    @IBOutlet var takerMailID           : UITextField!
-    @IBOutlet var branchTextField       : UITextField!
-    @IBOutlet var stateTextField        : UITextField!
-    @IBOutlet var cityTextField         : UITextField!
-    @IBOutlet var remarkTextView        : UITextView!
-    @IBOutlet var assignButton          : UIButton!
-    var picker                                             = CZPickerView()
+    @IBOutlet weak var loaderContainerView                  : UIView!
+    let networkReachability                                 = Reachability()
+    var loader                                              : MaterialLoadingIndicator!
+    @IBOutlet weak var loaderView                           : UIView!
+    @IBOutlet var takerMailID                               : UITextField!
+    @IBOutlet var branchTextField                           : UITextField!
+    @IBOutlet var stateTextField                            : UITextField!
+    @IBOutlet var cityTextField                             : UITextField!
+    @IBOutlet var remarkTextView                            : UITextView!
+    @IBOutlet var assignButton                              : UIButton!
+    var picker                                              = CZPickerView()
     var emailArray                                          = [String]()
     
     var allStateDictionary                                  = [String:String]()
     var allCityDictionary                                   = [String:String]()
     var allBranchDictionary                                 = [String:String]()
-    var solID                           : String!
-    var encryptedLead                   : String!
+    var solID                                               : String!
+    var encryptedLead                                       : String!
     
     @IBAction func backButtonClicked(_ sender: Any)
     {
@@ -53,6 +54,7 @@ class AssignLeadViewController: UIViewController,UITextViewDelegate,UITextFieldD
         self.loader = MaterialLoadingIndicator(frame: self.loaderView.bounds)
         self.loaderView.addSubview(loader)
         self.loaderView.isHidden = true
+        self.loaderContainerView.isHidden = true
         
         stateTextField.drawUnderLineForTextField()
         cityTextField.drawUnderLineForTextField()
@@ -76,6 +78,7 @@ class AssignLeadViewController: UIViewController,UITextViewDelegate,UITextFieldD
         if (networkReachability?.isReachable)!
         {
             self.loaderView.isHidden = false
+            self.loaderContainerView.isHidden = false
             self.loader.startAnimating()
             
             let encryptedRemark = AESCrypt.encrypt(self.remarkTextView.text, password: DataManager.SharedInstance().getKeyForEncryption()).stringReplace()
@@ -86,6 +89,7 @@ class AssignLeadViewController: UIViewController,UITextViewDelegate,UITextFieldD
             DataManager.assignLead(tranLeadId: encryptedlead, giverEmail: JNKeychain.loadValue(forKey: "encryptedEmailId") as! String, giverRemarks: encryptedRemark, takerEmail: encryptedMail, takerSol: encryptedSolID, custId: JNKeychain.loadValue(forKey: "encryptedCustID") as! String, clientId: JNKeychain.loadValue(forKey: "encryptedClientID") as! String, completionClouser: { (isSuccessful, error, result) in
                 
                 self.loaderView.isHidden = true
+                self.loaderContainerView.isHidden = true
                 self.loader.stopAnimating()
                 
                 if isSuccessful
@@ -154,10 +158,13 @@ class AssignLeadViewController: UIViewController,UITextViewDelegate,UITextFieldD
                 if (networkReachability?.isReachable)!
                 {
                     self.loaderView.isHidden = false
+                    self.loaderContainerView.isHidden = false
                     self.loader.startAnimating()
+                    
                     DataManager.getStates(custID: JNKeychain.loadValue(forKey: "encryptedCustID") as! String, clientID: JNKeychain.loadValue(forKey: "encryptedClientID") as! String, completionClouser: { (isSuccessful, error, result) in
                         
                         self.loaderView.isHidden = true
+                        self.loaderContainerView.isHidden = true
                         self.loader.stopAnimating()
                         
                         if isSuccessful
@@ -235,10 +242,15 @@ class AssignLeadViewController: UIViewController,UITextViewDelegate,UITextFieldD
             if (networkReachability?.isReachable)!
             {
                 self.loaderView.isHidden = false
+                self.loaderContainerView.isHidden = false
                 self.loader.startAnimating()
+                
                 DataManager.getCities(custID: JNKeychain.loadValue(forKey: "encryptedCustID") as! String, clientID: JNKeychain.loadValue(forKey: "encryptedClientID") as! String, message: AESCrypt.encrypt(self.allStateDictionary[text]!, password: DataManager.SharedInstance().getKeyForEncryption()).replacingOccurrences(of: "/", with: ":~:"), completionClouser: { (isSuccessful, error, result) in
+                    
                     self.loaderView.isHidden = true
+                    self.loaderContainerView.isHidden = true
                     self.loader.stopAnimating()
+                    
                     if isSuccessful
                     {
                         self.allCityDictionary.removeAll(keepingCapacity: false)
@@ -279,10 +291,15 @@ class AssignLeadViewController: UIViewController,UITextViewDelegate,UITextFieldD
             if (networkReachability?.isReachable)!
             {
                 self.loaderView.isHidden = false
+                self.loaderContainerView.isHidden = false
                 self.loader.startAnimating()
+                
                 DataManager.getBranches(custID: JNKeychain.loadValue(forKey: "encryptedCustID") as! String, clientID: JNKeychain.loadValue(forKey: "encryptedClientID") as! String, message: AESCrypt.encrypt(self.allCityDictionary[text]!, password: DataManager.SharedInstance().getKeyForEncryption()).replacingOccurrences(of: "/", with: ":~:"), completionClouser: { (isSuccessful, error, result) in
+                    
                     self.loaderView.isHidden = true
+                    self.loaderContainerView.isHidden = true
                     self.loader.stopAnimating()
+                    
                     if isSuccessful
                     {
                         if let jsonResult = result as? Array<Dictionary<String, String>>
@@ -323,6 +340,7 @@ class AssignLeadViewController: UIViewController,UITextViewDelegate,UITextFieldD
             if (networkReachability?.isReachable)!
             {
                 self.loaderView.isHidden = false
+                self.loaderContainerView.isHidden = false
                 self.loader.startAnimating()
                 
                 self.solID = self.allBranchDictionary[text]!
@@ -330,7 +348,9 @@ class AssignLeadViewController: UIViewController,UITextViewDelegate,UITextFieldD
                 DataManager.getEmailIDFromSol(sol: AESCrypt.encrypt(self.allBranchDictionary[text]!, password: DataManager.SharedInstance().getKeyForEncryption()).replacingOccurrences(of: "/", with: ":~:"), custID: JNKeychain.loadValue(forKey: "encryptedCustID") as! String, clientID: JNKeychain.loadValue(forKey: "encryptedClientID") as! String, completionClouser: { (isSuccessful, error, result) in
                     
                     self.loaderView.isHidden = true
+                    self.loaderContainerView.isHidden = true
                     self.loader.stopAnimating()
+                    
                     if isSuccessful
                     {
                         

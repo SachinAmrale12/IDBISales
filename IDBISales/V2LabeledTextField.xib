@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12120" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="V2LabeledTextField">
+            <connections>
+                <outlet property="ContainerView" destination="hUt-eK-2OF" id="844-RX-sZV"/>
+                <outlet property="label" destination="gli-KU-may" id="Y5a-Ev-CBe"/>
+                <outlet property="textField" destination="hhT-tl-9kT" id="gyc-St-oPx"/>
+                <outlet property="view" destination="iN0-l3-epB" id="hDh-AT-Sk4"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="300" height="60"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gli-KU-may">
+                    <rect key="frame" x="20" y="0.0" width="242" height="20"/>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hUt-eK-2OF">
+                    <rect key="frame" x="20" y="23" width="248" height="35"/>
+                    <subviews>
+                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="hhT-tl-9kT" customClass="V2Textfield">
+                            <rect key="frame" x="0.0" y="0.0" width="248" height="30"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="30" id="lNs-Ee-Zzy"/>
+                            </constraints>
+                            <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <textInputTraits key="textInputTraits"/>
+                        </textField>
+                    </subviews>
+                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="trailing" secondItem="hhT-tl-9kT" secondAttribute="trailing" id="Mis-Yp-d7N"/>
+                        <constraint firstItem="hhT-tl-9kT" firstAttribute="top" secondItem="hUt-eK-2OF" secondAttribute="top" id="dEx-uO-wJX"/>
+                        <constraint firstItem="hhT-tl-9kT" firstAttribute="centerY" secondItem="hUt-eK-2OF" secondAttribute="centerY" constant="-2.5" id="ufk-cu-zRj"/>
+                        <constraint firstItem="hhT-tl-9kT" firstAttribute="leading" secondItem="hUt-eK-2OF" secondAttribute="leading" id="xle-KQ-V3z"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="hUt-eK-2OF" secondAttribute="bottom" constant="2" id="1YC-If-493"/>
+                <constraint firstAttribute="trailing" secondItem="gli-KU-may" secondAttribute="trailing" constant="38" id="2bJ-fb-sZg"/>
+                <constraint firstItem="hUt-eK-2OF" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" constant="10.5" id="63W-2g-fyU"/>
+                <constraint firstItem="gli-KU-may" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="RlX-kX-EDN"/>
+                <constraint firstItem="hUt-eK-2OF" firstAttribute="top" secondItem="gli-KU-may" secondAttribute="bottom" constant="3" id="WO6-hv-G4h"/>
+                <constraint firstItem="gli-KU-may" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="20" id="Xvm-b4-cmm"/>
+                <constraint firstAttribute="trailing" secondItem="hUt-eK-2OF" secondAttribute="trailing" constant="32" id="wRN-tR-aSl"/>
+                <constraint firstItem="gli-KU-may" firstAttribute="leading" secondItem="hUt-eK-2OF" secondAttribute="leading" id="zRx-AA-25k"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+        </view>
+    </objects>
+</document>

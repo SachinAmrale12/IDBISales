@@ -19,6 +19,8 @@ class ReportsViewController: UIViewController {
     @IBOutlet weak var loaderView           : UIView!
     var loader                              : MaterialLoadingIndicator!
     @IBOutlet weak var reportContainerView  : UIView!
+    @IBOutlet weak var loaderContainerView  : UIView!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,6 +28,7 @@ class ReportsViewController: UIViewController {
         self.loader = MaterialLoadingIndicator(frame: self.loaderView.bounds)
         self.loaderView.addSubview(loader)
         self.loaderView.isHidden = true
+        self.loaderContainerView.isHidden = true
        // self.updateChartData()
         // Do any additional setup after loading the view.
     }
@@ -93,11 +96,13 @@ class ReportsViewController: UIViewController {
         if (networkReachability?.isReachable)!
         {
             self.loaderView.isHidden = false
+            self.loaderContainerView.isHidden = false
             self.loader.startAnimating()
             
             DataManager.getReports(ein: JNKeychain.loadValue(forKey: "encryptedCustID") as! String, clientId: JNKeychain.loadValue(forKey: "encryptedClientID") as! String, flg: flag, completionClouser: { (isSuccessful, error, result) in
                 
                 self.loaderView.isHidden = true
+                self.loaderContainerView.isHidden = true
                 self.loader.stopAnimating()
                 
                 if isSuccessful

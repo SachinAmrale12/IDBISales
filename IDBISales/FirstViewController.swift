@@ -12,16 +12,17 @@ import Charts
 
 class FirstViewController: UIViewController {
 
-    var sideMenu                        = MVYSideMenuController()
-    let networkReachability             = Reachability()
-    @IBOutlet var loaderView              : UIView!
-    var loader                          : MaterialLoadingIndicator!
-    var totalLead                       : String!
-    var leadOpen                        : String!
-    var leadClose                       : String!
+    @IBOutlet weak var loaderContainerView      : UIView!
+    var sideMenu                                = MVYSideMenuController()
+    let networkReachability                     = Reachability()
+    @IBOutlet var loaderView                    : UIView!
+    var loader                                  : MaterialLoadingIndicator!
+    var totalLead                               : String!
+    var leadOpen                                : String!
+    var leadClose                               : String!
     //secondVC
-    @IBOutlet weak var chartContainerView: UIView!
-    var chart                           = PieChartView()
+    @IBOutlet weak var chartContainerView       : UIView!
+    var chart                                   = PieChartView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,6 +30,7 @@ class FirstViewController: UIViewController {
         self.loader = MaterialLoadingIndicator(frame: self.loaderView.bounds)
         self.loaderView.addSubview(loader)
         self.loaderView.isHidden = true
+        self.loaderContainerView.isHidden = true
         // Do any additional setup after loading the view.
     }
     
@@ -93,11 +95,13 @@ class FirstViewController: UIViewController {
         if (networkReachability?.isReachable)!
         {
             self.loaderView.isHidden = false
+            self.loaderContainerView.isHidden = false
             self.loader.startAnimating()
             
             DataManager.getReports(ein: JNKeychain.loadValue(forKey: "encryptedCustID") as! String, clientId: JNKeychain.loadValue(forKey: "encryptedClientID") as! String, flg: flag, completionClouser: { (isSuccessful, error, result) in
                 
                 self.loaderView.isHidden = true
+                self.loaderContainerView.isHidden = true
                 self.loader.stopAnimating()
                 
                 if isSuccessful
@@ -112,7 +116,6 @@ class FirstViewController: UIViewController {
                                 if let value = element["value"]
                                 {
                                     let value = AESCrypt.decrypt(value as! String, password: DataManager.SharedInstance().getKeyForEncryption()) as String
-                                    print(value)
                                     let valuesArray = value.components(separatedBy: "~")
                                     self.totalLead = valuesArray[0]
                                     self.leadClose = valuesArray[1]

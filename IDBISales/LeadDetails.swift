@@ -11,24 +11,38 @@ import ReachabilitySwift
 
 class LeadDetails: UIViewController,UITextFieldDelegate,UITextViewDelegate {
     
+    
+    @IBOutlet weak var loaderContainerView: UIView!
+    @IBOutlet weak var custName         : V2LabeledTextField!
+    @IBOutlet weak var productName      : V2LabeledTextField!
+    @IBOutlet weak var giverEmail       : V2LabeledTextField!
+    @IBOutlet weak var mobileNumber     : V2LabeledTextField!
+    @IBOutlet weak var giverName        : V2LabeledTextField!
+    @IBOutlet weak var createdDate      : V2LabeledTextField!
+    @IBOutlet weak var customerEmail    : V2LabeledTextField!
+    
     let networkReachability             = Reachability()
     var closureReasonDictionary         = [String:String]()
     
     @IBOutlet weak var loaderView: UIView!
-    @IBOutlet var leadName              : UILabel!
-    @IBOutlet var productName           : UILabel!
-    @IBOutlet var mobileNumber          : UILabel!
-    @IBOutlet var email                 : UILabel!
-    @IBOutlet var giverEmailID          : UILabel!
-    @IBOutlet var giverName             : UILabel!
+  //  @IBOutlet var leadName              : UILabel!
+  //  @IBOutlet var productName           : UILabel!
+  //  @IBOutlet var mobileNumber          : UILabel!
+  //  @IBOutlet var email                 : UILabel!
+  //  @IBOutlet var giverEmailID          : UILabel!
+ //   @IBOutlet var giverName             : UILabel!
+    
+  //  @IBOutlet weak var createdDate: UILabel!
     
     @IBOutlet weak var fromLabel        : UILabel!
+    
     var name                            : String!
     var product                         : String!
     var mobile                          : String!
     var mail                            : String!
     var givermail                       : String!
     var givername                       : String!
+    var createddate                     : String!
     var loader                          : MaterialLoadingIndicator!
     var leadID                          : String!
     
@@ -58,28 +72,41 @@ class LeadDetails: UIViewController,UITextFieldDelegate,UITextViewDelegate {
     {
         self.loader = MaterialLoadingIndicator(frame: self.loaderView.bounds)
         self.loaderView.addSubview(loader)
+        self.loaderContainerView.isHidden = true
         self.loaderView.isHidden = true
         
-        self.leadName.text = name
-        self.productName.text = product
-        self.mobileNumber.text = mobile
-        self.giverName.text = givername
-        self.giverEmailID.text = JNKeychain.loadValue(forKey: "emailID") as? String
+        custName.label.text = "Name"
+        productName.label.text = "Product"
+        mobileNumber.label.text = "Mobile Number"
+        createdDate.label.text = "Created Date"
+        customerEmail.label.text = "Customer Email"
+        giverName.label.text = "Name"
+        giverEmail.label.text = "Email"
+        
+        custName.textField.text = name
+        productName.textField.text = product
+        mobileNumber.textField.text = mobile
+        createdDate.textField.text = createddate
+        customerEmail.textField.text = mail
+        giverName.textField.text = givername
+        giverEmail.textField.text = givermail
+        
+       // self.leadName.text = name
+     //   self.productName.text = product
+     //   self.mobileNumber.text = mobile
+       // self.giverName.text = givername
+     //   self.giverEmailID.text = givermail
+     //   self.email.text = mail
+    //    self.createdDate.text = createddate
         
         remarkTextView.layer.borderWidth = 1
         remarkTextView.layer.cornerRadius = 4
         remarkTextView.layer.borderColor = UIColor.orange.cgColor
+
         
-        leadName.drawUnderLineForLabel()
-        productName.drawUnderLineForLabel()
-        mobileNumber.drawUnderLineForLabel()
-        email.drawUnderLineForLabel()
-        giverEmailID.drawUnderLineForLabel()
-        giverName.drawUnderLineForLabel()
-        
-        fromLabel.layer.borderWidth = 1
-        fromLabel.layer.cornerRadius = 4
-        fromLabel.layer.borderColor = UIColor.orange.cgColor
+//        fromLabel.layer.borderWidth = 1
+//        fromLabel.layer.cornerRadius = 4
+//        fromLabel.layer.borderColor = UIColor.orange.cgColor
     }
     
     override func didReceiveMemoryWarning() {
@@ -119,11 +146,13 @@ class LeadDetails: UIViewController,UITextFieldDelegate,UITextViewDelegate {
         if (networkReachability?.isReachable)!
         {
             self.loaderView.isHidden = false
+            self.loaderContainerView.isHidden = false
             self.loader.startAnimating()
             
             DataManager.getLeadClosureReasons(custID: JNKeychain.loadValue(forKey: "encryptedCustID") as! String, clientID: JNKeychain.loadValue(forKey: "encryptedClientID") as! String, completionClouser: { (isSuccessful, error, result) in
                 
                 self.loaderView.isHidden = true
+                self.loaderContainerView.isHidden = true
                 self.loader.stopAnimating()
                 
                 if isSuccessful
@@ -177,6 +206,7 @@ class LeadDetails: UIViewController,UITextFieldDelegate,UITextViewDelegate {
         {
 
             self.loaderView.isHidden = false
+            self.loaderContainerView.isHidden = false
             self.loader.startAnimating()
             
             let encryptedLeadId = AESCrypt.encrypt(self.leadID, password: DataManager.SharedInstance().getKeyForEncryption()).stringReplace()
@@ -187,6 +217,7 @@ class LeadDetails: UIViewController,UITextFieldDelegate,UITextViewDelegate {
             DataManager.createAppointment(tranLeadId: encryptedLeadId, takerEmail: JNKeychain.loadValue(forKey: "encryptedEmailId") as! String, appointmentDt: encryptedAppointmentDate, appmntRemarks: encryptedRemark, custId: JNKeychain.loadValue(forKey: "encryptedCustID") as! String, clientId: JNKeychain.loadValue(forKey: "encryptedClientID") as! String, completionClouser: { (isSuccessful, error, result) in
                 
                 self.loaderView.isHidden = true
+                self.loaderContainerView.isHidden = true
                 self.loader.stopAnimating()
                 
                 if isSuccessful
@@ -269,6 +300,7 @@ class LeadDetails: UIViewController,UITextFieldDelegate,UITextViewDelegate {
         if (networkReachability?.isReachable)!
         {
             self.loaderView.isHidden = false
+            self.loaderContainerView.isHidden = false
             self.loader.startAnimating()
             
             let encryptedStatusCode = AESCrypt.encrypt(self.closureReasonDictionary[self.closureReson], password: DataManager.SharedInstance().getKeyForEncryption()).stringReplace()
@@ -278,6 +310,7 @@ class LeadDetails: UIViewController,UITextFieldDelegate,UITextViewDelegate {
             DataManager.leadClose(custID: JNKeychain.loadValue(forKey: "encryptedCustID") as! String, clientID: JNKeychain.loadValue(forKey: "encryptedClientID") as! String, forceLeadId: encryptedLeadID, status: encryptedStatusCode, remarks: encryptedNA, completionClouser: { (isSuccessful, error, result) in
             
                 self.loaderView.isHidden = true
+                self.loaderContainerView.isHidden = true
                 self.loader.stopAnimating()
             
                 if isSuccessful

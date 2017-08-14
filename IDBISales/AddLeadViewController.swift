@@ -12,11 +12,12 @@ import TNCheckBoxGroup
 
 class AddLeadViewController: UIViewController,UIPickerViewDelegate,UIPickerViewDataSource,UITextFieldDelegate,LUAutocompleteViewDelegate,LUAutocompleteViewDataSource,UITextViewDelegate{
     
+    @IBOutlet weak var loaderContainerVIew                  : UIView!
     @IBOutlet weak var lastNameTextfield                    : RaisePlaceholder!
     @IBOutlet weak var assigniTextfield                     : UITextView!
     @IBOutlet weak var nonCustomerRadioButton               : DLRadioButton!
     @IBOutlet weak var customerRadioButton                  : DLRadioButton!
-    @IBOutlet weak var checkBoxContainerView: UIView!
+    @IBOutlet weak var checkBoxContainerView                : UIView!
     @IBOutlet weak var checkBoxView                         : UIView!
     @IBOutlet weak var programmTextView                     : UITextView!
     var loader                                              : MaterialLoadingIndicator!
@@ -91,6 +92,7 @@ class AddLeadViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
         self.loader = MaterialLoadingIndicator(frame: self.loaderView.bounds)
         self.loaderView.addSubview(loader)
         self.loaderView.isHidden = true
+        self.loaderContainerVIew.isHidden = true
         
         Products = ["Agri Loan", "Auto Loan", "Being My Account", "Capital Gain Account", "Cash Card","Corporate Salary Account","Credit Card","Dealer Finance","DeMat Account","Education Loan","Flexi Current Account","Floating Rate Term Account","Gift Card","Godhuli Retail Term Deposite","Home Loan","Jublee Plus(Senior Citizen) Account","Loan Against Property","Loan Against Securities","Mutual Funds","National Pension Scheme","Personal Loan","Power Kids Account","Recurring Deposite","Reverse Mortgage Loan","Sabka Savings Account","Savings Account","Super Shakti Womens","Suvidha Fix Deposite","Suvidha Suraksha Recurring Deposite","Trader Finance","Word Currency Card"]
         
@@ -229,6 +231,7 @@ class AddLeadViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
         if (networkReachability?.isReachable)!
         {
             self.loaderView.isHidden = false
+            self.loaderContainerVIew.isHidden = false
             self.loader.startAnimating()
             
             let custID : String!
@@ -305,7 +308,9 @@ class AddLeadViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
             DataManager.createLead(isNewCustomer: isNewCustomer,programId: programid, leadCustId: custID, sourceBycode: AESCrypt.encrypt("others", password: DataManager.SharedInstance().getKeyForEncryption()).stringReplace(), custName: AESCrypt.encrypt(self.fullNameforAddLead, password: DataManager.SharedInstance().getKeyForEncryption()).stringReplace(), cityCode: cityCode, stateCode: stateCode, emailID: AESCrypt.encrypt(emailIdTextfield.text, password: DataManager.SharedInstance().getKeyForEncryption()).stringReplace(), empEmailId: AESCrypt.encrypt(JNKeychain.loadValue(forKey: "emailID") as! String, password: DataManager.SharedInstance().getKeyForEncryption()).stringReplace(), takerEmailId: self.takerEmailID, custId: JNKeychain.loadValue(forKey: "encryptedCustID") as! String, takerSolId: branchCode, mobileNo:  AESCrypt.encrypt(mobileNoTextfield.text, password: DataManager.SharedInstance().getKeyForEncryption()).stringReplace(), clientID: JNKeychain.loadValue(forKey: "encryptedClientID") as! String, completionClouser: { (isSuccessful, error, result) in
             
                 self.loaderView.isHidden = true
+                self.loaderContainerVIew.isHidden = true
                 self.loader.stopAnimating()
+                
                 print(result as Any)
                 if isSuccessful
                 {
@@ -408,11 +413,13 @@ class AddLeadViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
             if (networkReachability?.isReachable)!
             {
                 self.loaderView.isHidden = false
+                self.loaderContainerVIew.isHidden = false
                 self.loader.startAnimating()
                 
                 DataManager.getCustomerDetails(ein: JNKeychain.loadValue(forKey: "encryptedCustID") as! String,custID: AESCrypt.encrypt(customerIDTextfield.text, password: DataManager.SharedInstance().getKeyForEncryption()).stringReplace(), clientID: JNKeychain.loadValue(forKey: "encryptedClientID") as! String, completionClouser: { (isSuccessful, error, result) in
                     
                     self.loaderView.isHidden = true
+                    self.loaderContainerVIew.isHidden = true
                     self.loader.stopAnimating()
                     
                     if isSuccessful
@@ -646,10 +653,13 @@ class AddLeadViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
                 if (networkReachability?.isReachable)!
                 {
                     self.loaderView.isHidden = false
+                    self.loaderContainerVIew.isHidden = false
                     self.loader.startAnimating()
+                    
                     DataManager.getStates(custID: JNKeychain.loadValue(forKey: "encryptedCustID") as! String, clientID: JNKeychain.loadValue(forKey: "encryptedClientID") as! String, completionClouser: { (isSuccessful, error, result) in
                         
                         self.loaderView.isHidden = true
+                        self.loaderContainerVIew.isHidden = true
                         self.loader.stopAnimating()
                         
                         if isSuccessful
@@ -803,10 +813,15 @@ class AddLeadViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
             if (networkReachability?.isReachable)!
             {
                 self.loaderView.isHidden = false
+                self.loaderContainerVIew.isHidden = false
                 self.loader.startAnimating()
+                
                 DataManager.getCities(custID: JNKeychain.loadValue(forKey: "encryptedCustID") as! String, clientID: JNKeychain.loadValue(forKey: "encryptedClientID") as! String, message: AESCrypt.encrypt(self.allStateDictionary[text]!, password: DataManager.SharedInstance().getKeyForEncryption()).replacingOccurrences(of: "/", with: ":~:"), completionClouser: { (isSuccessful, error, result) in
+                    
                     self.loaderView.isHidden = true
+                    self.loaderContainerVIew.isHidden = true
                     self.loader.stopAnimating()
+                    
                     if isSuccessful
                     {
                         self.allCityDictionary.removeAll(keepingCapacity: false)
@@ -847,10 +862,15 @@ class AddLeadViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
             if (networkReachability?.isReachable)!
             {
                 self.loaderView.isHidden = false
+                self.loaderContainerVIew.isHidden = false
                 self.loader.startAnimating()
+                
                 DataManager.getBranches(custID: JNKeychain.loadValue(forKey: "encryptedCustID") as! String, clientID: JNKeychain.loadValue(forKey: "encryptedClientID") as! String, message: AESCrypt.encrypt(self.allCityDictionary[text]!, password: DataManager.SharedInstance().getKeyForEncryption()).replacingOccurrences(of: "/", with: ":~:"), completionClouser: { (isSuccessful, error, result) in
+                    
                     self.loaderView.isHidden = true
+                    self.loaderContainerVIew.isHidden = true
                     self.loader.stopAnimating()
+                    
                     if isSuccessful
                     {
                         if let jsonResult = result as? Array<Dictionary<String, String>>
@@ -891,12 +911,15 @@ class AddLeadViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
             if (networkReachability?.isReachable)!
             {
                 self.loaderView.isHidden = false
+                self.loaderContainerVIew.isHidden = false
                 self.loader.startAnimating()
                 
                 DataManager.getEmailIDFromSol(sol: AESCrypt.encrypt(self.allBranchDictionary[text]!, password: DataManager.SharedInstance().getKeyForEncryption()).replacingOccurrences(of: "/", with: ":~:"), custID: JNKeychain.loadValue(forKey: "encryptedCustID") as! String, clientID: JNKeychain.loadValue(forKey: "encryptedClientID") as! String, completionClouser: { (isSuccessful, error, result) in
                     
                     self.loaderView.isHidden = true
+                    self.loaderContainerVIew.isHidden = true
                     self.loader.stopAnimating()
+                    
                     if isSuccessful
                     {
                         
@@ -970,11 +993,15 @@ class AddLeadViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
             if (networkReachability?.isReachable)!
             {
                 self.loaderView.isHidden = false
+                self.loaderContainerVIew.isHidden = false
                 self.loader.startAnimating()
                 
                 DataManager.getProgrammList(custID: JNKeychain.loadValue(forKey: "encryptedCustID") as! String, clientID: JNKeychain.loadValue(forKey: "encryptedClientID") as! String, completionClouser: { (isSuccessful, error, result) in
+                    
                     self.loaderView.isHidden = true
+                    self.loaderContainerVIew.isHidden = true
                     self.loader.stopAnimating()
+                    
                     if isSuccessful
                     {
                         if let jsonResult = result as? Array<Dictionary<String, String>>

@@ -13,6 +13,7 @@ import ReachabilitySwift
 
 class ViewController: UIViewController {
 
+    @IBOutlet weak var loaderViewContainer      : UIView!
     @IBOutlet weak var loaderView               : UIView!
     @IBOutlet weak var userIdTextField          : RaisePlaceholder!
     @IBOutlet weak var passwordTextField        : RaisePlaceholder!
@@ -65,6 +66,7 @@ class ViewController: UIViewController {
                     if (networkReachability?.isReachable)!
                     {
                         self.loaderView.isHidden = false
+                        self.loaderViewContainer.isHidden = false
                         self.loader.startAnimating()
                         
                         let encryptedEINNumber = AESCrypt.encrypt(userIdTextField.text, password: keyForLoginCrendential).stringReplace()
@@ -120,7 +122,9 @@ class ViewController: UIViewController {
                                             DataManager.getAccessToken(custID: AESCrypt.encrypt(userID, password: self.keyForLoginCrendential).stringReplace(), clientID: AESCrypt.encrypt(self.clientID, password: encryptionLey).stringReplace(), pin: AESCrypt.encrypt(reverseID, password: encryptionLey).stringReplace(), username: username, clientSecret: AESCrypt.encrypt("2209@lms", password: encryptionLey).stringReplace(), completionClouser: { (isSuccessful, error, result) in
                                                 
                                                 self.loaderView.isHidden = true
+                                                self.loaderViewContainer.isHidden = true
                                                 self.loader.stopAnimating()
+                                                
                                                 if isSuccessful
                                                 {
                                                     if let jsonResult = result as? Dictionary<String, String>
@@ -171,6 +175,7 @@ class ViewController: UIViewController {
                                         else
                                         {
                                             self.loaderView.isHidden = true
+                                            self.loaderViewContainer.isHidden = true
                                             self.loader.stopAnimating()
                                             self.AlertMessages(title: "Error", message: error, actionTitle: "OK", alertStyle: .alert, actionStyle: .cancel, handler: nil)
                                         }
@@ -183,6 +188,7 @@ class ViewController: UIViewController {
                                 if let errorString = error
                                 {
                                      self.loaderView.isHidden = true
+                                    self.loaderViewContainer.isHidden = true
                                      self.loader.stopAnimating()
                                     self.AlertMessages(title: "Error", message: errorString, actionTitle: "OK", alertStyle: .alert, actionStyle: .cancel, handler: nil)
                                 }
@@ -205,6 +211,7 @@ class ViewController: UIViewController {
         
         self.loader = MaterialLoadingIndicator(frame: self.loaderView.bounds)
         self.loaderView.addSubview(loader)
+        self.loaderViewContainer.isHidden = true
         self.loaderView.isHidden = true
         
         userIdTextField.animationDuration = 0.5

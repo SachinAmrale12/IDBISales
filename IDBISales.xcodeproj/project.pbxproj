@@ -21,6 +21,10 @@
 		5C9F218F1F347DA500DB5274 /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C9F218E1F347DA500DB5274 /* Alert.swift */; };
 		5CB5008F1F3327DC00431EE8 /* JNKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CB5008E1F3327DC00431EE8 /* JNKeychain.m */; };
 		5CB500941F3331F500431EE8 /* CCheckbox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CB500931F3331F500431EE8 /* CCheckbox.swift */; };
+		5CB5BA3D1F3DD0B100EC196B /* V2LabeledTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CB5BA391F3DD0B100EC196B /* V2LabeledTextField.m */; };
+		5CB5BA3E1F3DD0B100EC196B /* V2LabeledTextField.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5CB5BA3A1F3DD0B100EC196B /* V2LabeledTextField.xib */; };
+		5CB5BA3F1F3DD0B100EC196B /* V2Textfield.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CB5BA3C1F3DD0B100EC196B /* V2Textfield.m */; };
+		5CB5BA421F3DD1EF00EC196B /* UIColor+V2Color.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CB5BA411F3DD1EF00EC196B /* UIColor+V2Color.m */; };
 		5CBBEF431F31D3840032B57B /* LUAutocompleteTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CBBEF3F1F31D3840032B57B /* LUAutocompleteTableViewCell.swift */; };
 		5CBBEF441F31D3840032B57B /* LUAutocompleteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CBBEF401F31D3840032B57B /* LUAutocompleteView.swift */; };
 		5CBBEF451F31D3840032B57B /* LUAutocompleteViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CBBEF411F31D3840032B57B /* LUAutocompleteViewDataSource.swift */; };
@@ -91,6 +95,13 @@
 		5CB5008D1F3327DC00431EE8 /* JNKeychain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JNKeychain.h; sourceTree = "<group>"; };
 		5CB5008E1F3327DC00431EE8 /* JNKeychain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JNKeychain.m; sourceTree = "<group>"; };
 		5CB500931F3331F500431EE8 /* CCheckbox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CCheckbox.swift; sourceTree = "<group>"; };
+		5CB5BA381F3DD0B100EC196B /* V2LabeledTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = V2LabeledTextField.h; sourceTree = "<group>"; };
+		5CB5BA391F3DD0B100EC196B /* V2LabeledTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = V2LabeledTextField.m; sourceTree = "<group>"; };
+		5CB5BA3A1F3DD0B100EC196B /* V2LabeledTextField.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = V2LabeledTextField.xib; sourceTree = "<group>"; };
+		5CB5BA3B1F3DD0B100EC196B /* V2Textfield.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = V2Textfield.h; sourceTree = "<group>"; };
+		5CB5BA3C1F3DD0B100EC196B /* V2Textfield.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = V2Textfield.m; sourceTree = "<group>"; };
+		5CB5BA401F3DD1EF00EC196B /* UIColor+V2Color.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+V2Color.h"; sourceTree = "<group>"; };
+		5CB5BA411F3DD1EF00EC196B /* UIColor+V2Color.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+V2Color.m"; sourceTree = "<group>"; };
 		5CBBEF3F1F31D3840032B57B /* LUAutocompleteTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LUAutocompleteTableViewCell.swift; sourceTree = "<group>"; };
 		5CBBEF401F31D3840032B57B /* LUAutocompleteView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LUAutocompleteView.swift; sourceTree = "<group>"; };
 		5CBBEF411F31D3840032B57B /* LUAutocompleteViewDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LUAutocompleteViewDataSource.swift; sourceTree = "<group>"; };
@@ -167,6 +178,7 @@
 		5C63B7FD1F2B38D500B56C92 /* ThirdPartyLibraries */ = {
 			isa = PBXGroup;
 			children = (
+				5CB5BA321F3DCDF100EC196B /* LabledText */,
 				5C75718E1F397B200052513E /* RadioButtton */,
 				5C7835AE1F35E98A00C45685 /* Loader */,
 				5C9F21871F3478C200DB5274 /* Date&TimePicker */,
@@ -260,6 +272,20 @@
 				5CB500931F3331F500431EE8 /* CCheckbox.swift */,
 			);
 			name = checkmark;
+			sourceTree = "<group>";
+		};
+		5CB5BA321F3DCDF100EC196B /* LabledText */ = {
+			isa = PBXGroup;
+			children = (
+				5CB5BA381F3DD0B100EC196B /* V2LabeledTextField.h */,
+				5CB5BA391F3DD0B100EC196B /* V2LabeledTextField.m */,
+				5CB5BA3A1F3DD0B100EC196B /* V2LabeledTextField.xib */,
+				5CB5BA3B1F3DD0B100EC196B /* V2Textfield.h */,
+				5CB5BA3C1F3DD0B100EC196B /* V2Textfield.m */,
+				5CB5BA401F3DD1EF00EC196B /* UIColor+V2Color.h */,
+				5CB5BA411F3DD1EF00EC196B /* UIColor+V2Color.m */,
+			);
+			name = LabledText;
 			sourceTree = "<group>";
 		};
 		5CBBEF3C1F31B1B20032B57B /* AutoCompleteTextField */ = {
@@ -515,6 +541,7 @@
 				9C243ECF1F2B17B400AE8499 /* Assets.xcassets in Resources */,
 				5CD1A9C21F2F089700E314DA /* defaultUser.png in Resources */,
 				9C243ECD1F2B17B400AE8499 /* Main.storyboard in Resources */,
+				5CB5BA3E1F3DD0B100EC196B /* V2LabeledTextField.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -601,15 +628,18 @@
 				5C63B80A1F2B467700B56C92 /* TPKeyboardAvoidingTableView.m in Sources */,
 				5CF1CB671F3095D2006CEBA7 /* MVYSideMenuOptions.m in Sources */,
 				5CF1CB661F3095D2006CEBA7 /* MVYSideMenuController.m in Sources */,
+				5CB5BA3F1F3DD0B100EC196B /* V2Textfield.m in Sources */,
 				5CC89EDF1F33048F00AA0336 /* DataManager.swift in Sources */,
 				5C9F218B1F3478DF00DB5274 /* DateCollectionViewCell.swift in Sources */,
 				5CF1CB611F30562D006CEBA7 /* AddLeadViewController.swift in Sources */,
+				5CB5BA3D1F3DD0B100EC196B /* V2LabeledTextField.m in Sources */,
 				5CB500941F3331F500431EE8 /* CCheckbox.swift in Sources */,
 				5C63B8091F2B467700B56C92 /* TPKeyboardAvoidingScrollView.m in Sources */,
 				5CC89EEE1F33058500AA0336 /* AESCrypt.m in Sources */,
 				9CAB09091F3D79D900217D6B /* FirstViewController.swift in Sources */,
 				5CBBEF451F31D3840032B57B /* LUAutocompleteViewDataSource.swift in Sources */,
 				5CCAB6CD1F2C4D6500E24BEB /* SecondViewController.swift in Sources */,
+				5CB5BA421F3DD1EF00EC196B /* UIColor+V2Color.m in Sources */,
 				5C63B7FF1F2B38F100B56C92 /* RaisePlaceholder.swift in Sources */,
 				5CC89EED1F33058500AA0336 /* KeyCode.m in Sources */,
 				5CC89EF11F33058500AA0336 /* NSData+CommonCrypto.m in Sources */,

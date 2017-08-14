@@ -11,35 +11,37 @@ import ReachabilitySwift
 
 class SecondViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {
 
-    var sideMenu                            = MVYSideMenuController()
-    var productName                         = [String]()
-    var custName                            = [String]()
-    var custPhoneNumber                     = [String]()
-    var leadCreationDate                    = [String]()
-    var leadID                              = [String]()
-    var giverName                           = [String]()
+    var sideMenu                                = MVYSideMenuController()
+    var productName                             = [String]()
+    var custName                                = [String]()
+    var custPhoneNumber                         = [String]()
+    var customerEmail                           = [String]()
+    var leadCreationDate                        = [String]()
+    var leadID                                  = [String]()
+    var giverName                               = [String]()
+    var giverEmail                              = [String]()
     
-    var productNameBranch                   = [String]()
-    var custNameBranch                      = [String]()
-    var custPhoneNumberBranch               = [String]()
-    var leadCreationDateBranch              = [String]()
-    var leadIDBranch                        = [String]()
-    var giverNameBranch                     = [String]()
+    var productNameBranch                       = [String]()
+    var custNameBranch                          = [String]()
+    var customerEmailBranch                     = [String]()
+    var custPhoneNumberBranch                   = [String]()
+    var leadCreationDateBranch                  = [String]()
+    var leadIDBranch                            = [String]()
+    var giverNameBranch                         = [String]()
+    var giverEmailBranch                        = [String]()
     
-    var assignTo                            = [String]()
-    var productNameLabel                    : UILabel!
-    var assignToLabel                       : UILabel!
-    let networkReachability                 = Reachability()
-    var loader                              : MaterialLoadingIndicator!
-    var isMyLead                            : Bool!
+    var assignTo                                = [String]()
+    var productNameLabel                        : UILabel!
+    var assignToLabel                           : UILabel!
+    let networkReachability                     = Reachability()
+    var loader                                  : MaterialLoadingIndicator!
+    var isMyLead                                : Bool!
+    @IBOutlet var containerView                 : UIView!
+    @IBOutlet weak var loaderContainerView      : UIView!
+    @IBOutlet weak var tableView                : UITableView!
+    @IBOutlet weak var loaderView               : UIView!
     
-    @IBOutlet var containerView             : UIView!
     
-    
-    
-    @IBOutlet weak var tableView: UITableView!
-    
-    @IBOutlet weak var loaderView: UIView!
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -57,6 +59,7 @@ class SecondViewController: UIViewController,UITableViewDelegate,UITableViewData
         self.loader = MaterialLoadingIndicator(frame: self.loaderView.bounds)
         self.loaderView.addSubview(loader)
         self.loaderView.isHidden = true
+        self.loaderContainerView.isHidden = true
         
 
     }
@@ -100,11 +103,13 @@ class SecondViewController: UIViewController,UITableViewDelegate,UITableViewData
         if (networkReachability?.isReachable)!
         {
             self.loaderView.isHidden = false
+            self.loaderContainerView.isHidden = false
             self.loader.startAnimating()
             
             DataManager.viewLead(custId: JNKeychain.loadValue(forKey: "encryptedCustID") as! String, clientId: JNKeychain.loadValue(forKey: "encryptedClientID") as! String, completionClouser: { (isSuccessful, error, result) in
                 
                 self.loaderView.isHidden = true
+                self.loaderContainerView.isHidden = true
                 self.loader.stopAnimating()
                 
                 if isSuccessful
@@ -130,6 +135,8 @@ class SecondViewController: UIViewController,UITableViewDelegate,UITableViewData
                                         self.productName.removeAll(keepingCapacity: false)
                                         self.leadID.removeAll(keepingCapacity: false)
                                         self.giverName.removeAll(keepingCapacity: false)
+                                        self.giverEmail.removeAll(keepingCapacity: false)
+                                        self.customerEmail.removeAll(keepingCapacity: false)
                                         
                                         for value in listArray!
                                         {
@@ -139,10 +146,12 @@ class SecondViewController: UIViewController,UITableViewDelegate,UITableViewData
                                             
                                             self.custName.append(leadDetailArray[0])
                                             self.custPhoneNumber.append(leadDetailArray[1])
-                                            self.leadCreationDate.append(leadDetailArray[2])
-                                            self.productName.append(leadDetailArray[3])
-                                            self.leadID.append(leadDetailArray[4])
-                                            self.giverName.append(leadDetailArray[5])
+                                            self.customerEmail.append(leadDetailArray[2])
+                                            self.leadCreationDate.append(leadDetailArray[3])
+                                            self.productName.append(leadDetailArray[4])
+                                            self.leadID.append(leadDetailArray[5])
+                                            self.giverName.append(leadDetailArray[6])
+                                            self.giverEmail.append(leadDetailArray[7])
                                             
                                         }
                                         
@@ -165,6 +174,8 @@ class SecondViewController: UIViewController,UITableViewDelegate,UITableViewData
                                         self.productNameBranch.removeAll(keepingCapacity: false)
                                         self.leadIDBranch.removeAll(keepingCapacity: false)
                                         self.giverNameBranch.removeAll(keepingCapacity: false)
+                                        self.giverEmailBranch.removeAll(keepingCapacity: false)
+                                        self.customerEmailBranch.removeAll(keepingCapacity: false)
                                         
                                         for value in listArray!
                                         {
@@ -173,10 +184,12 @@ class SecondViewController: UIViewController,UITableViewDelegate,UITableViewData
                                             
                                             self.custNameBranch.append(leadDetailArray[0])
                                             self.custPhoneNumberBranch.append(leadDetailArray[1])
-                                            self.leadCreationDateBranch.append(leadDetailArray[2])
-                                            self.productNameBranch.append(leadDetailArray[3])
-                                            self.leadIDBranch.append(leadDetailArray[4])
-                                            self.giverNameBranch.append(leadDetailArray[5])
+                                            self.customerEmailBranch.append(leadDetailArray[2])
+                                            self.leadCreationDate.append(leadDetailArray[3])
+                                            self.productNameBranch.append(leadDetailArray[4])
+                                            self.leadIDBranch.append(leadDetailArray[5])
+                                            self.giverNameBranch.append(leadDetailArray[6])
+                                            self.giverEmailBranch.append(leadDetailArray[7])
                                             
                                         }
                                         
@@ -239,13 +252,13 @@ class SecondViewController: UIViewController,UITableViewDelegate,UITableViewData
         if isMyLead
         {
             productNameLabel.text = custName[indexPath.row]
-            assignToLabel.text = productName[indexPath.row]
+            assignToLabel.text = leadCreationDate[indexPath.row]
            
         }
         else
         {
             productNameLabel.text = custNameBranch[indexPath.row]
-            assignToLabel.text = productNameBranch[indexPath.row]
+            assignToLabel.text = leadCreationDateBranch[indexPath.row]
         }
         
         
@@ -265,6 +278,10 @@ class SecondViewController: UIViewController,UITableViewDelegate,UITableViewData
             leadDetailsVC.mobile = custPhoneNumber[indexPath.row]
             leadDetailsVC.leadID = self.leadID[indexPath.row]
             leadDetailsVC.givername = self.giverName[indexPath.row]
+            leadDetailsVC.mail = self.customerEmail[indexPath.row]
+            leadDetailsVC.givermail = self.giverEmail[indexPath.row]
+            leadDetailsVC.createddate = self.leadCreationDate[indexPath.row]
+            
           //  leadDetailsVC.email = [indexPath.row]
            // leadDetailsVC.giverName.text = custName[indexPath.row]
            // leadDetailsVC.giverEmailID.text =
@@ -276,6 +293,9 @@ class SecondViewController: UIViewController,UITableViewDelegate,UITableViewData
             leadDetailsVC.mobile = custPhoneNumberBranch[indexPath.row]
             leadDetailsVC.leadID = self.leadIDBranch[indexPath.row]
             leadDetailsVC.givername = self.giverNameBranch[indexPath.row]
+            leadDetailsVC.mail = self.customerEmailBranch[indexPath.row]
+            leadDetailsVC.givermail = self.giverEmailBranch[indexPath.row]
+            leadDetailsVC.createddate = self.leadCreationDateBranch[indexPath.row]
             //  leadDetailsVC.email = [indexPath.row]
             // leadDetailsVC.giverName.text = custName[indexPath.row]
             // leadDetailsVC.giverEmailID.text =
