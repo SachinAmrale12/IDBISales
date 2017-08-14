@@ -204,7 +204,19 @@ class LeadDetails: UIViewController,UITextFieldDelegate,UITextViewDelegate {
     {
         if (networkReachability?.isReachable)!
         {
-
+            
+            if dateTimeTextField.text == "Please select \"Date & Time\""
+            {
+                self.AlertMessages(title: "Alert", message: "Please add Date and Time to \"Reschedule Meeting\"", actionTitle: "OK", alertStyle: .alert, actionStyle: .cancel, handler: nil)
+                return
+            }
+            if remarkTextView.text == "Please add Remark here" || remarkTextView.text == ""
+            {
+                self.AlertMessages(title: "Alert", message: "Please add Remark", actionTitle: "OK", alertStyle: .alert, actionStyle: .cancel, handler: nil)
+                return
+            }
+           
+            
             self.loaderView.isHidden = false
             self.loaderContainerView.isHidden = false
             self.loader.startAnimating()
@@ -233,6 +245,7 @@ class LeadDetails: UIViewController,UITextFieldDelegate,UITextViewDelegate {
                                 print(error)
                                 if error == "NA"
                                 {
+                                    self.view.endEditing(true)
                                     if let value = element["value"]
                                     {
                                         let value = AESCrypt.decrypt(value as! String, password: DataManager.SharedInstance().getKeyForEncryption()) as String
@@ -243,9 +256,13 @@ class LeadDetails: UIViewController,UITextFieldDelegate,UITextViewDelegate {
                                         let message = AESCrypt.decrypt(message as! String, password: DataManager.SharedInstance().getKeyForEncryption()) as String
                                         print(message)
                                         
+                                        
+                                        
                                     }
                                     
-                                    self.AlertMessages(title: "Error", message: "Appointment created successfully", actionTitle: "OK", alertStyle: .alert, actionStyle: .cancel, handler: nil)
+                                    self.AlertMessages(title: "Error", message: "Appointment created successfully", actionTitle: "OK", alertStyle: .alert, actionStyle: .cancel, handler: { (action) in
+                                        self.navigationController?.popViewController(animated: true)
+                                    })
                                     
                                 }
                                 else
@@ -271,6 +288,7 @@ class LeadDetails: UIViewController,UITextFieldDelegate,UITextViewDelegate {
                 }
                 
             })
+                
         }
         else
         {
