@@ -70,10 +70,16 @@ class LeadDetails: UIViewController,UITextFieldDelegate,UITextViewDelegate {
     
     func commonInitialization()
     {
+        let gesture = UITapGestureRecognizer(target: self, action: #selector(self.mobileButtonClicked))
+        gesture.numberOfTapsRequired = 1
+        self.mobileNumber.addGestureRecognizer(gesture)
+        
         self.loader = MaterialLoadingIndicator(frame: self.loaderView.bounds)
         self.loaderView.addSubview(loader)
         self.loaderContainerView.isHidden = true
         self.loaderView.isHidden = true
+        
+        mobileNumber.textField.delegate = self
         
         custName.label.text = "Name"
         productName.label.text = "Product"
@@ -108,6 +114,28 @@ class LeadDetails: UIViewController,UITextFieldDelegate,UITextViewDelegate {
 //        fromLabel.layer.cornerRadius = 4
 //        fromLabel.layer.borderColor = UIColor.orange.cgColor
     }
+    
+    
+    func mobileButtonClicked()
+    {
+        
+        if self.isValidPhoneNumber(value: self.mobileNumber.textField.text!)
+        {
+            if let url = URL(string: "tel://\(String(describing: self.mobileNumber.textField.text))"), UIApplication.shared.canOpenURL(url) {
+                if #available(iOS 10, *) {
+                    UIApplication.shared.open(url)
+                } else {
+                    UIApplication.shared.openURL(url)
+                }
+            }
+        }
+        else
+        {
+            self.AlertMessages(title: "Alert", message: "Invalid Mobile Number To Make a Phone Call", actionTitle: "OK", alertStyle: .alert, actionStyle: .cancel, handler: nil)
+        }
+        
+    }
+    
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -365,6 +393,17 @@ class LeadDetails: UIViewController,UITextFieldDelegate,UITextViewDelegate {
         {
             self.AlertMessages(title: "Internet connection Error", message: "Your Device is not Connect to \"Internet\"", actionTitle: "OK", alertStyle: .alert, actionStyle: .cancel, handler: nil)
         }
+    }
+    
+    
+    func isValidPhoneNumber(value: String) -> (Bool)
+    {
+        let PHONE_REGEX = "^(" + "\\" + "+91[" + "\\" + "-\\" + "s]?)?[0]?(91)?[789]" + "\\d{9}$"
+        let phoneTest = NSPredicate(format: "SELF MATCHES %@", PHONE_REGEX)
+        if phoneTest.evaluate(with: value) {
+            return (true)
+        }
+        return (false)
     }
     
    // MARK: textfield delegate methods

@@ -273,7 +273,8 @@ class AddLeadViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
             
             if self.takerEmailID == ""
             {
-                self.takerEmailID = AESCrypt.encrypt("NA", password: DataManager.SharedInstance().getKeyForEncryption()).stringReplace()
+                print(AESCrypt.encrypt(JNKeychain.loadValue(forKey: "emailID") as! String, password: DataManager.SharedInstance().getKeyForEncryption()).stringReplace())
+                self.takerEmailID = AESCrypt.encrypt(JNKeychain.loadValue(forKey: "emailID") as! String, password: DataManager.SharedInstance().getKeyForEncryption()).stringReplace()
             }
             else
             {
