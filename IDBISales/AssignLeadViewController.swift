@@ -61,9 +61,9 @@ class AssignLeadViewController: UIViewController,UITextViewDelegate,UITextFieldD
         branchTextField.drawUnderLineForTextField()
         takerMailID.drawUnderLineForTextField()
         
-        assignButton.layer.cornerRadius = assignButton.frame.size.height / 2
-        assignButton.layer.borderColor = UIColor.orange.cgColor
-        assignButton.layer.borderWidth = 1
+       // assignButton.layer.cornerRadius = assignButton.frame.size.height / 2
+      //  assignButton.layer.borderColor = UIColor.orange.cgColor
+      //  assignButton.layer.borderWidth = 1
         
         remarkTextView.layer.cornerRadius = 1
         remarkTextView.layer.borderColor = UIColor.orange.cgColor
@@ -397,6 +397,7 @@ class AssignLeadViewController: UIViewController,UITextViewDelegate,UITextFieldD
     ////MARK: textfield delegate
     public func textViewShouldBeginEditing(_ textView: UITextView) -> Bool
     {
+        textView.text = ""
         return true
     }
 

@@ -82,11 +82,11 @@ class AddLeadViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
         
         self.takerEmailID = ""
         
-        assignTextView.layer.borderColor = UIColor.orange.cgColor
+        assignTextView.layer.borderColor = UIColor(red: (25.0/255.0), green: (111.0/255.0), blue: (61.0/255.0), alpha: 1.0).cgColor
         assignTextView.layer.borderWidth = 1
         
        // checkBoxView.backgroundColor = UIColor(red: (255.0/255.0), green: (255.0/255.0), blue: (255.0/255.0), alpha: 1.0)
-        programmTextView.layer.borderColor = UIColor.orange.cgColor
+        programmTextView.layer.borderColor = UIColor(red: (25.0/255.0), green: (111.0/255.0), blue: (61.0/255.0), alpha: 1.0).cgColor
         programmTextView.layer.borderWidth = 1
         
         self.loader = MaterialLoadingIndicator(frame: self.loaderView.bounds)
@@ -103,7 +103,7 @@ class AddLeadViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
         
         testPicker = UIPickerView(frame: CGRect(x: 0, y: self.view.frame.size.height - 216, width: self.view.frame.size.width, height: 216))
         testPicker.backgroundColor = UIColor.white
-        testPicker.layer.borderColor = UIColor.orange.cgColor
+        testPicker.layer.borderColor = UIColor(red: (25.0/255.0), green: (111.0/255.0), blue: (61.0/255.0), alpha: 1.0).cgColor
         testPicker.layer.borderWidth = 1
         testPicker.delegate = self
         testPicker.dataSource = self
