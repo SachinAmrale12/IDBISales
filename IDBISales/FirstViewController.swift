@@ -43,6 +43,10 @@ class FirstViewController: UIViewController {
         self.callReportsService(flag: encryptedFlag)
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        sideMenu.closeMenu()
+    }
+    
     
     func updateChartData()  {
         

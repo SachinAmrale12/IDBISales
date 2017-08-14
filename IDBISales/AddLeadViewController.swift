@@ -190,13 +190,17 @@ class AddLeadViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
     {
         if firstNameTextfield.text == ""
         {
-            self.AlertMessages(title: "Error", message: "Please Select Name", actionTitle: "OK", alertStyle: .alert, actionStyle: .cancel, handler: nil)
+            self.AlertMessages(title: "Error", message: "Please Enter Name", actionTitle: "OK", alertStyle: .alert, actionStyle: .cancel, handler: nil)
             return
         }
-        
+        if lastNameTextfield.text == ""
+        {
+            self.AlertMessages(title: "Error", message: "Please Enter Last Name", actionTitle: "OK", alertStyle: .alert, actionStyle: .cancel, handler: nil)
+            return
+        }
         if mobileNoTextfield.text == ""
         {
-            self.AlertMessages(title: "Error", message: "Please Select Mobile Number", actionTitle: "OK", alertStyle: .alert, actionStyle: .cancel, handler: nil)
+            self.AlertMessages(title: "Error", message: "Please Enter Mobile Number", actionTitle: "OK", alertStyle: .alert, actionStyle: .cancel, handler: nil)
             return
         }
         else
@@ -210,7 +214,7 @@ class AddLeadViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
         
         if emailIdTextfield.text == ""
         {
-            self.AlertMessages(title: "Error", message: "Please Select Email Id", actionTitle: "OK", alertStyle: .alert, actionStyle: .cancel, handler: nil)
+            self.AlertMessages(title: "Error", message: "Please Enter Email Id", actionTitle: "OK", alertStyle: .alert, actionStyle: .cancel, handler: nil)
             return
         }
         else
@@ -403,10 +407,10 @@ class AddLeadViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
             mobileNoTextfield.isUserInteractionEnabled = false
             emailIdTextfield.isUserInteractionEnabled = false
             
-            firstNameTextfield.textColor = UIColor.lightGray
-            lastNameTextfield.textColor = UIColor.lightGray
-            mobileNoTextfield.textColor = UIColor.lightGray
-            emailIdTextfield.textColor = UIColor.lightGray
+            firstNameTextfield.textColor = UIColor.darkGray
+            lastNameTextfield.textColor = UIColor.darkGray
+            mobileNoTextfield.textColor = UIColor.darkGray
+            emailIdTextfield.textColor = UIColor.darkGray
 
             
             

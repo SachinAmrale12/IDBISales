@@ -33,6 +33,7 @@ class AssignLeadViewController: UIViewController,UITextViewDelegate,UITextFieldD
     var allBranchDictionary                                 = [String:String]()
     var solID                                               : String!
     var encryptedLead                                       : String!
+    var encryptedMail                                       : String!
     
     @IBAction func backButtonClicked(_ sender: Any)
     {
@@ -77,12 +78,46 @@ class AssignLeadViewController: UIViewController,UITextViewDelegate,UITextFieldD
     {
         if (networkReachability?.isReachable)!
         {
+            
+            if stateTextField.text == ""
+            {
+                self.AlertMessages(title: "Error", message: "Please Select State Name", actionTitle: "OK", alertStyle: .alert, actionStyle: .cancel, handler: nil)
+                return
+            }
+            if cityTextField.text == ""
+            {
+                self.AlertMessages(title: "Error", message: "Please Select City", actionTitle: "OK", alertStyle: .alert, actionStyle: .cancel, handler: nil)
+                return
+            }
+            if branchTextField.text == ""
+            {
+                self.AlertMessages(title: "Error", message: "Please Select Branch", actionTitle: "OK", alertStyle: .alert, actionStyle: .cancel, handler: nil)
+                return
+            }
+            
+            if takerMailID.text == ""
+            {
+                self.AlertMessages(title: "Error", message: "Please Select Email ID", actionTitle: "OK", alertStyle: .alert, actionStyle: .cancel, handler: nil)
+                return
+            }
+            else
+            {
+                if takerMailID.text == "No record found"
+                {
+                     encryptedMail = AESCrypt.encrypt("NA", password: DataManager.SharedInstance().getKeyForEncryption()).stringReplace()
+                }
+                else
+                {
+                     encryptedMail = AESCrypt.encrypt(self.takerMailID.text, password: DataManager.SharedInstance().getKeyForEncryption()).stringReplace()
+                }
+            }
+            
+            
             self.loaderView.isHidden = false
             self.loaderContainerView.isHidden = false
             self.loader.startAnimating()
             
             let encryptedRemark = AESCrypt.encrypt(self.remarkTextView.text, password: DataManager.SharedInstance().getKeyForEncryption()).stringReplace()
-            let encryptedMail = AESCrypt.encrypt(self.takerMailID.text, password: DataManager.SharedInstance().getKeyForEncryption()).stringReplace()
             let encryptedSolID = AESCrypt.encrypt(self.solID, password: DataManager.SharedInstance().getKeyForEncryption()).stringReplace()
             let encryptedlead = AESCrypt.encrypt(self.encryptedLead, password: DataManager.SharedInstance().getKeyForEncryption()).stringReplace()
             
@@ -115,7 +150,10 @@ class AssignLeadViewController: UIViewController,UITextViewDelegate,UITextFieldD
                                         let message = AESCrypt.decrypt(message as! String, password: DataManager.SharedInstance().getKeyForEncryption()) as String
                                         print(message)
                                         
-                                        self.AlertMessages(title: "Error", message: message, actionTitle: "OK", alertStyle: .alert, actionStyle: .cancel, handler: nil)
+                                        self.AlertMessages(title: "Info", message: message, actionTitle: "OK", alertStyle: .alert, actionStyle: .cancel, handler: {(action) in
+                                            
+                                            self.navigationController?.popToViewController((self.navigationController?.viewControllers[2])!, animated: true)
+                                        })
                                     }
                                 }
                                 else
