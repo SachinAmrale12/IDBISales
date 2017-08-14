@@ -182,6 +182,7 @@ class ViewController: UIViewController {
                             {
                                 if let errorString = error
                                 {
+                                    
                                      self.loaderView.isHidden = true
                                      self.loader.stopAnimating()
                                     self.AlertMessages(title: "Error", message: errorString, actionTitle: "OK", alertStyle: .alert, actionStyle: .cancel, handler: nil)
@@ -219,7 +220,27 @@ class ViewController: UIViewController {
        // loginButton.layer.borderColor = UIColor.orange.cgColor
        // loginButton.layer.borderWidth = 1
         
+        //MARK: notification observer
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(self.poptoRootViewController), name: NSNotification.Name(rawValue: "NotificationIdentifier"), object: nil)
+
+
+        
     }
+    
+    
+    
+    //MARK: Notification method
+    
+    func poptoRootViewController()
+    {
+        self.AlertMessages(title: "Alert", message: "Seesion time out \n Please Login again.", actionTitle: "OK", alertStyle: .alert, actionStyle: .cancel)
+        { (action) in
+            self.navigationController?.popToRootViewController(animated: true)
+        }
+    }
+    
+    
     
     
     override func didReceiveMemoryWarning() {

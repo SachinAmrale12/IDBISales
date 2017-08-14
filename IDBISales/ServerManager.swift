@@ -161,10 +161,14 @@ class ServerManager: NSObject {
                 (response) in
                 if response.result.error == nil
                 {
+                    let status = response.response?.statusCode
+                    print(status as Any)
+
                     if response.result.isSuccess
                     {
                         do {
                             let dictionary = try JSONSerialization.jsonObject(with: response.data!, options: JSONSerialization.ReadingOptions.mutableContainers)
+                            
                             completionClouser(response.result.isSuccess,nil,dictionary)
                         }
                         catch
@@ -178,7 +182,22 @@ class ServerManager: NSObject {
                 }
                 else
                 {
-                    completionClouser(response.result.isSuccess,response.error?.localizedDescription,nil)
+                    
+                    let status = response.response?.statusCode
+                    print(status as Any)
+                    if status == 401
+                    {
+                        completionClouser(response.result.isSuccess,nil,nil)
+                        
+                    // it will call method when access token expired. method define in viewcontroller "poptoRootViewController"
+                        let notificationName = Notification.Name("NotificationIdentifier")
+                        NotificationCenter.default.post(name: notificationName, object: nil)
+   
+                    }
+                    else
+                    {
+                        completionClouser(response.result.isSuccess,response.error?.localizedDescription,nil)
+                    }
                 }
         }
         

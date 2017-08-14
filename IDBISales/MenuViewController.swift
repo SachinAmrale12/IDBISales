@@ -53,10 +53,13 @@ class MenuViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
     {
+        
+        
         if indexPath.row == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "headerCell")
            // cell?.contentView.backgroundColor = uico
             
+            cell?.selectionStyle = UITableViewCellSelectionStyle.none
             let userImage = cell?.viewWithTag(1) as! UIImageView
             userImage.image = UIImage(named: "defaultUser.png")
             userImage.layer.cornerRadius = userImage.frame.size.width / 2
@@ -71,9 +74,12 @@ class MenuViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             return cell!
         }
             
-        else{
+        else
+        {
            let cell = tableView.dequeueReusableCell(withIdentifier: "contentCell")
             
+            cell?.selectionStyle = UITableViewCellSelectionStyle.none
+
             let userImage = cell?.viewWithTag(1) as! UIImageView
             userImage.image = UIImage(named: "defaultUser.png")
             userImage.layer.cornerRadius = userImage.frame.size.width / 2
