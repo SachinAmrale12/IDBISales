@@ -321,14 +321,13 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1rN-aR-2RG">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="64"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hbd-D9-TeA">
-                                        <rect key="frame" x="17" y="17" width="43" height="30"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hbd-D9-TeA">
+                                        <rect key="frame" x="20" y="12" width="65" height="40"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="30" id="0Yy-St-gmh"/>
-                                            <constraint firstAttribute="width" constant="43" id="9vh-zf-CdS"/>
+                                            <constraint firstAttribute="height" constant="40" id="0Yy-St-gmh"/>
+                                            <constraint firstAttribute="width" constant="65" id="9vh-zf-CdS"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                        <state key="normal" title="Back">
+                                        <state key="normal" image="BackButton">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
@@ -348,10 +347,10 @@
                                 </subviews>
                                 <color key="backgroundColor" red="0.098039215690000001" green="0.43529411759999997" blue="0.23921568630000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
-                                    <constraint firstItem="hbd-D9-TeA" firstAttribute="top" secondItem="1rN-aR-2RG" secondAttribute="top" constant="17" id="0Xc-4G-KLT"/>
+                                    <constraint firstItem="hbd-D9-TeA" firstAttribute="top" secondItem="1rN-aR-2RG" secondAttribute="top" constant="12" id="0Xc-4G-KLT"/>
                                     <constraint firstItem="ctq-Io-kaA" firstAttribute="centerY" secondItem="1rN-aR-2RG" secondAttribute="centerY" id="6NY-mS-ecC"/>
-                                    <constraint firstItem="hbd-D9-TeA" firstAttribute="leading" secondItem="1rN-aR-2RG" secondAttribute="leading" constant="17" id="NYy-vk-gi5"/>
-                                    <constraint firstAttribute="bottom" secondItem="hbd-D9-TeA" secondAttribute="bottom" constant="17" id="S3L-iq-dXr"/>
+                                    <constraint firstItem="hbd-D9-TeA" firstAttribute="leading" secondItem="1rN-aR-2RG" secondAttribute="leading" constant="20" id="NYy-vk-gi5"/>
+                                    <constraint firstAttribute="bottom" secondItem="hbd-D9-TeA" secondAttribute="bottom" constant="12" id="S3L-iq-dXr"/>
                                     <constraint firstAttribute="height" constant="64" id="n0G-VO-6d3"/>
                                     <constraint firstItem="ctq-Io-kaA" firstAttribute="centerX" secondItem="1rN-aR-2RG" secondAttribute="centerX" id="q6V-aE-6rL"/>
                                 </constraints>

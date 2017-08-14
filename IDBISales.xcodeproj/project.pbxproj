@@ -51,6 +51,7 @@
 		9C243EDD1F2B17B400AE8499 /* IDBISalesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C243EDC1F2B17B400AE8499 /* IDBISalesTests.swift */; };
 		9C243EE81F2B17B400AE8499 /* IDBISalesUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C243EE71F2B17B400AE8499 /* IDBISalesUITests.swift */; };
 		9CAB09091F3D79D900217D6B /* FirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CAB09081F3D79D900217D6B /* FirstViewController.swift */; };
+		9CAB090B1F419B3A00217D6B /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CAB090A1F419B3A00217D6B /* MessageUI.framework */; };
 		9CFD1B4F1F39AC500061A642 /* LeadDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CFD1B4E1F39AC500061A642 /* LeadDetails.swift */; };
 		9CFD1B511F3AEB920061A642 /* 640x1136-bg.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 9CFD1B501F3AEB920061A642 /* 640x1136-bg.jpg */; };
 		9CFD1B531F3C6D3B0061A642 /* AssignLeadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CFD1B521F3C6D3B0061A642 /* AssignLeadViewController.swift */; };
@@ -144,6 +145,7 @@
 		9C243EE71F2B17B400AE8499 /* IDBISalesUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IDBISalesUITests.swift; sourceTree = "<group>"; };
 		9C243EE91F2B17B400AE8499 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9CAB09081F3D79D900217D6B /* FirstViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirstViewController.swift; sourceTree = "<group>"; };
+		9CAB090A1F419B3A00217D6B /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		9CFD1B4E1F39AC500061A642 /* LeadDetails.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LeadDetails.swift; sourceTree = "<group>"; };
 		9CFD1B501F3AEB920061A642 /* 640x1136-bg.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "640x1136-bg.jpg"; sourceTree = "<group>"; };
 		9CFD1B521F3C6D3B0061A642 /* AssignLeadViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssignLeadViewController.swift; sourceTree = "<group>"; };
@@ -154,6 +156,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9CAB090B1F419B3A00217D6B /* MessageUI.framework in Frameworks */,
 				4DF4718CBCB570487106D357 /* Pods_IDBISales.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -417,6 +420,7 @@
 		9E496414ABBEA5157959E627 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				9CAB090A1F419B3A00217D6B /* MessageUI.framework */,
 				4E0D59ED96B1636B8C21CA7C /* Pods_IDBISales.framework */,
 			);
 			name = Frameworks;
