@@ -8,11 +8,11 @@
 
 import UIKit
 import ReachabilitySwift
-
-class LeadDetails: UIViewController,UITextFieldDelegate,UITextViewDelegate {
+import MessageUI
+class LeadDetails: UIViewController,UITextFieldDelegate,UITextViewDelegate,MFMailComposeViewControllerDelegate {
     
     
-    @IBOutlet weak var loaderContainerView: UIView!
+        @IBOutlet weak var loaderContainerView: UIView!
     @IBOutlet weak var custName         : V2LabeledTextField!
     @IBOutlet weak var productName      : V2LabeledTextField!
     @IBOutlet weak var giverEmail       : V2LabeledTextField!
@@ -73,6 +73,11 @@ class LeadDetails: UIViewController,UITextFieldDelegate,UITextViewDelegate {
         let gesture = UITapGestureRecognizer(target: self, action: #selector(self.mobileButtonClicked))
         gesture.numberOfTapsRequired = 1
         self.mobileNumber.addGestureRecognizer(gesture)
+
+        let emailTapGesture = UITapGestureRecognizer(target: self, action: #selector(self.EmailViewTap))
+        emailTapGesture.numberOfTapsRequired = 1
+        customerEmail.addGestureRecognizer(emailTapGesture)
+        
         
         self.loader = MaterialLoadingIndicator(frame: self.loaderView.bounds)
         self.loaderView.addSubview(loader)
@@ -232,7 +237,19 @@ class LeadDetails: UIViewController,UITextFieldDelegate,UITextViewDelegate {
     {
         if (networkReachability?.isReachable)!
         {
-
+            
+            if dateTimeTextField.text == "Please select \"Date & Time\""
+            {
+                self.AlertMessages(title: "Alert", message: "Please add Date and Time to \"Reschedule Meeting\"", actionTitle: "OK", alertStyle: .alert, actionStyle: .cancel, handler: nil)
+                return
+            }
+            if remarkTextView.text == "Please add Remark here" || remarkTextView.text == ""
+            {
+                self.AlertMessages(title: "Alert", message: "Please add Remark", actionTitle: "OK", alertStyle: .alert, actionStyle: .cancel, handler: nil)
+                return
+            }
+           
+            
             self.loaderView.isHidden = false
             self.loaderContainerView.isHidden = false
             self.loader.startAnimating()
@@ -261,6 +278,7 @@ class LeadDetails: UIViewController,UITextFieldDelegate,UITextViewDelegate {
                                 print(error)
                                 if error == "NA"
                                 {
+                                    self.view.endEditing(true)
                                     if let value = element["value"]
                                     {
                                         let value = AESCrypt.decrypt(value as! String, password: DataManager.SharedInstance().getKeyForEncryption()) as String
@@ -271,9 +289,13 @@ class LeadDetails: UIViewController,UITextFieldDelegate,UITextViewDelegate {
                                         let message = AESCrypt.decrypt(message as! String, password: DataManager.SharedInstance().getKeyForEncryption()) as String
                                         print(message)
                                         
+                                        
+                                        
                                     }
                                     
-                                    self.AlertMessages(title: "Error", message: "Appointment created successfully", actionTitle: "OK", alertStyle: .alert, actionStyle: .cancel, handler: nil)
+                                    self.AlertMessages(title: "Error", message: "Appointment created successfully", actionTitle: "OK", alertStyle: .alert, actionStyle: .cancel, handler: { (action) in
+                                        self.navigationController?.popViewController(animated: true)
+                                    })
                                     
                                 }
                                 else
@@ -299,6 +321,7 @@ class LeadDetails: UIViewController,UITextFieldDelegate,UITextViewDelegate {
                 }
                 
             })
+                
         }
         else
         {
@@ -394,8 +417,30 @@ class LeadDetails: UIViewController,UITextFieldDelegate,UITextViewDelegate {
             self.AlertMessages(title: "Internet connection Error", message: "Your Device is not Connect to \"Internet\"", actionTitle: "OK", alertStyle: .alert, actionStyle: .cancel, handler: nil)
         }
     }
+   
     
+    // MARK: email Tap gesture methods
+   
+    func EmailViewTap(sender: UITapGestureRecognizer? = nil)
+    {
+        if MFMailComposeViewController.canSendMail() {
+            
+            let mail = MFMailComposeViewController()
+            mail.mailComposeDelegate = self
+            mail.setToRecipients([customerEmail.textField.text!])
+            mail.setSubject("")
+            mail.setMessageBody("Text Body", isHTML: false)
+            present(mail, animated: true, completion: nil)
+        }
+    }
+
+    // MARK: MFMailComposeViewControllerDelegate
     
+    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+        controller.dismiss(animated: true, completion: nil)
+    }
+    
+
     func isValidPhoneNumber(value: String) -> (Bool)
     {
         let PHONE_REGEX = "^(" + "\\" + "+91[" + "\\" + "-\\" + "s]?)?[0]?(91)?[789]" + "\\d{9}$"
@@ -406,13 +451,19 @@ class LeadDetails: UIViewController,UITextFieldDelegate,UITextViewDelegate {
         return (false)
     }
     
-   // MARK: textfield delegate methods
+    // MARK: textfield delegate methods
     
     public func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool
     {
-        self.showPicker()
+        if textField == dateTimeTextField
+        {
+            self.showPicker()
+        }
+        
         return false
     }
+    
+    
     // MARK: textview delegate methods
     
     
@@ -504,6 +555,16 @@ extension LeadDetails: CZPickerViewDelegate, CZPickerViewDataSource {
     
     func czpickerView(_ pickerView: CZPickerView!, didConfirmWithItemsAtRows rows: [AnyObject]!) {
         
+        
+        /*let composer = MFMailComposeViewController()
+         
+         if MFMailComposeViewController.canSendMail() {
+         composer.mailComposeDelegate = self
+         composer.setToRecipients(["Email1", "Email2"])
+         composer.setSubject("Test Mail")
+         composer.setMessageBody("Text Body", isHTML: false)
+         present(composer, animated: true, completion: nil)
+         }*/
         
     }
 }

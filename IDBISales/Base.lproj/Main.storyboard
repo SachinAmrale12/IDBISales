@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="hmE-AV-825">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16D30" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="hmE-AV-825">
     <device id="retina3_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -188,7 +188,7 @@
                                             <action selector="menuButtonClicked:" destination="cAO-Ej-52O" eventType="touchUpInside" id="3Dq-Xk-0KI"/>
                                         </connections>
                                     </button>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="IDBI Sales" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ugf-Cf-bPF">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="IDBI Sales" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ugf-Cf-bPF">
                                         <rect key="frame" x="48" y="17" width="209" height="30"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="209" id="WUL-UM-3ex"/>
@@ -321,21 +321,20 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1rN-aR-2RG">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="64"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hbd-D9-TeA">
-                                        <rect key="frame" x="17" y="17" width="43" height="30"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hbd-D9-TeA">
+                                        <rect key="frame" x="20" y="12" width="65" height="40"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="30" id="0Yy-St-gmh"/>
-                                            <constraint firstAttribute="width" constant="43" id="9vh-zf-CdS"/>
+                                            <constraint firstAttribute="height" constant="40" id="0Yy-St-gmh"/>
+                                            <constraint firstAttribute="width" constant="65" id="9vh-zf-CdS"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                        <state key="normal" title="Back">
+                                        <state key="normal" image="BackButton">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
                                             <action selector="backClicked:" destination="hAl-eU-HSI" eventType="touchUpInside" id="oJN-lt-jfo"/>
                                         </connections>
                                     </button>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Lead Deatils" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ctq-Io-kaA">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Lead Deatils" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ctq-Io-kaA">
                                         <rect key="frame" x="85" y="22" width="150" height="21"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="21" id="46h-L7-qqg"/>
@@ -348,10 +347,10 @@
                                 </subviews>
                                 <color key="backgroundColor" red="0.098039215690000001" green="0.43529411759999997" blue="0.23921568630000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
-                                    <constraint firstItem="hbd-D9-TeA" firstAttribute="top" secondItem="1rN-aR-2RG" secondAttribute="top" constant="17" id="0Xc-4G-KLT"/>
+                                    <constraint firstItem="hbd-D9-TeA" firstAttribute="top" secondItem="1rN-aR-2RG" secondAttribute="top" constant="12" id="0Xc-4G-KLT"/>
                                     <constraint firstItem="ctq-Io-kaA" firstAttribute="centerY" secondItem="1rN-aR-2RG" secondAttribute="centerY" id="6NY-mS-ecC"/>
-                                    <constraint firstItem="hbd-D9-TeA" firstAttribute="leading" secondItem="1rN-aR-2RG" secondAttribute="leading" constant="17" id="NYy-vk-gi5"/>
-                                    <constraint firstAttribute="bottom" secondItem="hbd-D9-TeA" secondAttribute="bottom" constant="17" id="S3L-iq-dXr"/>
+                                    <constraint firstItem="hbd-D9-TeA" firstAttribute="leading" secondItem="1rN-aR-2RG" secondAttribute="leading" constant="20" id="NYy-vk-gi5"/>
+                                    <constraint firstAttribute="bottom" secondItem="hbd-D9-TeA" secondAttribute="bottom" constant="12" id="S3L-iq-dXr"/>
                                     <constraint firstAttribute="height" constant="64" id="n0G-VO-6d3"/>
                                     <constraint firstItem="ctq-Io-kaA" firstAttribute="centerX" secondItem="1rN-aR-2RG" secondAttribute="centerX" id="q6V-aE-6rL"/>
                                 </constraints>
@@ -910,7 +909,7 @@
                                             <action selector="backClicked:" destination="2iw-Fl-Bw1" eventType="touchUpInside" id="ijk-2W-AHg"/>
                                         </connections>
                                     </button>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Leads" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z5A-c3-9b9">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Leads" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z5A-c3-9b9">
                                         <rect key="frame" x="85" y="19" width="150" height="26"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="150" id="3Sd-Nt-EE0"/>
@@ -943,7 +942,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" tag="1" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0PT-Br-rwI">
-                                                    <rect key="frame" x="25" y="8" width="357" height="28"/>
+                                                    <rect key="frame" x="25" y="8" width="263" height="28"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="28" id="fC7-3i-N1Z"/>
                                                     </constraints>
@@ -951,7 +950,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" tag="2" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TVI-he-S2l">
-                                                    <rect key="frame" x="25" y="39" width="357" height="21"/>
+                                                    <rect key="frame" x="25" y="39" width="263" height="21"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="21" id="gdD-RV-6pP"/>
                                                     </constraints>
@@ -1051,7 +1050,7 @@
                                             <action selector="backButtonClicked:" destination="xnp-HP-x7A" eventType="touchUpInside" id="yFf-mS-b6G"/>
                                         </connections>
                                     </button>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add Lead" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DA7-0c-CTp">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add Lead" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DA7-0c-CTp">
                                         <rect key="frame" x="85" y="19" width="150" height="26"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="25.5" id="Kr4-MP-vrP"/>
@@ -1571,7 +1570,7 @@
                                             <action selector="backButtonClicked:" destination="n5c-WH-SwT" eventType="touchUpInside" id="bON-zd-zb7"/>
                                         </connections>
                                     </button>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Report" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hD2-Bj-hiO">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Report" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hD2-Bj-hiO">
                                         <rect key="frame" x="85" y="20" width="150" height="25"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="25" id="dXs-4T-fxg"/>
