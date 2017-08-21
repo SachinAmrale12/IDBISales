@@ -17,6 +17,7 @@ public class RaisePlaceholder: UITextField, UITextFieldDelegate {
     fileprivate let placeholderLabelFontSize: CGFloat = 12.0
     fileprivate var placeholderLabel: UILabel?
     fileprivate var titlePlaceholder: String?
+    let  ACCEPTABLE_CHARACTERS  = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -59,6 +60,33 @@ public class RaisePlaceholder: UITextField, UITextFieldDelegate {
         
         self.placeholderLabel = label
         
+    }
+    
+    
+    public func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool
+    {
+        if self.placeholderLabel?.text == "First Name" || self.placeholderLabel?.text == "Last Name"
+        {
+            guard let text = textField.text else { return true }
+            let newLength = text.characters.count + string.characters.count - range.length
+            if newLength <= 30
+            {
+                let characterSet = NSCharacterSet(charactersIn: ACCEPTABLE_CHARACTERS).inverted
+                let filtered = string.components(separatedBy: characterSet).joined(separator: "")
+                return string == filtered
+            }
+            else
+            {
+                return newLength <= 30
+            }
+        }
+        else if self.placeholderLabel?.text == "Mobile No."
+        {
+            guard let text = textField.text else { return true }
+            let newLength = text.characters.count + string.characters.count - range.length
+            return newLength <= 12
+        }
+        return true
     }
     
     public func textFieldDidBeginEditing(_ textField: UITextField) {

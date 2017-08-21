@@ -16,6 +16,7 @@ class ReportsViewController: UIViewController {
     var encryptedFlag                       : String!
     var leadOpen                            : String!
     var leadClose                           : String!
+    var leadWin                             : String!
     @IBOutlet weak var loaderView           : UIView!
     var loader                              : MaterialLoadingIndicator!
     @IBOutlet weak var reportContainerView  : UIView!
@@ -42,8 +43,8 @@ class ReportsViewController: UIViewController {
         
         let chart = PieChartView(frame: self.view.frame)
         // 2. generate chart data entries
-        let track = ["Leads Close", "Leads Open"]
-        let money = [Double(self.leadClose), Double(self.leadOpen)]
+        let track = ["Close", "Open", "Win"]
+        let money = [Double(self.leadClose), Double(self.leadOpen), Double(self.leadWin)]
         
         var entries = [PieChartDataEntry]()
         for (index, value) in money.enumerated() {
@@ -57,6 +58,7 @@ class ReportsViewController: UIViewController {
         let set = PieChartDataSet( values: entries, label: "")
         // this is custom extension method. Download the code for more details.
         var colors: [UIColor] = []
+        colors.append(UIColor(red: (181.0/255.0), green: (182.0/255.0), blue: (183.0/255.0), alpha: 1.0))
         colors.append(UIColor(red: (236.0/255.0), green: (147.0/255.0), blue: (88.0/255.0), alpha: 1.0))
         colors.append(UIColor(red: (25.0/255.0), green: (111.0/255.0), blue: (61.0/255.0), alpha: 1.0))
         
@@ -122,6 +124,7 @@ class ReportsViewController: UIViewController {
                                     let valuesArray = value.components(separatedBy: "~")
                                     self.leadClose = valuesArray[1]
                                     self.leadOpen = valuesArray[2]
+                                    self.leadWin = valuesArray[3]
                                     
                                     self.updateChartData()
                                 }

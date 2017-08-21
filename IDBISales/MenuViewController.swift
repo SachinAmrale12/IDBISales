@@ -100,7 +100,7 @@ class MenuViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         }
         if indexPath.row == 2
         {
-            self.navigationController?.popToRootViewController(animated: true)
+            self.navigationController?.popToRootViewController(animated: false)
         }
     }
 

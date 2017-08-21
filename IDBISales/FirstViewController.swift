@@ -20,6 +20,7 @@ class FirstViewController: UIViewController {
     var totalLead                               : String!
     var leadOpen                                : String!
     var leadClose                               : String!
+    var leadWin                                 : String!
     //secondVC
     @IBOutlet weak var chartContainerView       : UIView!
     var chart                                   = PieChartView()
@@ -51,8 +52,8 @@ class FirstViewController: UIViewController {
     func updateChartData()  {
         
         chart = PieChartView(frame: self.view.frame)
-        let track = ["Leads Close", "Leads Open"]
-        let money = [Double(self.leadClose), Double(self.leadOpen)]
+        let track = ["Close", "Open", "Win"]
+        let money = [Double(self.leadClose), Double(self.leadOpen), Double(self.leadWin)]
         
         var entries = [PieChartDataEntry]()
         for (index, value) in money.enumerated() {
@@ -67,8 +68,9 @@ class FirstViewController: UIViewController {
         // this is custom extension method. Download the code for more details.
         var colors: [UIColor] = []
         
-        colors.append(UIColor(red: (25.0/255.0), green: (111.0/255.0), blue: (61.0/255.0), alpha: 1.0))
+        colors.append(UIColor(red: (181.0/255.0), green: (182.0/255.0), blue: (183.0/255.0), alpha: 1.0))
         colors.append(UIColor(red: (236.0/255.0), green: (147.0/255.0), blue: (88.0/255.0), alpha: 1.0))
+        colors.append(UIColor(red: (25.0/255.0), green: (111.0/255.0), blue: (61.0/255.0), alpha: 1.0))
         
 //        for _ in 0..<money.count {
 //            let red = Double(arc4random_uniform(256))
@@ -126,6 +128,7 @@ class FirstViewController: UIViewController {
                                     self.totalLead = valuesArray[0]
                                     self.leadClose = valuesArray[1]
                                     self.leadOpen = valuesArray[2]
+                                    self.leadWin = valuesArray[3]
                                     
                                     self.updateChartData()
                                 }

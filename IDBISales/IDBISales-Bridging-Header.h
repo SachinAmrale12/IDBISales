@@ -15,4 +15,6 @@
 #import "JNKeychain.h"
 #import "DLRadioButton.h"
 #import "V2LabeledTextField.h"
+#import "JailBrokeController.h"
+#import "JailBrokenDevice.h"
 

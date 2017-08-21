@@ -30,6 +30,8 @@ class SecondViewController: UIViewController,UITableViewDelegate,UITableViewData
     var giverNameBranch                         = [String]()
     var giverEmailBranch                        = [String]()
     
+    var leadsArray                              = [[String:String]]()
+    
     var assignTo                                = [String]()
     var productNameLabel                        : UILabel!
     var assignToLabel                           : UILabel!
@@ -137,29 +139,43 @@ class SecondViewController: UIViewController,UITableViewDelegate,UITableViewData
                                         self.giverName.removeAll(keepingCapacity: false)
                                         self.giverEmail.removeAll(keepingCapacity: false)
                                         self.customerEmail.removeAll(keepingCapacity: false)
+                                        self.leadsArray.removeAll(keepingCapacity: false)
                                         
                                         for value in listArray!
                                         {
                                             let lead = AESCrypt.decrypt(value as! String, password: DataManager.SharedInstance().getKeyForEncryption()) as String
                                             print(lead)
+                                           
                                             let leadDetailArray = lead.components(separatedBy: "~")
-                                            
-                                            self.custName.append(leadDetailArray[0])
-                                            self.custPhoneNumber.append(leadDetailArray[1])
-                                            self.customerEmail.append(leadDetailArray[2])
-                                            self.leadCreationDate.append(leadDetailArray[3])
-                                            self.productName.append(leadDetailArray[4])
-                                            self.leadID.append(leadDetailArray[5])
-                                            self.giverName.append(leadDetailArray[6])
-                                            self.giverEmail.append(leadDetailArray[7])
+                                            let leadData = ["name":leadDetailArray[0],"phoneNumber":leadDetailArray[1],"email":leadDetailArray[2],"date":leadDetailArray[3],"productName":leadDetailArray[4],"id":leadDetailArray[5],"giverName":leadDetailArray[6],"giverEmail":leadDetailArray[7]]
+                                            self.leadsArray.append(leadData)
                                             
                                         }
                                         
-                                        self.tableView.reloadData()
                                     }
                                     else
                                     {
                                         self.AlertMessages(title: "Oops !", message: "No Record Found", actionTitle: "OK", alertStyle: .alert, actionStyle: .cancel, handler: nil)
+                                    }
+                                    
+                                    if self.leadsArray.count > 0
+                                    {
+                                        self.leadsArray = self.leadsArray.sorted(by: { $0["date"]?.compare($1["date"]!) == .orderedDescending })
+                                        
+                                        for lead in self.leadsArray
+                                        {
+                                            
+                                            self.custName.append(lead["name"]!)
+                                            self.custPhoneNumber.append(lead["phoneNumber"]!)
+                                            self.customerEmail.append(lead["email"]!)
+                                            self.leadCreationDate.append(lead["date"]!)
+                                            self.productName.append(lead["productName"]!)
+                                            self.leadID.append(lead["id"]!)
+                                            self.giverName.append(lead["giverName"]!)
+                                            self.giverEmail.append(lead["giverEmail"]!)
+                                        }
+                                        
+                                        self.tableView.reloadData()
                                     }
                     
                                 }
@@ -252,13 +268,13 @@ class SecondViewController: UIViewController,UITableViewDelegate,UITableViewData
         if isMyLead
         {
             productNameLabel.text = custName[indexPath.row]
-            assignToLabel.text = leadCreationDate[indexPath.row]
+            assignToLabel.text = productName[indexPath.row]
            
         }
         else
         {
             productNameLabel.text = custNameBranch[indexPath.row]
-            assignToLabel.text = leadCreationDateBranch[indexPath.row]
+            assignToLabel.text = productNameBranch[indexPath.row]
         }
         
         
@@ -272,7 +288,6 @@ class SecondViewController: UIViewController,UITableViewDelegate,UITableViewData
         
         if isMyLead
         {
-            print(leadID)
             leadDetailsVC.name = custName[indexPath.row]
             leadDetailsVC.product = productName[indexPath.row]
             leadDetailsVC.mobile = custPhoneNumber[indexPath.row]

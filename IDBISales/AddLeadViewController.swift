@@ -25,9 +25,9 @@ class AddLeadViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
     @IBOutlet weak var mainCustomerView                     : UIView!
     @IBOutlet weak var containerViewHeightConstarint        : NSLayoutConstraint!
     @IBOutlet weak var custIDTextfieldHeightConstraint      : NSLayoutConstraint!
-    @IBOutlet weak var stateTextfield                       : UITextField!
-    @IBOutlet weak var cityTextfield                        : UITextField!
-    @IBOutlet weak var branchTextfield                      : UITextField!
+//    @IBOutlet weak var stateTextfield                       : UITextField!
+//    @IBOutlet weak var cityTextfield                        : UITextField!
+//    @IBOutlet weak var branchTextfield                      : UITextField!
     @IBOutlet weak var assignTextView                       : UITextView!
     @IBOutlet weak var firstNameTextfield                   : RaisePlaceholder!
     @IBOutlet weak var mobileNoTextfield                    : RaisePlaceholder!
@@ -36,6 +36,9 @@ class AddLeadViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
     @IBOutlet weak var ageTextfield                         : RaisePlaceholder!
     @IBOutlet weak var customerIDTextfield                  : RaisePlaceholder!
     
+    @IBOutlet weak var stateTextfield                       : RaisePlaceholder!
+    @IBOutlet weak var cityTextfield                        : RaisePlaceholder!
+    @IBOutlet weak var branchTextfield                      : RaisePlaceholder!
     let networkReachability                                 = Reachability()
     var allStateDictionary                                  = [String:String]()
     var allCityDictionary                                   = [String:String]()
@@ -54,8 +57,7 @@ class AddLeadViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
     var isCustomer                                          : Bool!
     var picker                                             = CZPickerView()
   // var productList                                          = [String]()
-    
-    
+
     var takerEmailID                                        : String!
     
     override func viewDidLoad() {
@@ -97,6 +99,8 @@ class AddLeadViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
         Products = ["Agri Loan", "Auto Loan", "Being My Account", "Capital Gain Account", "Cash Card","Corporate Salary Account","Credit Card","Dealer Finance","DeMat Account","Education Loan","Flexi Current Account","Floating Rate Term Account","Gift Card","Godhuli Retail Term Deposite","Home Loan","Jublee Plus(Senior Citizen) Account","Loan Against Property","Loan Against Securities","Mutual Funds","National Pension Scheme","Personal Loan","Power Kids Account","Recurring Deposite","Reverse Mortgage Loan","Sabka Savings Account","Savings Account","Super Shakti Womens","Suvidha Fix Deposite","Suvidha Suraksha Recurring Deposite","Trader Finance","Word Currency Card"]
         
         self.stateTextfield.delegate = self
+       // self.firstNameTextfield.delegate = self
+       // self.lastNameTextfield.delegate = self
         
       //  contactTimeTextfield.delegate = self
       //  ageTextfield.delegate = self
@@ -141,9 +145,21 @@ class AddLeadViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
         lastNameTextfield.subjectColor = UIColor.black
         lastNameTextfield.underLineColor = UIColor(red: (25.0/255.0), green: (111.0/255.0), blue: (61.0/255.0), alpha: 1.0)
         
-        stateTextfield.drawUnderLineForTextField()
-        cityTextfield.drawUnderLineForTextField()
-        branchTextfield.drawUnderLineForTextField()
+        stateTextfield.animationDuration = 0.5
+        stateTextfield.subjectColor = UIColor.black
+        stateTextfield.underLineColor = UIColor(red: (25.0/255.0), green: (111.0/255.0), blue: (61.0/255.0), alpha: 1.0)
+        
+        cityTextfield.animationDuration = 0.5
+        cityTextfield.subjectColor = UIColor.black
+        cityTextfield.underLineColor = UIColor(red: (25.0/255.0), green: (111.0/255.0), blue: (61.0/255.0), alpha: 1.0)
+        
+        branchTextfield.animationDuration = 0.5
+        branchTextfield.subjectColor = UIColor.black
+        branchTextfield.underLineColor = UIColor(red: (25.0/255.0), green: (111.0/255.0), blue: (61.0/255.0), alpha: 1.0)
+        
+      //  stateTextfield.drawUnderLineForTextField()
+      //  cityTextfield.drawUnderLineForTextField()
+      //  branchTextfield.drawUnderLineForTextField()
         
         
         // checkmark
@@ -151,9 +167,10 @@ class AddLeadViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
         
         // customer ID textfiled
         
-        customerIDTextfield.animationDuration = 0.5
-        customerIDTextfield.subjectColor = UIColor.black
-        customerIDTextfield.underLineColor = UIColor(red: (25.0/255.0), green: (111.0/255.0), blue: (61.0/255.0), alpha: 1.0)
+        customerIDTextfield.drawUnderLineForTextField()
+       // customerIDTextfield.animationDuration = 0.5
+      //  customerIDTextfield.subjectColor = UIColor.black
+       // customerIDTextfield.underLineColor = UIColor(red: (25.0/255.0), green: (111.0/255.0), blue: (61.0/255.0), alpha: 1.0)
               
         
     }
@@ -186,11 +203,21 @@ class AddLeadViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
         }
     }
     
+    
+    @IBAction func cancelButtonClicked(_ sender: Any)
+    {
+        self.mainCustomerView.isHidden = true
+        self.checkBoxContainerView.isHidden = true
+        NotificationCenter.default.removeObserver(self)
+        self.navigationController?.popViewController(animated: true)
+    }
+    
+    
     @IBAction func addButtonClicked(_ sender: Any)
     {
         if firstNameTextfield.text == ""
         {
-            self.AlertMessages(title: "Error", message: "Please Enter Name", actionTitle: "OK", alertStyle: .alert, actionStyle: .cancel, handler: nil)
+            self.AlertMessages(title: "Error", message: "Please Enter First Name", actionTitle: "OK", alertStyle: .alert, actionStyle: .cancel, handler: nil)
             return
         }
         if lastNameTextfield.text == ""
@@ -441,8 +468,8 @@ class AddLeadViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
                                 }
                                 else
                                 {
-                                    self.customerIDTextfield.text = ""
                                     self.AlertMessages(title: "Alert", message: "Invalid Customer ID", actionTitle: "OK", alertStyle: .alert, actionStyle: .cancel, handler: nil)
+                                    self.customerIDTextfield.text = ""
                                     return
                                 }
                             }
@@ -591,6 +618,8 @@ class AddLeadViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
     {
         self.programmTextView.text = "Select Product"
         self.assignTextView.text = "Select Email ID"
+        self.cityTextfield.isEnabled = false
+        self.branchTextfield.isEnabled = false
         mainCustomerView.isHidden = false
         checkBoxContainerView.isHidden = false
         isCustomer = true
@@ -636,6 +665,7 @@ class AddLeadViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
     
     
     // MARK: Textfield Methods
+    
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         
@@ -691,11 +721,15 @@ class AddLeadViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
                             if let errorString = error
                             {
                                 self.AlertMessages(title: "Error", message: errorString, actionTitle: "OK", alertStyle: .alert, actionStyle: .cancel, handler: nil)
+                                
+                                self.loaderView.isHidden = true
+                                self.loaderContainerVIew.isHidden = true
+                                self.loader.stopAnimating()
                             }
                         }
                         
                     })
-                    return true
+                    return false
                 }
                 else
                 {
@@ -839,6 +873,8 @@ class AddLeadViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
                                 self.allCityDictionary.updateValue(value2!, forKey: value!)
                             }
                             
+                            self.cityTextfield.isEnabled = true
+                            
                             self.view.addSubview(self.autocompleteViewForCity)
                             self.autocompleteViewForCity.textField = self.cityTextfield
                             self.autocompleteViewForCity.dataSource = self
@@ -888,6 +924,8 @@ class AddLeadViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
                                 let solDesc = AESCrypt.decrypt(data["solDesc"], password: DataManager.SharedInstance().getKeyForEncryption())
                                 self.allBranchDictionary.updateValue(solID!, forKey: solDesc!)
                             }
+                            
+                            self.branchTextfield.isEnabled = true
                             
                             self.view.addSubview(self.autocompleteViewForBranch)
                             self.autocompleteViewForBranch.textField = self.branchTextfield

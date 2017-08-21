@@ -30,6 +30,11 @@
 		5CBBEF451F31D3840032B57B /* LUAutocompleteViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CBBEF411F31D3840032B57B /* LUAutocompleteViewDataSource.swift */; };
 		5CBBEF461F31D3840032B57B /* LUAutocompleteViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CBBEF421F31D3840032B57B /* LUAutocompleteViewDelegate.swift */; };
 		5CBBEF4B1F31E2AE0032B57B /* CZPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CBBEF4A1F31E2AE0032B57B /* CZPickerView.m */; };
+		5CC020931F44695A003E89F0 /* JailBrokeController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CC020901F44695A003E89F0 /* JailBrokeController.m */; };
+		5CC020941F44695A003E89F0 /* JailBrokenDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CC020921F44695A003E89F0 /* JailBrokenDevice.m */; };
+		5CC020971F446BC9003E89F0 /* check.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 5CC020951F446BC9003E89F0 /* check.jpeg */; };
+		5CC020981F446BC9003E89F0 /* uncheck.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 5CC020961F446BC9003E89F0 /* uncheck.jpeg */; };
+		5CC0209A1F4470F7003E89F0 /* RootDeviceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CC020991F4470F7003E89F0 /* RootDeviceViewController.swift */; };
 		5CC89EDF1F33048F00AA0336 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CC89EDE1F33048F00AA0336 /* DataManager.swift */; };
 		5CC89EE11F33049F00AA0336 /* ServerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CC89EE01F33049F00AA0336 /* ServerManager.swift */; };
 		5CC89EED1F33058500AA0336 /* KeyCode.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CC89EE41F33058500AA0336 /* KeyCode.m */; };
@@ -40,6 +45,10 @@
 		5CCAB6CD1F2C4D6500E24BEB /* SecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CCAB6CC1F2C4D6500E24BEB /* SecondViewController.swift */; };
 		5CCAB6D41F2C66AD00E24BEB /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CCAB6D31F2C66AD00E24BEB /* MenuViewController.swift */; };
 		5CD1A9C21F2F089700E314DA /* defaultUser.png in Resources */ = {isa = PBXBuildFile; fileRef = 5CD1A9C11F2F089700E314DA /* defaultUser.png */; };
+		5CE8EFA51F46B6F6007DD071 /* hide.png in Resources */ = {isa = PBXBuildFile; fileRef = 5CE8EFA31F46B6F6007DD071 /* hide.png */; };
+		5CE8EFA61F46B6F6007DD071 /* show.png in Resources */ = {isa = PBXBuildFile; fileRef = 5CE8EFA41F46B6F6007DD071 /* show.png */; };
+		5CE8EFA81F46DDF4007DD071 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CE8EFA71F46DDF4007DD071 /* NetworkManager.swift */; };
+		5CE8EFAA1F46E9E4007DD071 /* abhaycrt.cer in Resources */ = {isa = PBXBuildFile; fileRef = 5CE8EFA91F46E9E4007DD071 /* abhaycrt.cer */; };
 		5CF1CB611F30562D006CEBA7 /* AddLeadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CF1CB601F30562D006CEBA7 /* AddLeadViewController.swift */; };
 		5CF1CB661F3095D2006CEBA7 /* MVYSideMenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CF1CB631F3095D2006CEBA7 /* MVYSideMenuController.m */; };
 		5CF1CB671F3095D2006CEBA7 /* MVYSideMenuOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CF1CB651F3095D2006CEBA7 /* MVYSideMenuOptions.m */; };
@@ -110,6 +119,13 @@
 		5CBBEF481F31E2AE0032B57B /* CZPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CZPicker.h; sourceTree = "<group>"; };
 		5CBBEF491F31E2AE0032B57B /* CZPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CZPickerView.h; sourceTree = "<group>"; };
 		5CBBEF4A1F31E2AE0032B57B /* CZPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CZPickerView.m; sourceTree = "<group>"; };
+		5CC0208F1F44695A003E89F0 /* JailBrokeController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JailBrokeController.h; sourceTree = "<group>"; };
+		5CC020901F44695A003E89F0 /* JailBrokeController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JailBrokeController.m; sourceTree = "<group>"; };
+		5CC020911F44695A003E89F0 /* JailBrokenDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JailBrokenDevice.h; sourceTree = "<group>"; };
+		5CC020921F44695A003E89F0 /* JailBrokenDevice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JailBrokenDevice.m; sourceTree = "<group>"; };
+		5CC020951F446BC9003E89F0 /* check.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = check.jpeg; sourceTree = "<group>"; };
+		5CC020961F446BC9003E89F0 /* uncheck.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = uncheck.jpeg; sourceTree = "<group>"; };
+		5CC020991F4470F7003E89F0 /* RootDeviceViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RootDeviceViewController.swift; sourceTree = "<group>"; };
 		5CC89EDE1F33048F00AA0336 /* DataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
 		5CC89EE01F33049F00AA0336 /* ServerManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServerManager.swift; sourceTree = "<group>"; };
 		5CC89EE31F33058500AA0336 /* KeyCode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeyCode.h; sourceTree = "<group>"; };
@@ -125,6 +141,10 @@
 		5CCAB6CC1F2C4D6500E24BEB /* SecondViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecondViewController.swift; sourceTree = "<group>"; };
 		5CCAB6D31F2C66AD00E24BEB /* MenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
 		5CD1A9C11F2F089700E314DA /* defaultUser.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = defaultUser.png; sourceTree = "<group>"; };
+		5CE8EFA31F46B6F6007DD071 /* hide.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hide.png; sourceTree = "<group>"; };
+		5CE8EFA41F46B6F6007DD071 /* show.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = show.png; sourceTree = "<group>"; };
+		5CE8EFA71F46DDF4007DD071 /* NetworkManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
+		5CE8EFA91F46E9E4007DD071 /* abhaycrt.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = abhaycrt.cer; sourceTree = "<group>"; };
 		5CF1CB601F30562D006CEBA7 /* AddLeadViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddLeadViewController.swift; sourceTree = "<group>"; };
 		5CF1CB621F3095D2006CEBA7 /* MVYSideMenuController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MVYSideMenuController.h; sourceTree = "<group>"; };
 		5CF1CB631F3095D2006CEBA7 /* MVYSideMenuController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MVYSideMenuController.m; sourceTree = "<group>"; };
@@ -181,6 +201,7 @@
 		5C63B7FD1F2B38D500B56C92 /* ThirdPartyLibraries */ = {
 			isa = PBXGroup;
 			children = (
+				5CC0208E1F446928003E89F0 /* JailBreak */,
 				5CB5BA321F3DCDF100EC196B /* LabledText */,
 				5C75718E1F397B200052513E /* RadioButtton */,
 				5C7835AE1F35E98A00C45685 /* Loader */,
@@ -312,11 +333,23 @@
 			name = MultiSelectionView;
 			sourceTree = "<group>";
 		};
+		5CC0208E1F446928003E89F0 /* JailBreak */ = {
+			isa = PBXGroup;
+			children = (
+				5CC0208F1F44695A003E89F0 /* JailBrokeController.h */,
+				5CC020901F44695A003E89F0 /* JailBrokeController.m */,
+				5CC020911F44695A003E89F0 /* JailBrokenDevice.h */,
+				5CC020921F44695A003E89F0 /* JailBrokenDevice.m */,
+			);
+			name = JailBreak;
+			sourceTree = "<group>";
+		};
 		5CC89EDD1F33045700AA0336 /* APIConfigurations */ = {
 			isa = PBXGroup;
 			children = (
 				5CC89EDE1F33048F00AA0336 /* DataManager.swift */,
 				5CC89EE01F33049F00AA0336 /* ServerManager.swift */,
+				5CE8EFA91F46E9E4007DD071 /* abhaycrt.cer */,
 			);
 			name = APIConfigurations;
 			sourceTree = "<group>";
@@ -381,6 +414,7 @@
 				9C243EC71F2B17B400AE8499 /* AppDelegate.swift */,
 				5C9F218E1F347DA500DB5274 /* Alert.swift */,
 				9C243EC91F2B17B400AE8499 /* ViewController.swift */,
+				5CE8EFA71F46DDF4007DD071 /* NetworkManager.swift */,
 				9CAB09081F3D79D900217D6B /* FirstViewController.swift */,
 				5CCAB6CC1F2C4D6500E24BEB /* SecondViewController.swift */,
 				9CFD1B4E1F39AC500061A642 /* LeadDetails.swift */,
@@ -388,9 +422,14 @@
 				5CCAB6D31F2C66AD00E24BEB /* MenuViewController.swift */,
 				5CF1CB601F30562D006CEBA7 /* AddLeadViewController.swift */,
 				5C7835AC1F358A7200C45685 /* ReportsViewController.swift */,
+				5CC020991F4470F7003E89F0 /* RootDeviceViewController.swift */,
 				5C63B8021F2B467700B56C92 /* IDBISales-Bridging-Header.h */,
 				5CD1A9C11F2F089700E314DA /* defaultUser.png */,
 				9CFD1B501F3AEB920061A642 /* 640x1136-bg.jpg */,
+				5CC020951F446BC9003E89F0 /* check.jpeg */,
+				5CC020961F446BC9003E89F0 /* uncheck.jpeg */,
+				5CE8EFA31F46B6F6007DD071 /* hide.png */,
+				5CE8EFA41F46B6F6007DD071 /* show.png */,
 				9C243ECB1F2B17B400AE8499 /* Main.storyboard */,
 				9C243ECE1F2B17B400AE8499 /* Assets.xcassets */,
 				9C243ED01F2B17B400AE8499 /* LaunchScreen.storyboard */,
@@ -541,11 +580,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				9CFD1B511F3AEB920061A642 /* 640x1136-bg.jpg in Resources */,
+				5CC020981F446BC9003E89F0 /* uncheck.jpeg in Resources */,
+				5CE8EFA51F46B6F6007DD071 /* hide.png in Resources */,
 				9C243ED21F2B17B400AE8499 /* LaunchScreen.storyboard in Resources */,
 				9C243ECF1F2B17B400AE8499 /* Assets.xcassets in Resources */,
 				5CD1A9C21F2F089700E314DA /* defaultUser.png in Resources */,
+				5CE8EFA61F46B6F6007DD071 /* show.png in Resources */,
 				9C243ECD1F2B17B400AE8499 /* Main.storyboard in Resources */,
 				5CB5BA3E1F3DD0B100EC196B /* V2LabeledTextField.xib in Resources */,
+				5CE8EFAA1F46E9E4007DD071 /* abhaycrt.cer in Resources */,
+				5CC020971F446BC9003E89F0 /* check.jpeg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -640,7 +684,9 @@
 				5CB500941F3331F500431EE8 /* CCheckbox.swift in Sources */,
 				5C63B8091F2B467700B56C92 /* TPKeyboardAvoidingScrollView.m in Sources */,
 				5CC89EEE1F33058500AA0336 /* AESCrypt.m in Sources */,
+				5CC020941F44695A003E89F0 /* JailBrokenDevice.m in Sources */,
 				9CAB09091F3D79D900217D6B /* FirstViewController.swift in Sources */,
+				5CE8EFA81F46DDF4007DD071 /* NetworkManager.swift in Sources */,
 				5CBBEF451F31D3840032B57B /* LUAutocompleteViewDataSource.swift in Sources */,
 				5CCAB6CD1F2C4D6500E24BEB /* SecondViewController.swift in Sources */,
 				5CB5BA421F3DD1EF00EC196B /* UIColor+V2Color.m in Sources */,
@@ -649,6 +695,8 @@
 				5CC89EF11F33058500AA0336 /* NSData+CommonCrypto.m in Sources */,
 				5C7835AD1F358A7200C45685 /* ReportsViewController.swift in Sources */,
 				5C9F218D1F3478DF00DB5274 /* StepCollectionViewFlowLayout.swift in Sources */,
+				5CC0209A1F4470F7003E89F0 /* RootDeviceViewController.swift in Sources */,
+				5CC020931F44695A003E89F0 /* JailBrokeController.m in Sources */,
 				5C9F218F1F347DA500DB5274 /* Alert.swift in Sources */,
 				5CC89EEF1F33058500AA0336 /* NSData+Base64.m in Sources */,
 				9C243EC81F2B17B400AE8499 /* AppDelegate.swift in Sources */,

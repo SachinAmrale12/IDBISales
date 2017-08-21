@@ -34,26 +34,22 @@ class LeadDetails: UIViewController,UITextFieldDelegate,UITextViewDelegate,MFMai
     
   //  @IBOutlet weak var createdDate: UILabel!
     
-    @IBOutlet weak var fromLabel        : UILabel!
-    
-    var name                            : String!
-    var product                         : String!
-    var mobile                          : String!
-    var mail                            : String!
-    var givermail                       : String!
-    var givername                       : String!
-    var createddate                     : String!
-    var loader                          : MaterialLoadingIndicator!
-    var leadID                          : String!
-    
-    var closureReson                    : String!
-
-    @IBOutlet var scheduleParentContainerView: UIView!
-    @IBOutlet var scheduleChildView: UIView!
-    
-    @IBOutlet var dateTimeTextField: UITextField!
-    @IBOutlet var remarkTextView: UITextView!
-
+    @IBOutlet weak var fromLabel                    : UILabel!
+    var name                                        : String!
+    var product                                     : String!
+    var mobile                                      : String!
+    var mail                                        : String!
+    var givermail                                   : String!
+    var givername                                   : String!
+    var createddate                                 : String!
+    var loader                                      : MaterialLoadingIndicator!
+    var leadID                                      : String!
+    var closureReson                                : String!
+    @IBOutlet var scheduleParentContainerView       : UIView!
+    @IBOutlet var scheduleChildView                 : UIView!
+    @IBOutlet var dateTimeTextField                 : UITextField!
+    @IBOutlet var remarkTextView                    : UITextView!
+    var myMail                                      = MFMailComposeViewController()
     
     override func viewDidLoad()
     {
@@ -61,7 +57,7 @@ class LeadDetails: UIViewController,UITextFieldDelegate,UITextViewDelegate,MFMai
         
         NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
-        
+        myMail.mailComposeDelegate = self
         self.commonInitialization()
         // Do any additional setup after loading the view.
     }
@@ -76,7 +72,7 @@ class LeadDetails: UIViewController,UITextFieldDelegate,UITextViewDelegate,MFMai
 
         let emailTapGesture = UITapGestureRecognizer(target: self, action: #selector(self.EmailViewTap))
         emailTapGesture.numberOfTapsRequired = 1
-        customerEmail.addGestureRecognizer(emailTapGesture)
+        self.customerEmail.addGestureRecognizer(emailTapGesture)
         
         
         self.loader = MaterialLoadingIndicator(frame: self.loaderView.bounds)
@@ -126,7 +122,7 @@ class LeadDetails: UIViewController,UITextFieldDelegate,UITextViewDelegate,MFMai
         
         if self.isValidPhoneNumber(value: self.mobileNumber.textField.text!)
         {
-            if let url = URL(string: "tel://\(String(describing: self.mobileNumber.textField.text))"), UIApplication.shared.canOpenURL(url) {
+            if let url = URL(string: "tel://\(String(describing: self.mobileNumber.textField.text!))"), UIApplication.shared.canOpenURL(url) {
                 if #available(iOS 10, *) {
                     UIApplication.shared.open(url)
                 } else {
@@ -141,6 +137,11 @@ class LeadDetails: UIViewController,UITextFieldDelegate,UITextViewDelegate,MFMai
         
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        
+        remarkTextView.text = "Please add Remark here"
+        remarkTextView.textColor = UIColor.darkGray
+    }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -192,15 +193,22 @@ class LeadDetails: UIViewController,UITextFieldDelegate,UITextViewDelegate,MFMai
                 {
                     print(result as Any)
                     
-                    if let jsonResult = result as? Array<Dictionary<String, String>>
+                    if let jsonResult = result as? NSArray //<Dictionary<String, String>>
                     {
                         for data in jsonResult
                         {
-                            let statusName = AESCrypt.decrypt(data["statusName"], password: DataManager.SharedInstance().getKeyForEncryption())
-                            print(statusName as Any)
-                            let statusID = AESCrypt.decrypt(data["statusId"], password: DataManager.SharedInstance().getKeyForEncryption())
-                            print(statusID as Any)
-                            self.closureReasonDictionary.updateValue(statusName!, forKey: statusID!)
+                            let valueArray = (data as! String).components(separatedBy: "~")
+                            for clouser in valueArray
+                            {
+                                let statusName = AESCrypt.decrypt(clouser , password: DataManager.SharedInstance().getKeyForEncryption())
+                                print(statusName as Any)
+                            }
+                            
+                            
+                            
+                           // let statusID = AESCrypt.decrypt(data["statusId"], password: DataManager.SharedInstance().getKeyForEncryption())
+                           // print(statusID as Any)
+                           // self.closureReasonDictionary.updateValue(statusID!, forKey: statusName!)
                             
                         }
                         
@@ -289,13 +297,10 @@ class LeadDetails: UIViewController,UITextFieldDelegate,UITextViewDelegate,MFMai
                                         let message = AESCrypt.decrypt(message as! String, password: DataManager.SharedInstance().getKeyForEncryption()) as String
                                         print(message)
                                         
-                                        
-                                        
                                     }
                                     
-                                    self.AlertMessages(title: "Error", message: "Appointment created successfully", actionTitle: "OK", alertStyle: .alert, actionStyle: .cancel, handler: { (action) in
-                                        self.navigationController?.popViewController(animated: true)
-                                    })
+                                    self.AlertMessages(title: "Info", message: "Appointment created successfully", actionTitle: "OK", alertStyle: .alert, actionStyle: .cancel, handler: nil)
+                                    self.remarkTextView.text = ""
                                     
                                 }
                                 else
@@ -393,6 +398,11 @@ class LeadDetails: UIViewController,UITextFieldDelegate,UITextViewDelegate,MFMai
                                     {
                                         let message = AESCrypt.decrypt(message as! String, password: DataManager.SharedInstance().getKeyForEncryption()) as String
                                         print(message)
+                                        
+                                        self.AlertMessages(title: "Alert", message: message, actionTitle: "OK", alertStyle: .alert, actionStyle: .cancel, handler: { (UIAlertAction) in
+                                            
+                                            self.navigationController?.popViewController(animated: true)
+                                        })
                                     }
                                 }
                                 else
@@ -421,16 +431,16 @@ class LeadDetails: UIViewController,UITextFieldDelegate,UITextViewDelegate,MFMai
     
     // MARK: email Tap gesture methods
    
-    func EmailViewTap(sender: UITapGestureRecognizer? = nil)
+    func EmailViewTap()
     {
         if MFMailComposeViewController.canSendMail() {
             
-            let mail = MFMailComposeViewController()
-            mail.mailComposeDelegate = self
-            mail.setToRecipients([customerEmail.textField.text!])
-            mail.setSubject("")
-            mail.setMessageBody("Text Body", isHTML: false)
-            present(mail, animated: true, completion: nil)
+            myMail = MFMailComposeViewController()
+            myMail.mailComposeDelegate = self
+            myMail.setToRecipients([customerEmail.textField.text!])
+            myMail.setSubject("")
+            myMail.setMessageBody("Text Body", isHTML: false)
+            present(myMail, animated: true, completion: nil)
         }
     }
 
@@ -469,7 +479,10 @@ class LeadDetails: UIViewController,UITextFieldDelegate,UITextViewDelegate,MFMai
     
     public func textViewShouldBeginEditing(_ textView: UITextView) -> Bool
     {
-        remarkTextView.text = ""
+        if remarkTextView.textColor == UIColor.darkGray {
+            remarkTextView.text = ""
+            remarkTextView.textColor = UIColor(red: (25.0/255.0), green: (111.0/255.0), blue: (61.0/255.0), alpha: 1.0)
+        }
         return true
     }
     
@@ -512,21 +525,20 @@ extension LeadDetails: CZPickerViewDelegate, CZPickerViewDataSource {
     }
     
     func numberOfRows(in pickerView: CZPickerView!) -> Int {
-        return Array(self.closureReasonDictionary.values).count
+        return Array(self.closureReasonDictionary.keys).count
     }
     
     func czpickerView(_ pickerView: CZPickerView!, titleForRow row: Int) -> String! {
-        return Array(self.closureReasonDictionary.values)[row]
+        return Array(self.closureReasonDictionary.keys)[row]
     }
     
     func czpickerView(_ pickerView: CZPickerView!, didConfirmWithItemAtRow row: Int){
         self.navigationController?.setNavigationBarHidden(true, animated: true)
         
         // self.programmTextView.text = productList.[IndexPath].row.replacingOccurrences(of: "\"", with: "").replacingOccurrences(of: "[", with: "").replacingOccurrences(of: "]", with: "")
-        self.closureReson = Array(self.closureReasonDictionary.values)[row]
-        print(Array(self.closureReasonDictionary.values)[row])
+        self.closureReson = Array(self.closureReasonDictionary.keys)[row]
         
-        let message = "Are you sure\n You want to close this Lead with reason \"\((Array(self.closureReasonDictionary.values)[row]))\""
+        let message = "Are you sure\n You want to close this Lead with reason \"\((Array(self.closureReasonDictionary.keys)[row]))\""
         let alertController = UIAlertController(title: "Alert", message: message, preferredStyle: .alert)
         
         // Create the actions

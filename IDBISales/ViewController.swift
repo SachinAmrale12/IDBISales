@@ -13,17 +13,25 @@ import ReachabilitySwift
 
 class ViewController: UIViewController {
 
+    
+    @IBOutlet weak var parrentRootView          : UIView!
+    @IBOutlet weak var childRootView            : UIView!
+    @IBOutlet weak var rootCheckButton          : UIButton!
     @IBOutlet weak var loaderViewContainer      : UIView!
     @IBOutlet weak var loaderView               : UIView!
     @IBOutlet weak var userIdTextField          : RaisePlaceholder!
     @IBOutlet weak var passwordTextField        : RaisePlaceholder!
     @IBOutlet weak var loginButton              : UIButton!
     
+    @IBOutlet weak var showPasswordButton: UIButton!
     let networkReachability                     = Reachability()
+    let jailBrokeCheck                          = JailBrokenDevice()
     
     var keyForLoginCrendential                  : String!
     var clientID                                = "lmst"
     var loader                                  : MaterialLoadingIndicator!
+    var showHideButton                          : UIButton!
+  //  let networkManager                          = NetworkManager()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,16 +39,113 @@ class ViewController: UIViewController {
         
        // let value = JNKeychain.value(forKey: "DummyNumber") as! String
       //  let key = JNKeychain.value(forKey: "DummyNumberReverse") as! String
+    
+    //    self.testPinning()
         
-       keyForLoginCrendential = DataManager.SharedInstance().getGlobalKey()
+        if jailBrokeCheck.isDeviceJailbroken()
+        {
+            if let testValue = UserDefaults.standard.value(forKey: "isRootPolicyAccepted")
+            {
+                if testValue as? String == "TermsConditionsAccepted"
+                {
+                     self.parrentRootView.isHidden = true
+                }
+            }
+            else
+            {
+                self.parrentRootView.isHidden = false
+            }
+        }
         
+        self.rootCheckButton.setBackgroundImage(UIImage(named: "uncheck.jpeg"), for: .normal)
+        self.rootCheckButton.addTarget(self, action: #selector(self.rootCheckClicked), for: .touchUpInside)
+        
+        keyForLoginCrendential = DataManager.SharedInstance().getGlobalKey()
         userIdTextField.text = "129571"
         passwordTextField.text = "Pass@12345"
         self.navigationController?.navigationBar.isHidden = true
         self.commonInitialization()
         
     }
-
+    
+   
+//    func testPinning()
+//    {
+//        let url = "http://10.144.118.20:1919/iBus/user/access/ {\"username\":\"wgttu29rqJtcQdR+DSac2w==\",\"pin\":\"2KivveN7s8is14VJ:~:3aNqA==\",\"clientId\":\"Is9I:~:Y5ops5uh8gB3oKJhw==\",\"clientSecret\":\"KRrIpLIAMe9Jd4IyjNGejg==\",\"custId\":\"aKpSY5Rdc7ulcImMDTFVtQ==\"}"
+//        let requestParams = [String:Any]()
+//        networkManager.manager?.request(url.addingPercentEscapes(using: .ascii)!,method: .post, parameters: requestParams, encoding: JSONEncoding.default, headers: [:]).response(completionHandler: { response in
+//            
+//             print(response)
+//             print(response.response?.statusCode as Any)
+//        })
+//        
+//        
+////        networkManager.manager!.request(.GET, "http://10.144.118.20:1919/iBus/user/access/ {\"username\":\"wgttu29rqJtcQdR+DSac2w==\",\"pin\":\"2KivveN7s8is14VJ:~:3aNqA==\",\"clientId\":\"Is9I:~:Y5ops5uh8gB3oKJhw==\",\"clientSecret\":\"KRrIpLIAMe9Jd4IyjNGejg==\",\"custId\":\"aKpSY5Rdc7ulcImMDTFVtQ==\"}").response { response in
+////            if response.1 != nil {
+////                print("Success")
+////                print(response.1)
+////                print(response.1?.statusCode)
+////            } else {
+////                print("Error")
+////                print(response.3)
+////            }
+////        }
+//    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        self.userIdTextField.text = ""
+        self.passwordTextField.text = ""
+    }
+    
+    func rootCheckClicked()
+    {
+        if self.rootCheckButton.backgroundImage(for: .normal) == UIImage(named: "check.jpeg")
+        {
+            self.rootCheckButton.setBackgroundImage(UIImage(named: "uncheck.jpeg"), for: .normal)
+        }
+        else
+        {
+            self.rootCheckButton.setBackgroundImage(UIImage(named: "check.jpeg"), for: .normal)
+        }
+    }
+    
+    @IBAction func rootDeviceDisagree(_ sender: Any)
+    {
+        let rootDeviceDisAgree = UIAlertController(title: "Warning", message: "Are you sure you want to discontinue with IDBI Sales Partner ?", preferredStyle: .alert)
+        let noButton = UIAlertAction(title: "No", style: .cancel, handler: nil)
+        let yesButton = UIAlertAction(title: "Yes", style: .default) { (UIAlertAction) in
+            
+            let rootDeviceVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "rootdeviceidentifier")
+            self.present(rootDeviceVC, animated: true, completion: nil)
+        }
+        
+        rootDeviceDisAgree.addAction(noButton)
+        rootDeviceDisAgree.addAction(yesButton)
+        self.present(rootDeviceDisAgree, animated: true, completion: nil)
+    }
+    
+   
+    @IBAction func rootDeviceAgree(_ sender: Any)
+    {
+        if rootCheckButton.backgroundImage(for: .normal) == UIImage(named: "check.jpeg")
+        {
+            UserDefaults.standard.set("TermsConditionsAccepted", forKey: "isRootPolicyAccepted")
+            UserDefaults.standard.synchronize()
+            self.parrentRootView.isHidden = true
+            let defaults = UserDefaults.standard
+            if defaults.object(forKey: "onlyonce") == nil
+            {
+                defaults.set("YES", forKey: "onlyonce")
+            }
+        }
+        else
+        {
+            self.AlertMessages(title: "Jail Broken Device Alert", message: "Sorry, you have to accept Terms and Condition to continue with \"IDBI Sales Partner\" on Jail Broken device.", actionTitle: "OK", alertStyle: .alert, actionStyle: .cancel, handler: nil)
+        }
+        
+    }
+    
+    
     //navigation
     
     @IBAction func loginClicked(_ sender: Any)
@@ -51,13 +156,13 @@ class ViewController: UIViewController {
         }
         else
         {
-            if userIdTextField.text?.isEmpty == false && passwordTextField.text?.isEmpty == true
+            if userIdTextField.text?.isEmpty == true && passwordTextField.text?.isEmpty == false
             {
                 self.AlertMessages(title: "Alert", message: "Please enter EIN", actionTitle: "OK", alertStyle: .alert, actionStyle: .cancel, handler: nil)
             }
             else
             {
-                if userIdTextField.text?.isEmpty == true && passwordTextField.text?.isEmpty == false
+                if userIdTextField.text?.isEmpty == false && passwordTextField.text?.isEmpty == true
                 {
                     self.AlertMessages(title: "Alert", message: "Please enter Password", actionTitle: "OK", alertStyle: .alert, actionStyle: .cancel, handler: nil)
                 }
@@ -155,7 +260,11 @@ class ViewController: UIViewController {
                                                             }
                                                             else
                                                             {
-                                                                self.AlertMessages(title: "Error", message: error, actionTitle: "OK", alertStyle: .alert, actionStyle: .cancel, handler: nil)
+                                                                self.AlertMessages(title: "Error", message: error, actionTitle: "OK", alertStyle: .alert, actionStyle: .cancel, handler: {(action) in
+                                                                    
+                                                                    self.userIdTextField.text = ""
+                                                                    self.passwordTextField.text = ""
+                                                                })
                                                             }
                                                         }
                                                         
@@ -165,7 +274,11 @@ class ViewController: UIViewController {
                                                 {
                                                     if let errorString = error
                                                     {
-                                                        self.AlertMessages(title: "Error", message: errorString, actionTitle: "OK", alertStyle: .alert, actionStyle: .cancel, handler: nil)
+                                                        self.AlertMessages(title: "Error", message: errorString, actionTitle: "OK", alertStyle: .alert, actionStyle: .cancel, handler: {(action) in
+                                                            
+                                                            self.userIdTextField.text = ""
+                                                            self.passwordTextField.text = ""
+                                                        })
                                                     }
                                                 }
                                                 
@@ -177,7 +290,11 @@ class ViewController: UIViewController {
                                             self.loaderView.isHidden = true
                                             self.loaderViewContainer.isHidden = true
                                             self.loader.stopAnimating()
-                                            self.AlertMessages(title: "Error", message: error, actionTitle: "OK", alertStyle: .alert, actionStyle: .cancel, handler: nil)
+                                            self.AlertMessages(title: "Error", message: error, actionTitle: "OK", alertStyle: .alert, actionStyle: .cancel, handler: {(action) in
+                                                
+                                                self.userIdTextField.text = ""
+                                                self.passwordTextField.text = ""
+                                            })
                                         }
                                     }
                                     
@@ -209,6 +326,8 @@ class ViewController: UIViewController {
     
     func commonInitialization()
     {
+    
+        showPasswordButton.setImage(UIImage(named: "hide.png"), for: .normal)
         
         self.loader = MaterialLoadingIndicator(frame: self.loaderView.bounds)
         self.loaderView.addSubview(loader)
@@ -227,15 +346,26 @@ class ViewController: UIViewController {
        // loginButton.layer.borderColor = UIColor.orange.cgColor
        // loginButton.layer.borderWidth = 1
         
-        //MARK: notification observer
-        
         NotificationCenter.default.addObserver(self, selector: #selector(self.poptoRootViewController), name: NSNotification.Name(rawValue: "NotificationIdentifier"), object: nil)
 
-
-        
     }
     
     
+    //MARK: Show Hide Password Method
+    
+    @IBAction func showPasswordClicked(_ sender: Any)
+    {
+        if showPasswordButton.image(for: .normal) == UIImage(named: "hide.png")
+        {
+            self.passwordTextField.isSecureTextEntry = false
+            showPasswordButton.setImage(UIImage(named: "show.png"), for: .normal)
+        }
+        else
+        {
+            self.passwordTextField.isSecureTextEntry = true
+            showPasswordButton.setImage(UIImage(named: "hide.png"), for: .normal)
+        }
+    }
     
     //MARK: Notification method
     

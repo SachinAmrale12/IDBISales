@@ -13,6 +13,8 @@ import Alamofire
 
 class ServerManager: NSObject {
     
+    let domainName = "https://ibus.idbibank.co.in"
+    
     class func SharedInstance() -> ServerManager
     {
         struct serverStuct
@@ -26,7 +28,6 @@ class ServerManager: NSObject {
     func createAppointment(tranLeadId: String,takerEmail: String,appointmentDt: String,appmntRemarks: String,custId: String,clientId: String,completionClouser:@escaping (_ isSuccessful: Bool,_ error: String?,_ result: Any?) -> Void)
     {
         let urlString = "http://10.144.118.20:1919/iBus/service/lead/createappointment/{\"tranLeadId\":\"\(tranLeadId)\",\"giverEmail\":\"\(takerEmail)\",\"appointmentDt\":\"\(appointmentDt)\",\"appmntRemarks\":\"\(appmntRemarks)\",\"custId\":\"\(custId)\",\"clientId\":\"\(clientId)\"}?access_token=\(JNKeychain.loadValue(forKey: "accessToken")!)"
-        print(urlString)
         let url = urlString.addingPercentEscapes(using: .ascii)
         self.webServiceCall(url: url!, completionClouser :completionClouser)
     }
@@ -34,7 +35,6 @@ class ServerManager: NSObject {
     func assignLead(tranLeadId: String,giverEmail: String,giverRemarks: String,takerEmail: String,takerSol: String,custId: String,clientId: String,completionClouser:@escaping (_ isSuccessful: Bool,_ error: String?,_ result: Any?) -> Void)
     {
         let urlString = "http://10.144.118.20:1919/iBus/service/lead/reassignlead/{\"tranLeadId\":\"\(tranLeadId)\",\"giverEmail\":\"\(giverEmail)\",\"giverRemarks\":\"\(giverRemarks)\",\"takerEmail\":\"\(takerEmail)\",\"takerSol\":\"\(takerSol)\",\"custId\":\"\(custId)\",\"clientId\":\"\(clientId)\"}?access_token=\(JNKeychain.loadValue(forKey: "accessToken")!)"
-        print(urlString)
         let url = urlString.addingPercentEscapes(using: .ascii)
         self.webServiceCall(url: url!, completionClouser :completionClouser)
     }
@@ -42,6 +42,7 @@ class ServerManager: NSObject {
     func getReports(ein: String,clientId: String,flg: String,completionClouser:@escaping (_ isSuccessful: Bool,_ error: String?,_ result: Any?) -> Void)
     {
         let urlString = "http://10.144.118.20:1919/iBus/service/lead/createReport/{\"ein\":\"\(ein)\",\"clientId\":\"\(clientId)\",\"flg\":\"\(flg)\"}?access_token=\(JNKeychain.loadValue(forKey: "accessToken")!)"
+        print(urlString)
         let url = urlString.addingPercentEscapes(using: .ascii)
         self.webServiceCall(url: url!, completionClouser :completionClouser)
     }
@@ -51,7 +52,6 @@ class ServerManager: NSObject {
     func viewLead(custId: String,clientId: String,completionClouser:@escaping (_ isSuccessful: Bool,_ error: String?,_ result: Any?) -> Void)
     {
         let urlString = "http://10.144.118.20:1919/iBus/service/lead/viewleads/{\"custId\":\"\(custId)\",\"clientId\":\"\(clientId)\"}?access_token=\(JNKeychain.loadValue(forKey: "accessToken")!)"
-        print(urlString)
         let url = urlString.addingPercentEscapes(using: .ascii)
         self.webServiceCall(url: url!, completionClouser :completionClouser)
     }
@@ -83,8 +83,7 @@ class ServerManager: NSObject {
         let encryptedCenterCode = AESCrypt.encrypt("1", password: DataManager.SharedInstance().getKeyForEncryption()).replacingOccurrences(of: "/", with: ":~:")
         let encryptedNumricCode = AESCrypt.encrypt("0", password: DataManager.SharedInstance().getKeyForEncryption()).replacingOccurrences(of: "/", with: ":~:")
         
-        let urlString = "http://10.144.118.20:1919/iBus/service/lead/createlead/{\"isNewCustomer\":\"\(isNewCustomer)\",\"prgId\":\"\(programId)\",\"invstAmtEstmtd\":\"\(encryptedNumricCode)\",\"periodNumEstmtd\":\"\(encryptedNumricCode)\",\"periodUnitEstmtd\":\"\(encryptedNumricCode)\",\"remarks\":\"\(encryptedNA)\",\"sourceBycode\":\"\(sourceBycode)\",\"campaignId\":\"\(encryptedNumricCode)\",\"leadCustId\":\"\(leadCustId)\",\"custName\":\"\(custName)\",\"address1\":\"\(encryptedNA)\",\"address2\":\"\(encryptedNA)\",\"pin\":\"\(encryptedNumricCode)\",\"citycode\":\"\(cityCode)\",\"stateCode\":\"\(stateCode)\",\"emailId\":\"\(emailID)\",\"telcell\":\"\(encryptedNumricCode)\",\"phone1\":\"\(encryptedNumricCode)\",\"phone2\":\"\(encryptedNumricCode)\",\"custId\":\"\(custId)\",\"mobileNo\":\"\(mobileNo)\",\"appointDt\":\"\(encryptedNA)\",\"empEmailId\":\"\(empEmailId)\",\"takerEmailId\":\"\(takerEmailId)\",\"takerSolId\":\"\(takerSolId)\",\"centerCode\":\"\(encryptedCenterCode)\",\"clientId\":\"\(clientID)\"}?access_token=\(JNKeychain.loadValue(forKey: "accessToken")!)"
-        print(urlString)
+        let urlString = "http://10.144.118.20:1919/iBus/service/lead/createlead/{\"isNewCustomer\":\"\(isNewCustomer)\",\"prgId\":\"\(programId)\",\"invstAmtEstmtd\":\"\(encryptedNumricCode)\",\"periodNumEstmtd\":\"\(encryptedNumricCode)\",\"periodUnitEstmtd\":\"\(encryptedNumricCode)\",\"remarks\":\"\(encryptedNA)\",\"sourceBycode\":\"\(sourceBycode)\",\"campaignId\":\"\(encryptedNumricCode)\",\"leadCustId\":\"\(leadCustId)\",\"custName\":\"\(custName)\",\"address1\":\"\(encryptedNA)\",\"address2\":\"\(encryptedNA)\",\"pin\":\"\(encryptedNumricCode)\",\"citycode\":\"\(cityCode)\",\"stateCode\":\"\(stateCode)\",\"emailId\":\"\(emailID)\",\"telcell\":\"\(mobileNo)\",\"phone1\":\"\(encryptedNumricCode)\",\"phone2\":\"\(encryptedNumricCode)\",\"custId\":\"\(custId)\",\"mobileNo\":\"\(mobileNo)\",\"appointDt\":\"\(encryptedNA)\",\"empEmailId\":\"\(empEmailId)\",\"takerEmailId\":\"\(takerEmailId)\",\"takerSolId\":\"\(takerSolId)\",\"centerCode\":\"\(encryptedCenterCode)\",\"clientId\":\"\(clientID)\"}?access_token=\(JNKeychain.loadValue(forKey: "accessToken")!)"
         let url = urlString.addingPercentEscapes(using: .ascii)
         self.webServiceCall(url: url!, completionClouser :completionClouser)
     }
@@ -113,6 +112,7 @@ class ServerManager: NSObject {
     func getStates(custID: String,clientID: String,completionClouser:@escaping (_ isSuccessful: Bool,_ error: String?,_ result: Any?) -> Void)
     {
         let urlString = "http://10.144.118.20:1919/iBus/service/LMSTData/getStates/{\"custId\":\"\(custID)\",\"clientId\":\"\(clientID)\"}?access_token=\(JNKeychain.loadValue(forKey: "accessToken")!)"
+        print(urlString)
         let url = urlString.addingPercentEscapes(using: .ascii)
         self.webServiceCall(url: url!, completionClouser :completionClouser)
     }
@@ -120,7 +120,6 @@ class ServerManager: NSObject {
     func getAccessToken(custID: String,clientID: String,pin :String,username: String,clientSecret: String,completionClouser:@escaping (_ isSuccessful: Bool,_ error: String?,_ result: Any?) -> Void)
     {
         let urlString = "http://10.144.118.20:1919/iBus/user/access/" + "{\"custId\":\"\(custID)\",\"clientId\":\"\(clientID)\", \"pin\":\"\(pin)\",\"username\":\"\(username)\",\"clientSecret\":\"\(clientSecret)\"}"
-        print(urlString)
         let url = urlString.addingPercentEscapes(using: .ascii)
         self.webServiceCall(url: url!, completionClouser :completionClouser)
     }
@@ -137,7 +136,6 @@ class ServerManager: NSObject {
     func getLeadClosureReasons(custID: String,clientID: String,completionClouser:@escaping (_ isSuccessful: Bool,_ error: String?,_ result: Any?) -> Void)
     {
         let urlString = "http://10.144.118.20:1919/iBus/service/LMSTData/mstidname/" + "{\"custId\":\"\(custID)\",\"clientId\":\"\(clientID)\"}?access_token=\(JNKeychain.loadValue(forKey: "accessToken")!)"
-        
         let url = urlString.addingPercentEscapes(using: .ascii)
         self.webServiceCall(url: url!, completionClouser: completionClouser)
     }
