@@ -9,22 +9,28 @@
 import UIKit
 import ReachabilitySwift
 import MessageUI
-class LeadDetails: UIViewController,UITextFieldDelegate,UITextViewDelegate,MFMailComposeViewControllerDelegate {
+class LeadDetails: UIViewController,UITextFieldDelegate,UITextViewDelegate,MFMailComposeViewControllerDelegate,UITableViewDelegate,UITableViewDataSource {
     
+    @IBOutlet weak var leadFailureView                  : UIView!
+    @IBOutlet weak var leadFailureTableView             : UITableView!
+    @IBOutlet weak var leadFailureTextview              : UITextView!
     
-        @IBOutlet weak var loaderContainerView: UIView!
-    @IBOutlet weak var custName         : V2LabeledTextField!
-    @IBOutlet weak var productName      : V2LabeledTextField!
-    @IBOutlet weak var giverEmail       : V2LabeledTextField!
-    @IBOutlet weak var mobileNumber     : V2LabeledTextField!
-    @IBOutlet weak var giverName        : V2LabeledTextField!
-    @IBOutlet weak var createdDate      : V2LabeledTextField!
-    @IBOutlet weak var customerEmail    : V2LabeledTextField!
+    @IBOutlet weak var convertedAmountTextfield         : UITextField!
+    @IBOutlet weak var convertedRemarkTextview          : UITextView!
+    @IBOutlet weak var leadConvertedView                : UIView!
+    @IBOutlet weak var loaderContainerView              : UIView!
+    @IBOutlet weak var custName                         : V2LabeledTextField!
+    @IBOutlet weak var productName                      : V2LabeledTextField!
+    @IBOutlet weak var giverEmail                       : V2LabeledTextField!
+    @IBOutlet weak var mobileNumber                     : V2LabeledTextField!
+    @IBOutlet weak var giverName                        : V2LabeledTextField!
+    @IBOutlet weak var createdDate                      : V2LabeledTextField!
+    @IBOutlet weak var customerEmail                    : V2LabeledTextField!
     
-    let networkReachability             = Reachability()
-    var closureReasonDictionary         = [String:String]()
+    let networkReachability                             = Reachability()
+    var closureReasonDictionary                         = [String:String]()
     
-    @IBOutlet weak var loaderView: UIView!
+    @IBOutlet weak var loaderView                       : UIView!
   //  @IBOutlet var leadName              : UILabel!
   //  @IBOutlet var productName           : UILabel!
   //  @IBOutlet var mobileNumber          : UILabel!
@@ -50,6 +56,7 @@ class LeadDetails: UIViewController,UITextFieldDelegate,UITextViewDelegate,MFMai
     @IBOutlet var dateTimeTextField                 : UITextField!
     @IBOutlet var remarkTextView                    : UITextView!
     var myMail                                      = MFMailComposeViewController()
+    var mainClosureReason                           = [String]()
     
     override func viewDidLoad()
     {
@@ -66,6 +73,9 @@ class LeadDetails: UIViewController,UITextFieldDelegate,UITextViewDelegate,MFMai
     
     func commonInitialization()
     {
+        self.leadFailureTableView.delegate = self
+        self.leadFailureTableView.dataSource = self
+        
         let gesture = UITapGestureRecognizer(target: self, action: #selector(self.mobileButtonClicked))
         gesture.numberOfTapsRequired = 1
         self.mobileNumber.addGestureRecognizer(gesture)
@@ -109,13 +119,92 @@ class LeadDetails: UIViewController,UITextFieldDelegate,UITextViewDelegate,MFMai
         remarkTextView.layer.borderWidth = 1
         remarkTextView.layer.cornerRadius = 4
         remarkTextView.layer.borderColor = UIColor.orange.cgColor
+        
+//        convertedAmountTextfield.animationDuration = 0.5
+//        convertedAmountTextfield.subjectColor = UIColor.black
+//        convertedAmountTextfield.underLineColor = UIColor(red: (25.0/255.0), green: (111.0/255.0), blue: (61.0/255.0), alpha: 1.0)
 
+        convertedAmountTextfield.drawUnderLineForTextField()
+        
+        convertedRemarkTextview.layer.borderColor = UIColor(red: (25.0/255.0), green: (111.0/255.0), blue: (61.0/255.0), alpha: 1.0).cgColor
+        convertedRemarkTextview.layer.borderWidth = 1
+        
+        leadFailureTextview.layer.borderColor = UIColor(red: (25.0/255.0), green: (111.0/255.0), blue: (61.0/255.0), alpha: 1.0).cgColor
+        leadFailureTextview.layer.borderWidth = 1
         
 //        fromLabel.layer.borderWidth = 1
 //        fromLabel.layer.cornerRadius = 4
 //        fromLabel.layer.borderColor = UIColor.orange.cgColor
     }
     
+    
+    @IBAction func leadFailureDoneClicked(_ sender: Any)
+    {
+        if self.leadFailureTextview.text == "Please add Remark here" || self.leadFailureTextview.text == ""
+        {
+            self.AlertMessages(title: "Error", message: "Please add some remark or select some reason.", actionTitle: "OK", alertStyle: .alert, actionStyle: .cancel, handler: nil)
+            return
+        }
+        else
+        {
+            
+            let message = "Are you sure\n You want to close this Lead for reason \"\(self.leadFailureTextview.text!)\""
+            let alertController = UIAlertController(title: "Alert", message: message, preferredStyle: .alert)
+            let okAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.default)
+            {
+                UIAlertAction in
+                
+                let encryptedRemark = AESCrypt.encrypt(self.leadFailureTextview.text!, password: DataManager.SharedInstance().getKeyForEncryption()).stringReplace()
+                self.closeLead(remark: encryptedRemark)
+            }
+            let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel) {
+                UIAlertAction in
+                alertController.dismiss(animated: true, completion: nil)
+            }
+            
+            alertController.addAction(okAction)
+            alertController.addAction(cancelAction)
+            
+            self.present(alertController, animated: true, completion: nil)
+        }
+    }
+    
+    @IBAction func convertedDoneClicked(_ sender: Any)
+    {
+        var message : String!
+        if self.convertedRemarkTextview.text == "" || self.convertedRemarkTextview.text == "Please add Remark here"
+        {
+            self.AlertMessages(title: "Error", message: "Please add some remark", actionTitle: "OK", alertStyle: .alert, actionStyle: .cancel, handler: nil)
+            return
+        }
+        
+        if self.convertedAmountTextfield.text == ""
+        {
+            message = "Are you sure\n You want to close this Lead with no converted amount and reason \"\(self.convertedRemarkTextview.text!)\""
+        }
+        else
+        {
+            message = "Are you sure\n You want to close this Lead with converted amount of \(String(describing: self.convertedAmountTextfield.text!)) and reason \"\(self.convertedRemarkTextview.text!)\""
+        }
+        
+        let alertController = UIAlertController(title: "Alert", message: message, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.default)
+        {
+            UIAlertAction in
+            
+            let encryptedRemark = AESCrypt.encrypt(self.convertedRemarkTextview.text!, password: DataManager.SharedInstance().getKeyForEncryption()).stringReplace()
+            self.closeLead(remark: encryptedRemark)
+        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel) {
+            UIAlertAction in
+            alertController.dismiss(animated: true, completion: nil)
+        }
+        
+        alertController.addAction(okAction)
+        alertController.addAction(cancelAction)
+        
+        self.present(alertController, animated: true, completion: nil)
+    }
     
     func mobileButtonClicked()
     {
@@ -141,6 +230,12 @@ class LeadDetails: UIViewController,UITextFieldDelegate,UITextViewDelegate,MFMai
         
         remarkTextView.text = "Please add Remark here"
         remarkTextView.textColor = UIColor.darkGray
+        
+        convertedRemarkTextview.text = "Please add Remark here"
+        convertedRemarkTextview.textColor = UIColor.darkGray
+        
+        leadFailureTextview.text = "Please add Remark here"
+        leadFailureTextview.textColor = UIColor.darkGray
     }
     
     override func didReceiveMemoryWarning() {
@@ -172,6 +267,34 @@ class LeadDetails: UIViewController,UITextFieldDelegate,UITextViewDelegate,MFMai
         }
     }
     
+    
+    // MARK: Tableview delegate and datasource methods
+    
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
+    {
+        var cell = tableView.dequeueReusableCell(withIdentifier: "Cell")
+        if !(cell != nil) {
+            cell = UITableViewCell(style: UITableViewCellStyle.value2, reuseIdentifier: "Cell")
+        }
+        
+        cell?.detailTextLabel?.text = mainClosureReason[indexPath.row]
+        cell?.detailTextLabel?.textAlignment = .center
+        return cell!
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 35
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return mainClosureReason.count
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        self.leadFailureTextview.text = mainClosureReason[indexPath.row]
+    }
+    
     // MARK: closure methods
     
     
@@ -195,21 +318,25 @@ class LeadDetails: UIViewController,UITextFieldDelegate,UITextViewDelegate,MFMai
                     
                     if let jsonResult = result as? NSArray //<Dictionary<String, String>>
                     {
+                        self.closureReasonDictionary.removeAll(keepingCapacity: false)
+                        self.mainClosureReason.removeAll(keepingCapacity: false)
+                        
                         for data in jsonResult
                         {
                             let valueArray = (data as! String).components(separatedBy: "~")
-                            for clouser in valueArray
+
+                            let flag = AESCrypt.decrypt(valueArray[0] , password: DataManager.SharedInstance().getKeyForEncryption())
+                            let reason = AESCrypt.decrypt(valueArray[1] , password: DataManager.SharedInstance().getKeyForEncryption())
+                            let closureID = AESCrypt.decrypt(valueArray[2] , password: DataManager.SharedInstance().getKeyForEncryption())
+                            
+                            if flag == "F"
                             {
-                                let statusName = AESCrypt.decrypt(clouser , password: DataManager.SharedInstance().getKeyForEncryption())
-                                print(statusName as Any)
+                                self.closureReasonDictionary.updateValue(closureID!, forKey: reason!)
                             }
-                            
-                            
-                            
-                           // let statusID = AESCrypt.decrypt(data["statusId"], password: DataManager.SharedInstance().getKeyForEncryption())
-                           // print(statusID as Any)
-                           // self.closureReasonDictionary.updateValue(statusID!, forKey: statusName!)
-                            
+                            else
+                            {
+                                self.mainClosureReason.append(reason!)
+                            }
                         }
                         
                         let picker = CZPickerView(headerTitle: "Closure List", cancelButtonTitle: "Cancel", confirmButtonTitle: "Confirm")
@@ -218,7 +345,8 @@ class LeadDetails: UIViewController,UITextFieldDelegate,UITextViewDelegate,MFMai
                         picker?.needFooterView = false
                         picker?.allowMultipleSelection = false
                         picker?.show()
-                        print(self.closureReasonDictionary as Any)
+                        
+                        
                     }
                 }
             })
@@ -350,8 +478,11 @@ class LeadDetails: UIViewController,UITextFieldDelegate,UITextViewDelegate,MFMai
     {
         scheduleChildView.isHidden = true
         scheduleParentContainerView.isHidden = true
+        
+        leadFailureView.isHidden = true
+        leadConvertedView.isHidden = true
     }
-    func closeLead()
+    func closeLead(remark: String)
     {
         if (networkReachability?.isReachable)!
         {
@@ -360,10 +491,20 @@ class LeadDetails: UIViewController,UITextFieldDelegate,UITextViewDelegate,MFMai
             self.loader.startAnimating()
             
             let encryptedStatusCode = AESCrypt.encrypt(self.closureReasonDictionary[self.closureReson], password: DataManager.SharedInstance().getKeyForEncryption()).stringReplace()
-            let encryptedNA = AESCrypt.encrypt("NA", password: DataManager.SharedInstance().getKeyForEncryption()).stringReplace()
             let encryptedLeadID = AESCrypt.encrypt(self.leadID, password: DataManager.SharedInstance().getKeyForEncryption()).stringReplace()
             
-            DataManager.leadClose(custID: JNKeychain.loadValue(forKey: "encryptedCustID") as! String, clientID: JNKeychain.loadValue(forKey: "encryptedClientID") as! String, forceLeadId: encryptedLeadID, status: encryptedStatusCode, remarks: encryptedNA, completionClouser: { (isSuccessful, error, result) in
+            var encryptedAmount : String!
+            if self.convertedAmountTextfield.text != ""
+            {
+                 encryptedAmount = AESCrypt.encrypt(self.convertedAmountTextfield.text, password: DataManager.SharedInstance().getKeyForEncryption()).stringReplace()
+            }
+            else
+            {
+                 encryptedAmount = AESCrypt.encrypt("0", password: DataManager.SharedInstance().getKeyForEncryption()).stringReplace()
+            }
+            
+            
+            DataManager.leadClose(custID: JNKeychain.loadValue(forKey: "encryptedCustID") as! String, clientID: JNKeychain.loadValue(forKey: "encryptedClientID") as! String, forceLeadId: encryptedLeadID, status: encryptedStatusCode, remarks: remark,amount: encryptedAmount, completionClouser: { (isSuccessful, error, result) in
             
                 self.loaderView.isHidden = true
                 self.loaderContainerView.isHidden = true
@@ -404,6 +545,11 @@ class LeadDetails: UIViewController,UITextFieldDelegate,UITextViewDelegate,MFMai
                                             self.navigationController?.popViewController(animated: true)
                                         })
                                     }
+                                    
+                                    self.leadConvertedView.isHidden = true
+                                    self.leadFailureView.isHidden = true
+                                    self.scheduleParentContainerView.isHidden = true
+                                    
                                 }
                                 else
                                 {
@@ -483,6 +629,14 @@ class LeadDetails: UIViewController,UITextFieldDelegate,UITextViewDelegate,MFMai
             remarkTextView.text = ""
             remarkTextView.textColor = UIColor(red: (25.0/255.0), green: (111.0/255.0), blue: (61.0/255.0), alpha: 1.0)
         }
+        if convertedRemarkTextview.textColor == UIColor.darkGray {
+            convertedRemarkTextview.text = ""
+            convertedRemarkTextview.textColor = UIColor(red: (25.0/255.0), green: (111.0/255.0), blue: (61.0/255.0), alpha: 1.0)
+        }
+        if leadFailureTextview.textColor == UIColor.darkGray {
+            leadFailureTextview.text = ""
+            leadFailureTextview.textColor = UIColor(red: (25.0/255.0), green: (111.0/255.0), blue: (61.0/255.0), alpha: 1.0)
+        }
         return true
     }
     
@@ -535,30 +689,20 @@ extension LeadDetails: CZPickerViewDelegate, CZPickerViewDataSource {
     func czpickerView(_ pickerView: CZPickerView!, didConfirmWithItemAtRow row: Int){
         self.navigationController?.setNavigationBarHidden(true, animated: true)
         
-        // self.programmTextView.text = productList.[IndexPath].row.replacingOccurrences(of: "\"", with: "").replacingOccurrences(of: "[", with: "").replacingOccurrences(of: "]", with: "")
         self.closureReson = Array(self.closureReasonDictionary.keys)[row]
-        
-        let message = "Are you sure\n You want to close this Lead with reason \"\((Array(self.closureReasonDictionary.keys)[row]))\""
-        let alertController = UIAlertController(title: "Alert", message: message, preferredStyle: .alert)
-        
-        // Create the actions
-        let okAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.default)
+        if row == 0
         {
-            UIAlertAction in
-            self.closeLead()
+            // lead converted
+            self.scheduleParentContainerView.isHidden = false
+            self.leadConvertedView.isHidden = false
         }
-        let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel) {
-            UIAlertAction in
-            alertController.dismiss(animated: true, completion: nil)
+        else
+        {
+            // lead failure
+            self.scheduleParentContainerView.isHidden = false
+            self.leadFailureView.isHidden = false
+            self.leadFailureTableView.reloadData()
         }
-        
-        // Add the actions
-        alertController.addAction(okAction)
-        alertController.addAction(cancelAction)
-        
-        // Present the controller
-        self.present(alertController, animated: true, completion: nil)
-        
     }
     
     func czpickerViewDidClickCancelButton(_ pickerView: CZPickerView!) {

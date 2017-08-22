@@ -25,9 +25,9 @@ class AddLeadViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
     @IBOutlet weak var mainCustomerView                     : UIView!
     @IBOutlet weak var containerViewHeightConstarint        : NSLayoutConstraint!
     @IBOutlet weak var custIDTextfieldHeightConstraint      : NSLayoutConstraint!
-//    @IBOutlet weak var stateTextfield                       : UITextField!
-//    @IBOutlet weak var cityTextfield                        : UITextField!
-//    @IBOutlet weak var branchTextfield                      : UITextField!
+    @IBOutlet weak var stateTextfield                       : UITextField!
+    @IBOutlet weak var cityTextfield                        : UITextField!
+    @IBOutlet weak var branchTextfield                      : UITextField!
     @IBOutlet weak var assignTextView                       : UITextView!
     @IBOutlet weak var firstNameTextfield                   : RaisePlaceholder!
     @IBOutlet weak var mobileNoTextfield                    : RaisePlaceholder!
@@ -36,9 +36,9 @@ class AddLeadViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
     @IBOutlet weak var ageTextfield                         : RaisePlaceholder!
     @IBOutlet weak var customerIDTextfield                  : RaisePlaceholder!
     
-    @IBOutlet weak var stateTextfield                       : RaisePlaceholder!
-    @IBOutlet weak var cityTextfield                        : RaisePlaceholder!
-    @IBOutlet weak var branchTextfield                      : RaisePlaceholder!
+   // @IBOutlet weak var stateTextfield                       : RaisePlaceholder!
+  //  @IBOutlet weak var cityTextfield                        : RaisePlaceholder!
+  //  @IBOutlet weak var branchTextfield                      : RaisePlaceholder!
     let networkReachability                                 = Reachability()
     var allStateDictionary                                  = [String:String]()
     var allCityDictionary                                   = [String:String]()
@@ -145,21 +145,21 @@ class AddLeadViewController: UIViewController,UIPickerViewDelegate,UIPickerViewD
         lastNameTextfield.subjectColor = UIColor.black
         lastNameTextfield.underLineColor = UIColor(red: (25.0/255.0), green: (111.0/255.0), blue: (61.0/255.0), alpha: 1.0)
         
-        stateTextfield.animationDuration = 0.5
-        stateTextfield.subjectColor = UIColor.black
-        stateTextfield.underLineColor = UIColor(red: (25.0/255.0), green: (111.0/255.0), blue: (61.0/255.0), alpha: 1.0)
+//        stateTextfield.animationDuration = 0.5
+//        stateTextfield.subjectColor = UIColor.black
+//        stateTextfield.underLineColor = UIColor(red: (25.0/255.0), green: (111.0/255.0), blue: (61.0/255.0), alpha: 1.0)
+//        
+//        cityTextfield.animationDuration = 0.5
+//        cityTextfield.subjectColor = UIColor.black
+//        cityTextfield.underLineColor = UIColor(red: (25.0/255.0), green: (111.0/255.0), blue: (61.0/255.0), alpha: 1.0)
+//        
+//        branchTextfield.animationDuration = 0.5
+//        branchTextfield.subjectColor = UIColor.black
+//        branchTextfield.underLineColor = UIColor(red: (25.0/255.0), green: (111.0/255.0), blue: (61.0/255.0), alpha: 1.0)
         
-        cityTextfield.animationDuration = 0.5
-        cityTextfield.subjectColor = UIColor.black
-        cityTextfield.underLineColor = UIColor(red: (25.0/255.0), green: (111.0/255.0), blue: (61.0/255.0), alpha: 1.0)
-        
-        branchTextfield.animationDuration = 0.5
-        branchTextfield.subjectColor = UIColor.black
-        branchTextfield.underLineColor = UIColor(red: (25.0/255.0), green: (111.0/255.0), blue: (61.0/255.0), alpha: 1.0)
-        
-      //  stateTextfield.drawUnderLineForTextField()
-      //  cityTextfield.drawUnderLineForTextField()
-      //  branchTextfield.drawUnderLineForTextField()
+        stateTextfield.drawUnderLineForTextField()
+        cityTextfield.drawUnderLineForTextField()
+        branchTextfield.drawUnderLineForTextField()
         
         
         // checkmark

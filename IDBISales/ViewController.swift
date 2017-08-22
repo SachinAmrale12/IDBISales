@@ -61,8 +61,8 @@ class ViewController: UIViewController {
         self.rootCheckButton.addTarget(self, action: #selector(self.rootCheckClicked), for: .touchUpInside)
         
         keyForLoginCrendential = DataManager.SharedInstance().getGlobalKey()
-        userIdTextField.text = "129571"
-        passwordTextField.text = "Pass@12345"
+     //   userIdTextField.text = "129571"
+      //  passwordTextField.text = "Pass@12345"
         self.navigationController?.navigationBar.isHidden = true
         self.commonInitialization()
         
@@ -373,7 +373,7 @@ class ViewController: UIViewController {
     {
         self.AlertMessages(title: "Alert", message: "Seesion time out \n Please Login again.", actionTitle: "OK", alertStyle: .alert, actionStyle: .cancel)
         { (action) in
-            self.navigationController?.popToRootViewController(animated: true)
+            self.navigationController?.popToRootViewController(animated: false)
         }
     }
     

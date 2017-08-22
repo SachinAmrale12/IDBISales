@@ -244,9 +244,9 @@ class DataManager: NSObject {
         }
     }
     
-    class func leadClose(custID: String,clientID: String,forceLeadId: String,status: String,remarks: String,completionClouser:@escaping (_ isSuccessful: Bool,_ error: String?,_ result: Any?) -> Void)
+    class func leadClose(custID: String,clientID: String,forceLeadId: String,status: String,remarks: String,amount: String,completionClouser:@escaping (_ isSuccessful: Bool,_ error: String?,_ result: Any?) -> Void)
     {
-        ServerManager.SharedInstance().leadClose(custID: custID, clientID: clientID, forceLeadId: forceLeadId, status: status, remarks: remarks) {
+        ServerManager.SharedInstance().leadClose(custID: custID, clientID: clientID, forceLeadId: forceLeadId, status: status, remarks: remarks,amount: amount) {
             (isSucessful, error, result) in
             
             if isSucessful

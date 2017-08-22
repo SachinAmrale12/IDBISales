@@ -140,9 +140,12 @@ class ServerManager: NSObject {
         self.webServiceCall(url: url!, completionClouser: completionClouser)
     }
     
-    func leadClose(custID: String,clientID: String,forceLeadId: String,status: String,remarks:String,completionClouser:@escaping (_ isSuccessful: Bool,_ error: String?,_ result: Any?) -> Void)
+    func leadClose(custID: String,clientID: String,forceLeadId: String,status: String,remarks:String,amount: String,completionClouser:@escaping (_ isSuccessful: Bool,_ error: String?,_ result: Any?) -> Void)
     {
-        let urlString = "http://10.144.118.20:1919/iBus/service/lead/closelead/" + "{\"custId\":\"\(custID)\",\"clientId\":\"\(clientID)\",\"forceLeadId\":\"\(forceLeadId)\",\"status\":\"\(status)\",\"remarks\":\"\(remarks)\"}?access_token=\(JNKeychain.loadValue(forKey: "accessToken")!)"
+        //http://10.144.118.20:1919/iBus/service/lead/closelead/{"custId":"iDF3kQlXsEDx:~:fNQyHpKEA==","clientId":"N06PaZ0IvkdcmiLfH3vmBg==","forceLeadId":"0zyqodw:~:nnsZrhN2a7UuRw==","status":"KzxlvmS8phxDDVZ8Rs8ZQg==","remarks":"Ad26prHVcpIpCodLgiySIg==","invstAmtActual":"U5sEMFpH+s9+vCBzkt8Jyw=="}?access_token=
+        
+        let urlString = "http://10.144.118.20:1919/iBus/service/lead/closelead/{\"custId\":\"\(custID)\",\"clientId\":\"\(clientID)\",\"forceLeadId\":\"\(forceLeadId)\",\"status\":\"\(status)\",\"remarks\":\"\(remarks)\",\"invstAmtActual\":\"\(amount)\"}?access_token=\(JNKeychain.loadValue(forKey: "accessToken")!)"
+        print(urlString)
         let url = urlString.addingPercentEscapes(using: .ascii)
         self.webServiceCall(url: url!, completionClouser: completionClouser)
     }

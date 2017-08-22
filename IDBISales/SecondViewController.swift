@@ -144,8 +144,7 @@ class SecondViewController: UIViewController,UITableViewDelegate,UITableViewData
                                         for value in listArray!
                                         {
                                             let lead = AESCrypt.decrypt(value as! String, password: DataManager.SharedInstance().getKeyForEncryption()) as String
-                                            print(lead)
-                                           
+                                            
                                             let leadDetailArray = lead.components(separatedBy: "~")
                                             let leadData = ["name":leadDetailArray[0],"phoneNumber":leadDetailArray[1],"email":leadDetailArray[2],"date":leadDetailArray[3],"productName":leadDetailArray[4],"id":leadDetailArray[5],"giverName":leadDetailArray[6],"giverEmail":leadDetailArray[7]]
                                             self.leadsArray.append(leadData)
@@ -155,6 +154,16 @@ class SecondViewController: UIViewController,UITableViewDelegate,UITableViewData
                                     }
                                     else
                                     {
+                                        self.custName.removeAll(keepingCapacity: false)
+                                        self.custPhoneNumber.removeAll(keepingCapacity: false)
+                                        self.leadCreationDate.removeAll(keepingCapacity: false)
+                                        self.productName.removeAll(keepingCapacity: false)
+                                        self.leadID.removeAll(keepingCapacity: false)
+                                        self.giverName.removeAll(keepingCapacity: false)
+                                        self.giverEmail.removeAll(keepingCapacity: false)
+                                        self.customerEmail.removeAll(keepingCapacity: false)
+                                        self.leadsArray.removeAll(keepingCapacity: false)
+                                        
                                         self.AlertMessages(title: "Oops !", message: "No Record Found", actionTitle: "OK", alertStyle: .alert, actionStyle: .cancel, handler: nil)
                                     }
                                     
@@ -175,9 +184,9 @@ class SecondViewController: UIViewController,UITableViewDelegate,UITableViewData
                                             self.giverEmail.append(lead["giverEmail"]!)
                                         }
                                         
-                                        self.tableView.reloadData()
                                     }
                     
+                                    self.tableView.reloadData()
                                 }
                                 if let mybranchList = element["mybranchList"]
                                 {
